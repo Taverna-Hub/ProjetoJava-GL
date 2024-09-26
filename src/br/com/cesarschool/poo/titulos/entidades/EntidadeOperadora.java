@@ -22,27 +22,32 @@ package br.com.cesarschool.poo.titulos.entidades;
  */
 public class EntidadeOperadora {
 
-    private long indentificador;
+    private long identificador;
     private String nome;
     private double autorizadoAcao;
     private double saldoAcao;
     private double saldoTituloDivida;
 
-    public EntidadeOperadora(long indentificador, String nome, double autorizadoAcao) {
-        this.indentificador = indentificador;
+    public EntidadeOperadora(long identificador, String nome, double autorizadoAcao) {
+        this.identificador = identificador;
         this.nome = nome;
         this.autorizadoAcao = autorizadoAcao;
     }
 
+    public void setAutorizadoAcao(double autorizadoAcao) {
+        this.autorizadoAcao = autorizadoAcao;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public long getIndentificador() {
-        return indentificador;
+        return identificador;
     }
 
     public String getNome() {
         return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public double getAutorizadoAcao() {
@@ -57,9 +62,6 @@ public class EntidadeOperadora {
         return saldoTituloDivida;
     }
 
-    public void setAutorizadoAcao(double autorizadoAcao) {
-        this.autorizadoAcao = autorizadoAcao;
-    }
 
     public void creditarSaldoAcao(double valor){
         saldoAcao += valor;
@@ -74,3 +76,5 @@ public class EntidadeOperadora {
         saldoTituloDivida -= valor;
     }
 }
+
+//OK
