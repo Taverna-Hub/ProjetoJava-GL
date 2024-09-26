@@ -39,35 +39,20 @@ public class Transacao {
     public EntidadeOperadora getEntidadeCredito() {
         return entidadeCredito;
     }
-    public void setEntidadeCredito(EntidadeOperadora entidadeCredito) {
-        this.entidadeCredito = entidadeCredito;
-    }
 
     public EntidadeOperadora getEntidadeDebito() {
         return entidadeDebito;
-    }
-    public void setEntidadeDebito(EntidadeOperadora entidadeDebito) {
-        this.entidadeDebito = entidadeDebito;
     }
 
     public Acao getAcao() {
         return acao;
     }
-    public void setAcao(Acao acao) {
-        this.acao = acao;
-    }
 
     public TituloDivida getTituloDivida() {
         return tituloDivida;
     }
-    public void setTituloDivida(TituloDivida tituloDivida) {
-        this.tituloDivida = tituloDivida;
-    }
 
     public double getValorOperacao() {
         return valorOperacao;
-    }
-    public void setValorOperacao(double valorOperacao) {
-        this.valorOperacao = valorOperacao;
     }
 }
