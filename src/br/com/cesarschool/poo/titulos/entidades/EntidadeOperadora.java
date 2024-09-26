@@ -7,13 +7,13 @@ package br.com.cesarschool.poo.titulos.entidades;
  * saldoAcao, do tipo double
  * saldoTituloDivida, do tipo double
  * 
- * Deve ter um construtor público que inicializa os atributos identificador, nome
- * e autorizadoAcao. Deve ter métodos set/get públicos para os atributos identificador, nome
- * e autorizadoAcao. O atributo identificador é read-only fora da classe.
+ * Deve ter um construtor pï¿½blico que inicializa os atributos identificador, nome
+ * e autorizadoAcao. Deve ter mï¿½todos set/get pï¿½blicos para os atributos identificador, nome
+ * e autorizadoAcao. O atributo identificador ï¿½ read-only fora da classe.
  * 
- * Os atributos saldoAcao e saldoTituloDivida devem ter apenas métodos get públicos.
+ * Os atributos saldoAcao e saldoTituloDivida devem ter apenas mï¿½todos get pï¿½blicos.
  * 
- * Outros métodos públicos:
+ * Outros mï¿½todos pï¿½blicos:
  * 
  *  void creditarSaldoAcao(double valor): deve adicionar valor ao saldoAcao
  *  void debitarSaldoAcao(double valor): deve diminuir valor de saldoAcao
@@ -22,4 +22,55 @@ package br.com.cesarschool.poo.titulos.entidades;
  */
 public class EntidadeOperadora {
 
+    private long indentificador;
+    private String nome;
+    private double autorizadoAcao;
+    private double saldoAcao;
+    private double saldoTituloDivida;
+
+    public EntidadeOperadora(long indentificador, String nome, double autorizadoAcao) {
+        this.indentificador = indentificador;
+        this.nome = nome;
+        this.autorizadoAcao = autorizadoAcao;
+    }
+
+    public long getIndentificador() {
+        return indentificador;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public double getAutorizadoAcao() {
+        return autorizadoAcao;
+    }
+
+    public double getSaldoAcao() {
+        return saldoAcao;
+    }
+
+    public double getSaldoTituloDivida() {
+        return saldoTituloDivida;
+    }
+
+    public void setAutorizadoAcao(double autorizadoAcao) {
+        this.autorizadoAcao = autorizadoAcao;
+    }
+
+    public void creditarSaldoAcao(double valor){
+        saldoAcao += valor;
+    }
+    public void debitarSaldoAcao(double valor){
+        saldoAcao -= valor;
+    }
+    public void creditarSaldoTituloDivida(double valor){
+        saldoTituloDivida += valor;
+    }
+    public void debitarSaldoTituloDivida(double valor){
+        saldoTituloDivida -= valor;
+    }
 }
