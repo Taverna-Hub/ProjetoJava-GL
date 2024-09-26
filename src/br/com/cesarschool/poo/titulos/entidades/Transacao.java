@@ -34,7 +34,6 @@ public class Transacao {
         this.valorOperacao = valorOperacao;
         this.dataHoraOperacao = dataHoraOperacao;
     }
-    // Não sei se tá certo a parte do Read-Only dos atributos
 
     public EntidadeOperadora getEntidadeCredito() {
         return entidadeCredito;
