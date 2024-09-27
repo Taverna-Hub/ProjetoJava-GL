@@ -33,5 +33,3 @@ public class Acao extends Ativo{
         this.valorUnitario = valorUnitario;
     }
 }
-
-// OK

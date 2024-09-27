@@ -1,6 +1,14 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
 import br.com.cesarschool.poo.titulos.entidades.Acao;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Scanner;
+
 /*
  * Deve gravar em e ler de um arquivo texto chamado Acao.txt os dados dos objetos do tipo
  * Acao. Seguem abaixo exemplos de linhas (identificador, nome, dataValidade, valorUnitario)
@@ -9,32 +17,74 @@ import br.com.cesarschool.poo.titulos.entidades.Acao;
     2;BANCO DO BRASIL;2026-01-01;21.21
     3;CORREIOS;2027-11-11;6.12 
  * 
- * A inclus„o deve adicionar uma nova linha ao arquivo. N„o È permitido incluir 
- * identificador repetido. Neste caso, o mÈtodo deve retornar false. Inclus„o com 
+ * A inclus√£o deve adicionar uma nova linha ao arquivo. N√£o √© permitido incluir
+ * identificador repetido. Neste caso, o m√©todo deve retornar false. Inclus√£o com
  * sucesso, retorno true.
  * 
- * A alteraÁ„o deve substituir a linha atual por uma nova linha. A linha deve ser 
- * localizada por identificador que, quando n„o encontrado, enseja retorno false. 
- * AlteraÁ„o com sucesso, retorno true.  
+ * A altera√ß√£o deve substituir a linha atual por uma nova linha. A linha deve ser
+ * localizada por identificador que, quando nÔøΩo encontrado, seja retorno false.
+ * Altera√ß√£o com sucesso, retorno true.
  *   
- * A exclus„o deve apagar a linha atual do arquivo. A linha deve ser 
- * localizada por identificador que, quando n„o encontrado, enseja retorno false. 
- * Exclus„o com sucesso, retorno true.
+ * A exclus√£o deve apagar a linha atual do arquivo. A linha deve ser
+ * localizada por identificador que, quando n√£o encontrado, seja retorno false.
+ * Exclus√£o com sucesso, retorno true.
  * 
  * A busca deve localizar uma linha por identificador, materializar e retornar um 
- * objeto. Caso o identificador n„o seja encontrado no arquivo, retornar null.   
+ * objeto. Caso o identificador n√£o seja encontrado no arquivo, retornar null.
  */
 public class RepositorioAcao {
-	public boolean incluir(Acao acao) {
-		return false;
+
+	File arquivoAcao = new File("./Acao.txt");
+
+	public boolean incluir(Acao acao) throws IOException {
+
+		if (buscar(acao.getIdentificador()) != null) {
+			return false;
+		}
+
+		FileWriter escreverLinha = new FileWriter("./Acao.txt");
+
+		String identificadorString = String.valueOf(acao.getIdentificador());
+		String dataString = String.valueOf(acao.getDataDeValidade());
+		String valorString = String.valueOf(acao.getValorUnitario());
+
+		String linhaCompleta = identificadorString + ";" + acao.getNome() + ";" + dataString + ";" + valorString + ";";
+
+		escreverLinha.write(linhaCompleta);
+		escreverLinha.close();
+
+		return true;
 	}
+	// OK
+
 	public boolean alterar(Acao acao) {
 		return false;
 	}
+
+
 	public boolean excluir(int identificador) {
 		return false;
 	}
-	public Acao buscar(int identificador) {
+
+	public Acao buscar(int identificador) throws FileNotFoundException {
+
+		Scanner scan = new Scanner(arquivoAcao);
+		while (scan.hasNextLine()) {
+
+			String[] arrayLinha = scan.nextLine().split(";", 4);
+
+			int identificadorArray = Integer.parseInt(arrayLinha[0]);
+			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
+			double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
+
+			if (identificador == identificadorArray) {
+				scan.close();
+				return new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray);
+			}
+		}
+		scan.close();
 		return null;
 	}
+	// OK
+
 }
