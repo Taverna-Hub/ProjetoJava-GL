@@ -60,17 +60,21 @@ public class RepositorioAcao {
 	// OK
 	//confirmar com monitor
 	public boolean alterar(Acao acao) throws IOException {
+
 		if (buscar(acao.getIdentificador()) == null){
 			return false;
 		}
+
 		Scanner SCAN = new Scanner(arquivoAcao);
 		Scanner SCANNERTECLADO = new Scanner(System.in);
 		List<String> linhasDoArquivo = new ArrayList<>();
 
 		while (SCAN.hasNextLine()){
+
 			if (!SCAN.nextLine().startsWith(String.valueOf(acao.getIdentificador()))){
 				linhasDoArquivo.add(SCAN.nextLine());
 			}
+
 			else {
 				incluir(new Acao(SCANNERTECLADO.nextInt(), SCANNERTECLADO.nextLine(), LocalDate.now(), SCANNERTECLADO.nextDouble()));
 			}
@@ -81,13 +85,16 @@ public class RepositorioAcao {
 
 
 	public boolean excluir(int identificador) throws IOException {
+
 		if (buscar(identificador) == null){
 			return false;
 		}
+
 		Scanner SCAN = new Scanner(arquivoAcao);
 		List<String> linhasDoArquivo = new ArrayList<>();
 
 		while (SCAN.hasNextLine()){
+
 			if (!SCAN.nextLine().startsWith(String.valueOf(identificador))){
 				linhasDoArquivo.add(SCAN.nextLine());
 			}
@@ -103,7 +110,6 @@ public class RepositorioAcao {
 			incluir(new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray));
 
 		}
-
 
 		return true;
 	}
