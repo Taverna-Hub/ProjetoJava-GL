@@ -3,6 +3,15 @@ package br.com.cesarschool.poo.titulos.repositorios;
 import br.com.cesarschool.poo.titulos.entidades.Acao;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 /*
  * Deve gravar em e ler de um arquivo texto chamado TituloDivida.txt os dados dos objetos do tipo
  * TituloDivida. Seguem abaixo exemplos de linhas (identificador, nome, dataValidade, taxaJuros).
@@ -11,32 +20,128 @@ import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
     2;EUA;2026-01-01;1.5
     3;FRANCA;2027-11-11;2.5 
  * 
- * A inclusão deve adicionar uma nova linha ao arquivo. Não é permitido incluir 
- * identificador repetido. Neste caso, o método deve retornar false. Inclusão com 
+ * A inclusï¿½o deve adicionar uma nova linha ao arquivo. Nï¿½o ï¿½ permitido incluir 
+ * identificador repetido. Neste caso, o mï¿½todo deve retornar false. Inclusï¿½o com 
  * sucesso, retorno true.
  * 
- * A alteração deve substituir a linha atual por uma nova linha. A linha deve ser 
- * localizada por identificador que, quando não encontrado, enseja retorno false. 
- * Alteração com sucesso, retorno true.  
+ * A alteraï¿½ï¿½o deve substituir a linha atual por uma nova linha. A linha deve ser 
+ * localizada por identificador que, quando nï¿½o encontrado, enseja retorno false. 
+ * Alteraï¿½ï¿½o com sucesso, retorno true.  
  *   
- * A exclusão deve apagar a linha atual do arquivo. A linha deve ser 
- * localizada por identificador que, quando não encontrado, enseja retorno false. 
- * Exclusão com sucesso, retorno true.
+ * A exclusï¿½o deve apagar a linha atual do arquivo. A linha deve ser 
+ * localizada por identificador que, quando nï¿½o encontrado, enseja retorno false. 
+ * Exclusï¿½o com sucesso, retorno true.
  * 
  * A busca deve localizar uma linha por identificador, materializar e retornar um 
- * objeto. Caso o identificador não seja encontrado no arquivo, retornar null.   
+ * objeto. Caso o identificador nï¿½o seja encontrado no arquivo, retornar null.   
  */
+
 public class RepositorioTituloDivida {
-	public boolean incluir(TituloDivida tituloDivida) {
-		return false;
+	File arquivoTitulo = new File("src/BDs/TituloDivida.txt");
+	public boolean incluir(TituloDivida tituloDivida) throws IOException {
+		if (buscar(tituloDivida.getIdentificador()) != null) {
+			return false;
+		}
+		Scanner scan = new Scanner(arquivoTitulo);
+		FileWriter escreverLinha = new FileWriter(arquivoTitulo, true);
+
+
+		String identificadorString = String.valueOf(tituloDivida.getIdentificador());
+		String dataString = String.valueOf(tituloDivida.getDataDeValidade());
+		String valorString = String.valueOf(tituloDivida.getTaxaJuros());
+
+		String linhaCompleta = identificadorString + ";" + tituloDivida.getNome() + ";" + dataString + ";" + valorString + ";\n";
+
+		escreverLinha.write(linhaCompleta);
+		scan.close();
+		escreverLinha.close();
+
+		return true;
 	}
-	public boolean alterar(TituloDivida tituloDivida) {
-		return false;
+
+	public boolean alterar(TituloDivida tituloDivida) throws IOException {
+
+		if (buscar(tituloDivida.getIdentificador()) == null){
+			return false;
+		}
+
+		Scanner SCAN = new Scanner(arquivoTitulo);
+		List<String> linhasDoArquivo = new ArrayList<>();
+
+		while (SCAN.hasNextLine()){
+			linhasDoArquivo.add(SCAN.nextLine());
+
+		}
+		FileWriter escreverLinha = new FileWriter(arquivoTitulo);
+
+		for (String linha : linhasDoArquivo){
+
+			String[] arrayLinha = linha.split(";");
+
+			int identificadorArray = Integer.parseInt(arrayLinha[0]);
+			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
+			double TaxaDeJurosArray = Double.parseDouble(arrayLinha[3]);
+			if (tituloDivida.getIdentificador() != identificadorArray){
+				incluir(new TituloDivida(identificadorArray, arrayLinha[1], dataArray, TaxaDeJurosArray));
+
+			}
+			else {
+				incluir(tituloDivida);
+
+			}
+
+		}
+
+		return true;
 	}
-	public boolean excluir(int identificador) {
-		return false;
+
+	public boolean excluir(int identificador) throws IOException {
+		if (buscar(identificador) == null){
+			return false;
+		}
+
+		Scanner SCAN = new Scanner(arquivoTitulo);
+		List<String> linhasDoArquivo = new ArrayList<>();
+
+		while (SCAN.hasNextLine()){
+			linhasDoArquivo.add(SCAN.nextLine());
+
+		}
+		FileWriter escreverLinha = new FileWriter(arquivoTitulo);
+
+		for (String linha : linhasDoArquivo){
+
+			String[] arrayLinha = linha.split(";");
+
+			int identificadorArray = Integer.parseInt(arrayLinha[0]);
+			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
+			double taxaDeJurosArray = Double.parseDouble(arrayLinha[3]);
+			if (identificador != identificadorArray){
+				incluir(new TituloDivida(identificadorArray, arrayLinha[1], dataArray, taxaDeJurosArray));
+
+			}
+
+		}
+
+		return true;
 	}
-	public Acao buscar(int identificador) {
+
+	public TituloDivida buscar(int identificador) throws FileNotFoundException {
+		Scanner scan = new Scanner(arquivoTitulo);
+		while (scan.hasNextLine()) {
+
+			String[] arrayLinha = scan.nextLine().split(";");
+
+			int identificadorArray = Integer.parseInt(arrayLinha[0]);
+			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
+			double TaxaDeJurosArray = Double.parseDouble(arrayLinha[3]);
+
+			if (identificador == identificadorArray) {
+				scan.close();
+				return new TituloDivida(identificadorArray, arrayLinha[1], dataArray, TaxaDeJurosArray);
+			}
+		}
+		scan.close();
 		return null;
 	}
 }
