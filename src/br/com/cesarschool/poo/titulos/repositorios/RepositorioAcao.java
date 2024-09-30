@@ -36,37 +36,38 @@ import java.util.Scanner;
  */
 public class RepositorioAcao {
 
-	File arquivoAcao = new File("./Acao.txt");
+	File arquivoAcao = new File("src/Bds/Acao.txt");
 
 	public boolean incluir(Acao acao) throws IOException {
 
 		if (buscar(acao.getIdentificador()) != null) {
 			return false;
 		}
+		Scanner scan = new Scanner(arquivoAcao);
+		FileWriter escreverLinha = new FileWriter(arquivoAcao, true);
 
-		FileWriter escreverLinha = new FileWriter(arquivoAcao);
 
 		String identificadorString = String.valueOf(acao.getIdentificador());
 		String dataString = String.valueOf(acao.getDataDeValidade());
 		String valorString = String.valueOf(acao.getValorUnitario());
 
-		String linhaCompleta = identificadorString + ";" + acao.getNome() + ";" + dataString + ";" + valorString + ";";
+		String linhaCompleta = identificadorString + ";" + acao.getNome() + ";" + dataString + ";" + valorString + ";\n";
 
 		escreverLinha.write(linhaCompleta);
+		scan.close();
 		escreverLinha.close();
 
 		return true;
 	}
 	// OK
-	//confirmar com monitor
 	public boolean alterar(Acao acao) throws IOException {
 
 		if (buscar(acao.getIdentificador()) == null){
 			return false;
 		}
 
+
 		Scanner SCAN = new Scanner(arquivoAcao);
-		Scanner SCANNERTECLADO = new Scanner(System.in);
 		List<String> linhasDoArquivo = new ArrayList<>();
 
 		while (SCAN.hasNextLine()){
@@ -76,7 +77,12 @@ public class RepositorioAcao {
 			}
 
 			else {
-				incluir(new Acao(SCANNERTECLADO.nextInt(), SCANNERTECLADO.nextLine(), LocalDate.now(), SCANNERTECLADO.nextDouble()));
+
+				boolean a = incluir(acao);
+				if (!a){
+					return false;
+				}
+
 			}
 		}
 
@@ -94,20 +100,22 @@ public class RepositorioAcao {
 		List<String> linhasDoArquivo = new ArrayList<>();
 
 		while (SCAN.hasNextLine()){
-
-			if (!SCAN.nextLine().startsWith(String.valueOf(identificador))){
 				linhasDoArquivo.add(SCAN.nextLine());
-			}
+
 		}
+		FileWriter escreverLinha = new FileWriter(arquivoAcao);
 
 		for (String linha : linhasDoArquivo){
-			String[] arrayLinha = linha.split(";", 4);
+
+			String[] arrayLinha = linha.split(";");
 
 			int identificadorArray = Integer.parseInt(arrayLinha[0]);
 			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
 			double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
+			if (identificador != identificadorArray){
+				incluir(new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray));
 
-			incluir(new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray));
+			}
 
 		}
 
@@ -119,7 +127,7 @@ public class RepositorioAcao {
 		Scanner scan = new Scanner(arquivoAcao);
 		while (scan.hasNextLine()) {
 
-			String[] arrayLinha = scan.nextLine().split(";", 4);
+			String[] arrayLinha = scan.nextLine().split(";");
 
 			int identificadorArray = Integer.parseInt(arrayLinha[0]);
 			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
