@@ -66,24 +66,31 @@ public class RepositorioAcao {
 			return false;
 		}
 
-
 		Scanner SCAN = new Scanner(arquivoAcao);
 		List<String> linhasDoArquivo = new ArrayList<>();
 
 		while (SCAN.hasNextLine()){
+			linhasDoArquivo.add(SCAN.nextLine());
 
-			if (!SCAN.nextLine().startsWith(String.valueOf(acao.getIdentificador()))){
-				linhasDoArquivo.add(SCAN.nextLine());
+		}
+		FileWriter escreverLinha = new FileWriter(arquivoAcao);
+
+		for (String linha : linhasDoArquivo){
+
+			String[] arrayLinha = linha.split(";");
+
+			int identificadorArray = Integer.parseInt(arrayLinha[0]);
+			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
+			double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
+			if (acao.getIdentificador() != identificadorArray){
+				incluir(new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray));
+
 			}
-
 			else {
-
-				boolean a = incluir(acao);
-				if (!a){
-					return false;
-				}
+				incluir(acao);
 
 			}
+
 		}
 
 		return true;
