@@ -13,10 +13,10 @@ import br.com.cesarschool.poo.titulos.entidades.Transacao;
  *   002192;BCB;true;0.00;1890220034.0;001112;BOFA;true;12900000210.00;3564234127.0;1;PETROBRAS;2024-12-12;30.33;null;100000.0;2024-01-01 12:22:21 
  *   002192;BCB;false;0.00;1890220034.0;001112;BOFA;true;12900000210.00;3564234127.0;null;3;FRANCA;2027-11-11;2.5;100000.0;2024-01-01 12:22:21
  *
- * A inclusão deve adicionar uma nova linha ao arquivo. 
+ * A inclusï¿½o deve adicionar uma nova linha ao arquivo. 
  * 
- * A busca deve retornar um array de transações cuja entidadeCredito tenha identificador igual ao
- * recebido como parâmetro.  
+ * A busca deve retornar um array de transaï¿½ï¿½es cuja entidadeCredito tenha identificador igual ao
+ * recebido como parï¿½metro.  
  */
 public class RepositorioTransacao {
 	public void incluir(Transacao transacao) {
