@@ -37,9 +37,10 @@ import java.util.Scanner;
  */
 
 public class RepositorioTituloDivida {
-	File arquivoTitulo = new File("src/BDs/TituloDivida.txt");
-	public boolean incluir(TituloDivida tituloDivida) throws IOException {
-		if (buscar(tituloDivida.getIdentificador()) != null) {
+	File arquivoTitulo = new File("ProjetoJava-GL/src/BDs/TituloDivida.txt");
+
+	public boolean incluirTituloDivida (TituloDivida tituloDivida) throws IOException {
+		if (buscarTituloDivida(tituloDivida.getIdentificador()) != null) {
 			return false;
 		}
 		Scanner scan = new Scanner(arquivoTitulo);
@@ -59,9 +60,9 @@ public class RepositorioTituloDivida {
 		return true;
 	}
 
-	public boolean alterar(TituloDivida tituloDivida) throws IOException {
+	public boolean alterarTituloDivida (TituloDivida tituloDivida) throws IOException {
 
-		if (buscar(tituloDivida.getIdentificador()) == null){
+		if (buscarTituloDivida(tituloDivida.getIdentificador()) == null){
 			return false;
 		}
 
@@ -82,11 +83,11 @@ public class RepositorioTituloDivida {
 			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
 			double TaxaDeJurosArray = Double.parseDouble(arrayLinha[3]);
 			if (tituloDivida.getIdentificador() != identificadorArray){
-				incluir(new TituloDivida(identificadorArray, arrayLinha[1], dataArray, TaxaDeJurosArray));
+				incluirTituloDivida(new TituloDivida(identificadorArray, arrayLinha[1], dataArray, TaxaDeJurosArray));
 
 			}
 			else {
-				incluir(tituloDivida);
+				incluirTituloDivida(tituloDivida);
 
 			}
 
@@ -95,8 +96,8 @@ public class RepositorioTituloDivida {
 		return true;
 	}
 
-	public boolean excluir(int identificador) throws IOException {
-		if (buscar(identificador) == null){
+	public boolean excluirTituloDivida (int identificador) throws IOException {
+		if (buscarTituloDivida(identificador) == null){
 			return false;
 		}
 
@@ -117,7 +118,7 @@ public class RepositorioTituloDivida {
 			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
 			double taxaDeJurosArray = Double.parseDouble(arrayLinha[3]);
 			if (identificador != identificadorArray){
-				incluir(new TituloDivida(identificadorArray, arrayLinha[1], dataArray, taxaDeJurosArray));
+				incluirTituloDivida(new TituloDivida(identificadorArray, arrayLinha[1], dataArray, taxaDeJurosArray));
 
 			}
 
@@ -126,7 +127,7 @@ public class RepositorioTituloDivida {
 		return true;
 	}
 
-	public TituloDivida buscar(int identificador) throws FileNotFoundException {
+	public TituloDivida buscarTituloDivida (int identificador) throws FileNotFoundException {
 		Scanner scan = new Scanner(arquivoTitulo);
 		while (scan.hasNextLine()) {
 

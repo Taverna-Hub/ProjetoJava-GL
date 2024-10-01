@@ -6,6 +6,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /*
  * Deve gravar em e ler de um arquivo texto chamado Acao.txt os dados dos objetos do tipo
@@ -32,93 +33,116 @@ import java.util.List;
  */
 public class RepositorioEntidadeOperadora {
 
-    private static final String FILE_PATH = "Acao.txt";
-    private List<Acao> lerArquivo() throws IOException {
+    File arquivoAcao = new File("ProjetoJava-GL/src/BDs/Acao.txt");
 
-        List<Acao> acoes = new ArrayList<>();
-        try (BufferedReader leitor = new BufferedReader(new FileReader(FILE_PATH))) {
+    public boolean incluirEntidadeOperadora(Acao acao) throws IOException {
 
-            String linha;
-            while ((linha = leitor.readLine()) != null) {
-
-                String[] dados = linha.split(";");
-
-                int identificador = Integer.parseInt(dados[0]);
-                String nome = dados[1];
-                LocalDate dataLocal = LocalDate.parse(dados[2]);
-                double valorUnitario = Double.parseDouble(dados[3]);
-
-                acoes.add(new Acao(identificador, nome, dataLocal, valorUnitario));
-            }
+        if (buscarEntidadeOperaradora(acao.getIdentificador()) != null) {
+            return false;
         }
-        return acoes;
+
+        Scanner scan = new Scanner(arquivoAcao);
+        FileWriter escreverLinha = new FileWriter(arquivoAcao, true);
+
+
+        String identificadorString = String.valueOf(acao.getIdentificador());
+        String dataString = String.valueOf(acao.getDataDeValidade());
+        String valorString = String.valueOf(acao.getValorUnitario());
+
+        String linhaCompleta = identificadorString + ";" + acao.getNome() + ";" + dataString + ";" + valorString + ";\n";
+
+        escreverLinha.write(linhaCompleta);
+        scan.close();
+        escreverLinha.close();
+
+        return true;
     }
 
-    public void gravarArquivo(List<Acao> acoes) throws IOException {
+    public boolean alterarEntidadeOperadora(Acao acao) throws IOException {
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
-            for (Acao acao : acoes) {
-
-                writer.write(acao.getIdentificador() + ";"
-                        + acao.getNome() + ";"
-                        + acao.getDataDeValidade() + ";"
-                        + acao.getValorUnitario() + ";");
-                writer.newLine();
-            }
+        if (buscarEntidadeOperaradora(acao.getIdentificador()) == null){
+            return false;
         }
+
+        Scanner SCAN = new Scanner(arquivoAcao);
+        List<String> linhasDoArquivo = new ArrayList<>();
+
+        while (SCAN.hasNextLine()){
+            linhasDoArquivo.add(SCAN.nextLine());
+
+        }
+        FileWriter escreverLinha = new FileWriter(arquivoAcao);
+
+        for (String linha : linhasDoArquivo){
+
+            String[] arrayLinha = linha.split(";");
+
+            int identificadorArray = Integer.parseInt(arrayLinha[0]);
+            LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
+            double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
+            if (acao.getIdentificador() != identificadorArray){
+                incluirEntidadeOperadora(new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray));
+
+            }
+            else {
+                incluirEntidadeOperadora(acao);
+
+            }
+
+        }
+
+        return true;
     }
 
-    public boolean AlterarAcao(Acao acaoAlterada) throws IOException {
+    public boolean excluirEntidadeOperadora(int identificador) throws IOException {
 
-        List<Acao> acoes = lerArquivo();
-        boolean encontrou = false;
+        if (buscarEntidadeOperaradora(identificador) == null){
+            return false;
+        }
 
-        for (int i = 0; i < acoes.size(); i++) {
-            if (acoes.get(i).getIdentificador() == acaoAlterada.getIdentificador()) {
+        Scanner SCAN = new Scanner(arquivoAcao);
+        List<String> linhasDoArquivo = new ArrayList<>();
 
-                acoes.set(i, acaoAlterada);
-                encontrou = true;
-                break;
+        while (SCAN.hasNextLine()){
+            linhasDoArquivo.add(SCAN.nextLine());
+
+        }
+        FileWriter escreverLinha = new FileWriter(arquivoAcao);
+
+        for (String linha : linhasDoArquivo){
+
+            String[] arrayLinha = linha.split(";");
+
+            int identificadorArray = Integer.parseInt(arrayLinha[0]);
+            LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
+            double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
+            if (identificador != identificadorArray){
+                incluirEntidadeOperadora(new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray));
+
             }
+
         }
 
-        if(encontrou) {
-            gravarArquivo(acoes);
-            return true;
-        }
-        return false;
+        return true;
     }
 
-    public boolean excluirAcao(int id) throws IOException {
+    public Acao buscarEntidadeOperaradora(int identificador) throws FileNotFoundException {
 
-        List<Acao> acoes = lerArquivo();
-        boolean encontrou = false;
+        Scanner scan = new Scanner(arquivoAcao);
+        while (scan.hasNextLine()) {
 
-        for (int i = 0; i < acoes.size(); i++) {
-            if (acoes.get(i).getIdentificador() == id) {
+            String[] arrayLinha = scan.nextLine().split(";");
 
-                acoes.remove(i);
-                encontrou = true;
-                break;
+            int identificadorArray = Integer.parseInt(arrayLinha[0]);
+            LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
+            double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
+
+            if (identificador == identificadorArray) {
+                scan.close();
+                return new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray);
             }
         }
-
-        if(encontrou) {
-            gravarArquivo(acoes);
-            return true;
-        }
-        return false;
-    }
-
-    public Acao buscarAcao(int id) throws IOException {
-
-        List<Acao> acoes = lerArquivo();
-        for (Acao acao : acoes) {
-
-            if (acao.getIdentificador() == id) {
-                return acao;
-            }
-        }
+        scan.close();
         return null;
     }
 }
