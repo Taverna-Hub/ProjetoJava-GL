@@ -6,8 +6,8 @@ import br.com.cesarschool.poo.titulos.entidades.Transacao;
  * Transacao. Seguem abaixo exemplos de linhas 
  * De entidadeCredito: identificador, nome, autorizadoAcao, saldoAcao, saldoTituloDivida.
  * De entidadeDebito: identificador, nome, autorizadoAcao, saldoAcao, saldoTituloDivida.
- * De acao: identificador, nome, dataValidade, valorUnitario OU null
- * De tituloDivida: identificador, nome, dataValidade, taxaJuros OU null. 
+ * De acao: (identificador, nome, dataValidade, valorUnitario) OU null
+ * De tituloDivida: (identificador, nome, dataValidade, taxaJuros) OU null.
  * valorOperacao, dataHoraOperacao
  * 
  *   002192;BCB;true;0.00;1890220034.0;001112;BOFA;true;12900000210.00;3564234127.0;1;PETROBRAS;2024-12-12;30.33;null;100000.0;2024-01-01 12:22:21 

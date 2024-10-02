@@ -62,6 +62,10 @@ public class EntidadeOperadora {
         return saldoTituloDivida;
     }
 
+    public long getIdentificador(){
+        return identificador;
+    }
+
 
     public void creditarSaldoAcao(double valor){
         saldoAcao += valor;

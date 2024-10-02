@@ -37,7 +37,7 @@ import java.util.Scanner;
  */
 
 public class RepositorioTituloDivida {
-	File arquivoTitulo = new File("ProjetoJava-GL/src/BDs/TituloDivida.txt");
+	File arquivoTitulo = new File("src/BDs/TituloDivida.txt");
 
 	public boolean incluirTituloDivida (TituloDivida tituloDivida) throws IOException {
 		if (buscarTituloDivida(tituloDivida.getIdentificador()) != null) {

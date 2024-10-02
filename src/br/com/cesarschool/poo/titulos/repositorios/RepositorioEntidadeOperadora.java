@@ -1,6 +1,7 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
 import br.com.cesarschool.poo.titulos.entidades.Acao;
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -33,23 +34,29 @@ import java.util.Scanner;
  */
 public class RepositorioEntidadeOperadora {
 
-    File arquivoAcao = new File("ProjetoJava-GL/src/BDs/Acao.txt");
+    File arquivoEntidadeOperadora = new File("src/BDs/EntidadeOperadora.txt");
 
-    public boolean incluirEntidadeOperadora(Acao acao) throws IOException {
+    public boolean incluirEntidadeOperadora(EntidadeOperadora entidadeOperadora) throws IOException {
 
-        if (buscarEntidadeOperaradora(acao.getIdentificador()) != null) {
+        if (buscarEntidadeOperaradora(entidadeOperadora.getIdentificador()) != null) {
             return false;
         }
 
-        Scanner scan = new Scanner(arquivoAcao);
-        FileWriter escreverLinha = new FileWriter(arquivoAcao, true);
+        Scanner scan = new Scanner(arquivoEntidadeOperadora);
+        FileWriter escreverLinha = new FileWriter(arquivoEntidadeOperadora, true);
 
 
-        String identificadorString = String.valueOf(acao.getIdentificador());
-        String dataString = String.valueOf(acao.getDataDeValidade());
-        String valorString = String.valueOf(acao.getValorUnitario());
+        String identificadorString = String.valueOf(entidadeOperadora.getIdentificador());
+        String saldoAcaoString = String.valueOf(entidadeOperadora.getSaldoAcao());
+        String autorizadoAcaoString = String.valueOf(entidadeOperadora.getAutorizadoAcao());
+        String SaldoTituloDividaString = String.valueOf(entidadeOperadora.getSaldoTituloDivida());
 
-        String linhaCompleta = identificadorString + ";" + acao.getNome() + ";" + dataString + ";" + valorString + ";\n";
+        String linhaCompleta = identificadorString +
+                ";" + entidadeOperadora.getNome() +
+                ";" + autorizadoAcaoString +  ";"
+                + saldoAcaoString + ";"
+                + SaldoTituloDividaString +
+                ";\n";
 
         escreverLinha.write(linhaCompleta);
         scan.close();
@@ -58,34 +65,39 @@ public class RepositorioEntidadeOperadora {
         return true;
     }
 
-    public boolean alterarEntidadeOperadora(Acao acao) throws IOException {
+    public boolean alterarEntidadeOperadora(EntidadeOperadora entidadeOperadora) throws IOException {
 
-        if (buscarEntidadeOperaradora(acao.getIdentificador()) == null){
+        if (buscarEntidadeOperaradora(entidadeOperadora.getIdentificador()) == null){
             return false;
         }
 
-        Scanner SCAN = new Scanner(arquivoAcao);
+        Scanner SCAN = new Scanner(arquivoEntidadeOperadora);
         List<String> linhasDoArquivo = new ArrayList<>();
 
         while (SCAN.hasNextLine()){
             linhasDoArquivo.add(SCAN.nextLine());
 
         }
-        FileWriter escreverLinha = new FileWriter(arquivoAcao);
+        FileWriter escreverLinha = new FileWriter(arquivoEntidadeOperadora);
 
         for (String linha : linhasDoArquivo){
 
             String[] arrayLinha = linha.split(";");
 
-            int identificadorArray = Integer.parseInt(arrayLinha[0]);
-            LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
-            double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
-            if (acao.getIdentificador() != identificadorArray){
-                incluirEntidadeOperadora(new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray));
+            long identificadorArray = Long.parseLong(arrayLinha[0]);
+            double autorizadoAcaoArray = Double.parseDouble(arrayLinha[2]);
+            double saldoAcaoArray = Double.parseDouble(arrayLinha[3]);
+            double saldoTituloDividaArray = Double.parseDouble(arrayLinha[4]);
+
+            if (entidadeOperadora.getIdentificador() != identificadorArray){
+                EntidadeOperadora e1 = new EntidadeOperadora(identificadorArray, arrayLinha[1], autorizadoAcaoArray);
+                e1.creditarSaldoAcao(saldoAcaoArray);
+                e1.creditarSaldoTituloDivida(saldoTituloDividaArray);
+                incluirEntidadeOperadora(e1);
 
             }
             else {
-                incluirEntidadeOperadora(acao);
+                incluirEntidadeOperadora(entidadeOperadora);
 
             }
 
@@ -94,31 +106,35 @@ public class RepositorioEntidadeOperadora {
         return true;
     }
 
-    public boolean excluirEntidadeOperadora(int identificador) throws IOException {
+    public boolean excluirEntidadeOperadora(long identificador) throws IOException {
 
         if (buscarEntidadeOperaradora(identificador) == null){
             return false;
         }
 
-        Scanner SCAN = new Scanner(arquivoAcao);
+        Scanner SCAN = new Scanner(arquivoEntidadeOperadora);
         List<String> linhasDoArquivo = new ArrayList<>();
 
         while (SCAN.hasNextLine()){
             linhasDoArquivo.add(SCAN.nextLine());
 
         }
-        FileWriter escreverLinha = new FileWriter(arquivoAcao);
+        FileWriter escreverLinha = new FileWriter(arquivoEntidadeOperadora);
 
         for (String linha : linhasDoArquivo){
 
             String[] arrayLinha = linha.split(";");
 
-            int identificadorArray = Integer.parseInt(arrayLinha[0]);
-            LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
-            double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
-            if (identificador != identificadorArray){
-                incluirEntidadeOperadora(new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray));
+            long identificadorArray = Long.parseLong(arrayLinha[0]);
+            double autorizadoAcaoArray = Double.parseDouble(arrayLinha[2]);
+            double saldoAcaoArray = Double.parseDouble(arrayLinha[3]);
+            double saldoTituloDividaArray = Double.parseDouble(arrayLinha[4]);
 
+            if (identificador != identificadorArray){
+                EntidadeOperadora e1 = new EntidadeOperadora(identificadorArray, arrayLinha[1], autorizadoAcaoArray);
+                e1.creditarSaldoAcao(saldoAcaoArray);
+                e1.creditarSaldoTituloDivida(saldoTituloDividaArray);
+                incluirEntidadeOperadora(e1);
             }
 
         }
@@ -126,20 +142,25 @@ public class RepositorioEntidadeOperadora {
         return true;
     }
 
-    public Acao buscarEntidadeOperaradora(int identificador) throws FileNotFoundException {
+    public EntidadeOperadora buscarEntidadeOperaradora(long identificador) throws FileNotFoundException {
 
-        Scanner scan = new Scanner(arquivoAcao);
+        Scanner scan = new Scanner(arquivoEntidadeOperadora);
         while (scan.hasNextLine()) {
 
             String[] arrayLinha = scan.nextLine().split(";");
 
-            int identificadorArray = Integer.parseInt(arrayLinha[0]);
-            LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
-            double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
+            long identificadorArray = Long.parseLong(arrayLinha[0]);
+            double autorizadoAcaoArray = Double.parseDouble(arrayLinha[2]);
+            double saldoAcaoArray = Double.parseDouble(arrayLinha[3]);
+            double saldoTituloDividaArray = Double.parseDouble(arrayLinha[4]);
+
 
             if (identificador == identificadorArray) {
                 scan.close();
-                return new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray);
+                EntidadeOperadora e1 = new EntidadeOperadora(identificadorArray, arrayLinha[1], autorizadoAcaoArray);
+                e1.creditarSaldoAcao(saldoAcaoArray);
+                e1.creditarSaldoTituloDivida(saldoTituloDividaArray);
+                return e1;
             }
         }
         scan.close();
