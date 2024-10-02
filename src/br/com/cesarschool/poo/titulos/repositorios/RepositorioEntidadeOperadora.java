@@ -1,10 +1,8 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
-import br.com.cesarschool.poo.titulos.entidades.Acao;
 import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -38,7 +36,7 @@ public class RepositorioEntidadeOperadora {
 
     public boolean incluirEntidadeOperadora(EntidadeOperadora entidadeOperadora) throws IOException {
 
-        if (buscarEntidadeOperaradora(entidadeOperadora.getIdentificador()) != null) {
+        if (buscarEntidadeOperadora(entidadeOperadora.getIdentificador()) != null) {
             return false;
         }
 
@@ -65,7 +63,7 @@ public class RepositorioEntidadeOperadora {
 
     public boolean alterarEntidadeOperadora(EntidadeOperadora entidadeOperadora) throws IOException {
 
-        if (buscarEntidadeOperaradora(entidadeOperadora.getIdentificador()) == null){
+        if (buscarEntidadeOperadora(entidadeOperadora.getIdentificador()) == null){
             return false;
         }
 
@@ -106,7 +104,7 @@ public class RepositorioEntidadeOperadora {
 
     public boolean excluirEntidadeOperadora(long identificador) throws IOException {
 
-        if (buscarEntidadeOperaradora(identificador) == null){
+        if (buscarEntidadeOperadora(identificador) == null){
             return false;
         }
 
@@ -140,7 +138,7 @@ public class RepositorioEntidadeOperadora {
         return true;
     }
 
-    public EntidadeOperadora buscarEntidadeOperaradora(long identificador) throws FileNotFoundException {
+    public EntidadeOperadora buscarEntidadeOperadora(long identificador) throws FileNotFoundException {
 
         Scanner scan = new Scanner(arquivoEntidadeOperadora);
         while (scan.hasNextLine()) {

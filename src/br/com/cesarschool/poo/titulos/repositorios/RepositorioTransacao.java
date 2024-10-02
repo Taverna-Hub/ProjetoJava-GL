@@ -6,10 +6,11 @@ import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import br.com.cesarschool.poo.titulos.entidades.Transacao;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import static java.lang.String.valueOf;
 
@@ -35,31 +36,59 @@ public class RepositorioTransacao {
 
 	public void incluir(Transacao transacao) throws IOException {
 
-			FileWriter escreverLinha = new FileWriter(arquivoTransacao, true);
+		FileWriter escreverLinha = new FileWriter(arquivoTransacao, true);
 
-
-		EntidadeOperadora entidadeCredito = new RepositorioEntidadeOperadora().buscarEntidadeOperaradora(transacao.getEntidadeCredito().getIdentificador());
-		EntidadeOperadora entidadeDebito = new RepositorioEntidadeOperadora().buscarEntidadeOperaradora(transacao.getEntidadeDebito().getIdentificador());
+		EntidadeOperadora entidadeCredito = new RepositorioEntidadeOperadora().buscarEntidadeOperadora(transacao.getEntidadeCredito().getIdentificador());
+		EntidadeOperadora entidadeDebito = new RepositorioEntidadeOperadora().buscarEntidadeOperadora(transacao.getEntidadeDebito().getIdentificador());
 		Acao acao = new RepositorioAcao().buscar(transacao.getAcao().getIdentificador());
 		TituloDivida tituloDivida = new RepositorioTituloDivida().buscarTituloDivida(transacao.getTituloDivida().getIdentificador());
 		double valorOperacao = transacao.getValorOperacao();
 		LocalDateTime dataHoraOperacao = transacao.getDataHoraOperacao();
 
-		String LinhaCompleta = entidadeCredito +
-				";" + entidadeDebito +
-				";" + acao +
-				";" + tituloDivida +
-				";" + valorOperacao +
-				";" + dataHoraOperacao.toString() +
-				";";
-		escreverLinha.write(LinhaCompleta);
-
+		String LinhaCompleta = entidadeCredito + ";"
+				+ entidadeDebito + ";"
+				+ acao + ";"
+				+ tituloDivida + ";"
+				+ valorOperacao + ";"
+				+ dataHoraOperacao.toString() + ";";
+		escreverLinha.write(LinhaCompleta + "\n");
+		escreverLinha.close();
 
 	}
-	public Transacao[] buscarPorEntidadeCredora(int identificadorEntidadeCredito)
-	{
+	public Transacao[] buscarPorEntidadeCredora(int identificadorEntidadeCredito) throws IOException {
 
+		FileReader lerLinha = new FileReader(arquivoTransacao);
+		ArrayList<Transacao> transacoesEncontradas = new ArrayList<>();
+		String linhaAtual = "";
+		int caractere;
+		boolean confirmarTransacao = false;
 
-		return null;
+		while ((caractere = lerLinha.read()) != -1) {
+
+			if (caractere == '\n') {
+				String[] dados = linhaAtual.split(";");
+
+				int idEntidadeCredito = Integer.parseInt(dados[0]);
+				if (idEntidadeCredito == identificadorEntidadeCredito) {
+					EntidadeOperadora entidadeCredito = new RepositorioEntidadeOperadora().buscarEntidadeOperadora(idEntidadeCredito);
+					EntidadeOperadora entidadeDebito = new RepositorioEntidadeOperadora().buscarEntidadeOperadora(Integer.parseInt(dados[1]));
+					Acao acao = new RepositorioAcao().buscar(Integer.parseInt(dados[2]));
+					TituloDivida tituloDivida = new RepositorioTituloDivida().buscarTituloDivida(Integer.parseInt(dados[3]));
+					double valorOperacao = Double.parseDouble(dados[4]);
+					LocalDateTime dataHoraOperacao = LocalDateTime.parse(dados[5]);
+
+					Transacao transacao = new Transacao(entidadeCredito, entidadeDebito, acao,
+							  tituloDivida, valorOperacao, dataHoraOperacao);
+
+					transacoesEncontradas.add(transacao);
+					confirmarTransacao = true;
+				}
+			}
+			lerLinha.close();
+
+		}
+
+		if (!confirmarTransacao) return null;
+		else return transacoesEncontradas.toArray(new Transacao[0]);
 	}
 }

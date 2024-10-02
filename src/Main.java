@@ -1,4 +1,3 @@
-import br.com.cesarschool.poo.titulos.entidades.Acao;
 import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
@@ -25,7 +24,7 @@ public class Main {
         System.out.println("Incluindo EntidadeOperadora: " + entidadeOperadora.incluirEntidadeOperadora(acaoEntidadeOperadora));
 
         // buscando o objeto
-        System.out.println("Buscando EntidadeOperadora: " + entidadeOperadora.buscarEntidadeOperaradora(4).hashCode());
+        System.out.println("Buscando EntidadeOperadora: " + entidadeOperadora.buscarEntidadeOperadora(4).hashCode());
 
         // alterando ele
         EntidadeOperadora ae2 = new EntidadeOperadora(1, "Cobol", 25.00);
@@ -36,9 +35,9 @@ public class Main {
 
         // removendo objeto
         System.out.println("Excluindo EntidadeOperadora: " + entidadeOperadora.excluirEntidadeOperadora(4));
-        System.out.println("Buscando pós exclusão: " + entidadeOperadora.buscarEntidadeOperaradora(4));
+        System.out.println("Buscando pós exclusão: " + entidadeOperadora.buscarEntidadeOperadora(4));
 
-        System.out.println("Re-confirmando exclusão: " + entidadeOperadora.buscarEntidadeOperaradora(4));
+        System.out.println("Re-confirmando exclusão: " + entidadeOperadora.buscarEntidadeOperadora(4));
 
     }
 
