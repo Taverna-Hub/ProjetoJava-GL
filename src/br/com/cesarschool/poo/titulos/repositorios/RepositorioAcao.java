@@ -43,7 +43,6 @@ public class RepositorioAcao {
 		if (buscar(acao.getIdentificador()) != null) {
 			return false;
 		}
-		Scanner scan = new Scanner(arquivoAcao);
 		FileWriter escreverLinha = new FileWriter(arquivoAcao, true);
 
 
@@ -54,7 +53,6 @@ public class RepositorioAcao {
 		String linhaCompleta = identificadorString + ";" + acao.getNome() + ";" + dataString + ";" + valorString + ";\n";
 
 		escreverLinha.write(linhaCompleta);
-		scan.close();
 		escreverLinha.close();
 
 		return true;

@@ -42,7 +42,6 @@ public class RepositorioEntidadeOperadora {
             return false;
         }
 
-        Scanner scan = new Scanner(arquivoEntidadeOperadora);
         FileWriter escreverLinha = new FileWriter(arquivoEntidadeOperadora, true);
 
 
@@ -59,7 +58,6 @@ public class RepositorioEntidadeOperadora {
                 ";\n";
 
         escreverLinha.write(linhaCompleta);
-        scan.close();
         escreverLinha.close();
 
         return true;

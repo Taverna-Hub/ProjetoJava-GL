@@ -54,6 +54,10 @@ public class Transacao {
     public double getValorOperacao() {
         return valorOperacao;
     }
+
+    public LocalDateTime getDataHoraOperacao(){
+        return dataHoraOperacao;
+    }
 }
 
 //OK

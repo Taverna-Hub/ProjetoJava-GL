@@ -43,7 +43,6 @@ public class RepositorioTituloDivida {
 		if (buscarTituloDivida(tituloDivida.getIdentificador()) != null) {
 			return false;
 		}
-		Scanner scan = new Scanner(arquivoTitulo);
 		FileWriter escreverLinha = new FileWriter(arquivoTitulo, true);
 
 
@@ -54,7 +53,6 @@ public class RepositorioTituloDivida {
 		String linhaCompleta = identificadorString + ";" + tituloDivida.getNome() + ";" + dataString + ";" + valorString + ";\n";
 
 		escreverLinha.write(linhaCompleta);
-		scan.close();
 		escreverLinha.close();
 
 		return true;
