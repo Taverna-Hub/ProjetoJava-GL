@@ -45,10 +45,36 @@ public class RepositorioTransacao {
 		double valorOperacao = transacao.getValorOperacao();
 		LocalDateTime dataHoraOperacao = transacao.getDataHoraOperacao();
 
-		String LinhaCompleta = entidadeCredito + ";"
-				+ entidadeDebito + ";"
-				+ acao + ";"
-				+ tituloDivida + ";"
+		String entidadeCreditoString =
+				entidadeCredito.getIdentificador() + ";"
+				+ entidadeCredito.getNome()  + ";"
+				+ entidadeCredito.getAutorizadoAcao()  + ";"
+				+ entidadeCredito.getSaldoAcao()  + ";"
+				+ entidadeCredito.getSaldoTituloDivida();
+		String entidadeDebitoString =
+				entidadeDebito.getIdentificador() + ";"
+				+ entidadeDebito.getNome()  + ";"
+				+ entidadeDebito.getAutorizadoAcao()  + ";"
+				+ entidadeDebito.getSaldoAcao()  + ";"
+				+ entidadeDebito.getSaldoTituloDivida();
+		String acaoString =
+				acao.getIdentificador() + ";"
+				+ acao.getNome()  + ";"
+				+ acao.getDataDeValidade()  + ";"
+				+ acao.getValorUnitario();
+
+		String tituloDividaString =
+				tituloDivida.getIdentificador()  + ";"
+				+ tituloDivida.getNome()  + ";"
+				+ tituloDivida.getDataDeValidade()  + ";"
+				+ tituloDivida.getTaxaJuros();
+
+
+		String LinhaCompleta =
+				entidadeCreditoString + ";"
+				+ entidadeDebitoString + ";"
+				+ acaoString + ";"
+				+ tituloDividaString + ";"
 				+ valorOperacao + ";"
 				+ dataHoraOperacao.toString() + ";";
 		escreverLinha.write(LinhaCompleta + "\n");

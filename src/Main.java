@@ -1,43 +1,36 @@
+import br.com.cesarschool.poo.titulos.entidades.Acao;
 import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
+import br.com.cesarschool.poo.titulos.entidades.Transacao;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioTransacao;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        TituloDivida t1 = new TituloDivida(3, "Canada", LocalDate.now(), 20.00);
+        EntidadeOperadora ec = new EntidadeOperadora(4, "Visa", 1);
+        EntidadeOperadora ed = new EntidadeOperadora(5, "Ourocard", 1);
+        Acao acao = new Acao(1,"CESAR", LocalDate.now(), 30.332);
+        ec.creditarSaldoAcao(20);
+        ed.creditarSaldoAcao(20);
+        TituloDivida td = new TituloDivida(7, "USA", LocalDate.of(2024, 10, 7), 20.0);
 
-        System.out.println(new RepositorioTituloDivida().alterarTituloDivida(t1));
+        new RepositorioEntidadeOperadora().incluirEntidadeOperadora(ec);
+        new RepositorioEntidadeOperadora().incluirEntidadeOperadora(ed);
+        new RepositorioAcao().incluir(acao);
+        new RepositorioTituloDivida().incluirTituloDivida(td);
+        Transacao transacao = new Transacao(ec, ed, acao, td, 200.00, LocalDateTime.now());
+        new RepositorioTransacao().incluir(transacao);
+        System.out.println(ec.getSaldoAcao());
+        System.out.println(ed.getSaldoAcao());
 
-        RepositorioEntidadeOperadora entidadeOperadora = new RepositorioEntidadeOperadora();
-
-        // validando funcionamento RepositorioEntidadeOperadora
-        // criando objeto
-        EntidadeOperadora acaoEntidadeOperadora = new EntidadeOperadora(4, "CBF", 35.00);
-        acaoEntidadeOperadora.creditarSaldoAcao(20);
-        acaoEntidadeOperadora.creditarSaldoTituloDivida(30);
-        // adicionando ao txt
-        System.out.println("Incluindo EntidadeOperadora: " + entidadeOperadora.incluirEntidadeOperadora(acaoEntidadeOperadora));
-
-        // buscando o objeto
-        System.out.println("Buscando EntidadeOperadora: " + entidadeOperadora.buscarEntidadeOperadora(4).hashCode());
-
-        // alterando ele
-        EntidadeOperadora ae2 = new EntidadeOperadora(1, "Cobol", 25.00);
-        ae2.debitarSaldoAcao(25);
-        ae2.debitarSaldoTituloDivida(65);
-
-        System.out.println("Alterando EntidadeOperadora: " + entidadeOperadora.alterarEntidadeOperadora(ae2));
-
-        // removendo objeto
-        System.out.println("Excluindo EntidadeOperadora: " + entidadeOperadora.excluirEntidadeOperadora(4));
-        System.out.println("Buscando pós exclusão: " + entidadeOperadora.buscarEntidadeOperadora(4));
-
-        System.out.println("Re-confirmando exclusão: " + entidadeOperadora.buscarEntidadeOperadora(4));
+        new RepositorioTransacao().buscarPorEntidadeCredora(5);
 
     }
 
