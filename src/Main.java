@@ -29,8 +29,16 @@ public class Main {
         new RepositorioTransacao().incluir(transacao);
         System.out.println(ec.getSaldoAcao());
         System.out.println(ed.getSaldoAcao());
+        Transacao[] t1 = new RepositorioTransacao().buscarPorEntidadeCredora(4);
 
-        new RepositorioTransacao().buscarPorEntidadeCredora(5);
+        for (Transacao t : t1){
+            System.out.println(t.getEntidadeCredito().getNome());
+            System.out.println(t.getEntidadeDebito().getNome());
+            System.out.println(t.getAcao().getNome());
+            System.out.println(t.getTituloDivida().getNome());
+            System.out.println(t.getValorOperacao());
+            System.out.println(t.getDataHoraOperacao());
+        }
 
     }
 
