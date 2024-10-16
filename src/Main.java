@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        EntidadeOperadora ec = new EntidadeOperadora(4, "Visa", 1);
-        EntidadeOperadora ed = new EntidadeOperadora(5, "Ourocard", 1);
+        EntidadeOperadora ec = new EntidadeOperadora(4, "Visa", true);
+        EntidadeOperadora ed = new EntidadeOperadora(5, "Ourocard", true);
         Acao acao = new Acao(1,"CESAR", LocalDate.now(), 30.332);
         ec.creditarSaldoAcao(20);
         ed.creditarSaldoAcao(20);

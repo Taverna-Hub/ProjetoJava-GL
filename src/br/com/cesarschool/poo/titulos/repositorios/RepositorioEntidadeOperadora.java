@@ -81,7 +81,7 @@ public class RepositorioEntidadeOperadora {
             String[] arrayLinha = linha.split(";");
 
             long identificadorArray = Long.parseLong(arrayLinha[0]);
-            double autorizadoAcaoArray = Double.parseDouble(arrayLinha[2]);
+            boolean autorizadoAcaoArray = Boolean.parseBoolean(arrayLinha[2]);
             double saldoAcaoArray = Double.parseDouble(arrayLinha[3]);
             double saldoTituloDividaArray = Double.parseDouble(arrayLinha[4]);
 
@@ -122,7 +122,7 @@ public class RepositorioEntidadeOperadora {
             String[] arrayLinha = linha.split(";");
 
             long identificadorArray = Long.parseLong(arrayLinha[0]);
-            double autorizadoAcaoArray = Double.parseDouble(arrayLinha[2]);
+            boolean autorizadoAcaoArray = Boolean.parseBoolean(arrayLinha[2]);
             double saldoAcaoArray = Double.parseDouble(arrayLinha[3]);
             double saldoTituloDividaArray = Double.parseDouble(arrayLinha[4]);
 
@@ -146,7 +146,7 @@ public class RepositorioEntidadeOperadora {
             String[] arrayLinha = scan.nextLine().split(";");
 
             long identificadorArray = Long.parseLong(arrayLinha[0]);
-            double autorizadoAcaoArray = Double.parseDouble(arrayLinha[2]);
+            boolean autorizadoAcaoArray = Boolean.parseBoolean(arrayLinha[2]);
             double saldoAcaoArray = Double.parseDouble(arrayLinha[3]);
             double saldoTituloDividaArray = Double.parseDouble(arrayLinha[4]);
 
