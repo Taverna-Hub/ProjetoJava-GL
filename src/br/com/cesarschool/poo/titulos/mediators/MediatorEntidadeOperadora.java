@@ -1,8 +1,12 @@
 package br.com.cesarschool.poo.titulos.mediators;
 
+import br.com.cesarschool.poo.titulos.entidades.Acao;
 import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /*
  * Deve ser um singleton.
@@ -84,5 +88,42 @@ public class MediatorEntidadeOperadora {
 
         return error;
     }
+
+    public String incluir(EntidadeOperadora entidade) throws IOException {
+        String mensagemValidacao = validar(entidade);
+        if (mensagemValidacao == null){
+            if (!(repositorioEntidadeOperadora.incluirEntidadeOperadora(entidade))){
+                mensagemValidacao = "Entidade já existente";
+            }
+        }
+
+        return mensagemValidacao;
+    }
+    public String alterar(EntidadeOperadora entidade) throws IOException {
+        String mensagemValidacao = validar(entidade);
+
+        if (mensagemValidacao == null){
+            if (!(repositorioEntidadeOperadora.alterarEntidadeOperadora(entidade))){
+                mensagemValidacao = "Ação inexistente";
+            }
+        }
+
+        return mensagemValidacao;
+    }
+
+    public String excluir(int identificador) throws IOException {
+        if (99999 <= identificador || identificador <= 0){
+            return null;
+        }
+        return repositorioEntidadeOperadora.excluirEntidadeOperadora(identificador) ? null : "Ação inexistente";
+    }
+
+    public EntidadeOperadora buscar(long identificador) throws FileNotFoundException {
+        if (99999 <= identificador || identificador <= 0){
+            return null;
+        }
+        return repositorioEntidadeOperadora.buscarEntidadeOperadora(identificador);
+    }
+
 
 }

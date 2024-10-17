@@ -121,6 +121,9 @@ public class MediatorAcao {
     }
 
     public String excluir(int identificador) throws IOException {
+        if (99999 <= identificador || identificador <= 0){
+            return null;
+        }
         return repositorioAcao.excluir(identificador) ? null : "Ação inexistente";
     }
 
