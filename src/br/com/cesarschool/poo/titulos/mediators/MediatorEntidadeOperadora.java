@@ -1,12 +1,13 @@
 package br.com.cesarschool.poo.titulos.mediators;
 
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
 
 /*
  * Deve ser um singleton.
  * 
- * Deve ter um atributo repositorioEntidadeOperadora, do tipo RepositorioEntidadeOperadora, que deve 
+ * Deve ter um atributo repositorioEntidadeOperadora, do tipo RepositorioEntidadeOperadora, que deve
  * ser inicializado na sua declara��o. Este atributo ser� usado exclusivamente
  * pela classe, n�o tendo, portanto, m�todos set e get.
  * 
@@ -52,10 +53,36 @@ import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
  * Se este for v�lido, deve chamar o buscar do reposit�rio, retornando o 
  * que ele retornar. Se o identificador for inv�lido, retornar null. 
  */
-public class MediatorEntdadeOperadora {
-    RepositorioEntidadeOperadora  repositorioEntidadeOperadora;
+public class MediatorEntidadeOperadora {
+    private final RepositorioEntidadeOperadora repositorioEntidadeOperadora;
 
-    private MediatorEntdadeOperadora(){
+    private static MediatorEntidadeOperadora instancia;
+
+    private MediatorEntidadeOperadora(){
         this.repositorioEntidadeOperadora = new RepositorioEntidadeOperadora();
     }
+
+    public static MediatorEntidadeOperadora getInstancia() {
+        if (instancia == null) {
+            instancia = new MediatorEntidadeOperadora();
+        }
+        return instancia;
+    }
+
+    private String validar(EntidadeOperadora entidadeOperadora){
+
+        String error = null;
+        if (entidadeOperadora.getIdentificador() >= 1000000 || entidadeOperadora.getIdentificador() <= 100){
+            error = "Identificador deve estar entre 100 e 1000000.";
+        }
+        else if (entidadeOperadora.getNome().isBlank() || entidadeOperadora.getNome() == null) {
+            error = "Nome deve ser preenchido.";
+        }
+        else if (entidadeOperadora.getNome().length() < 10 || entidadeOperadora.getNome().length() > 100) {
+            error = "Nome deve ter entre 10 e 100 caracteres.";
+        }
+
+        return error;
+    }
+
 }

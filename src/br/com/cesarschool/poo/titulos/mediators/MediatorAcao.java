@@ -78,13 +78,13 @@ public class MediatorAcao {
     }
     private String validar(Acao acao){
         String erro = null;
-        if (99999 <= acao.getIdentificador() || acao.getIdentificador() <= 0){
+        if (99999 < acao.getIdentificador() || acao.getIdentificador() < 0){
             erro = "Identificador deve estar entre 1 e 99999.";
         }
         else if (acao.getNome().isBlank() || acao.getNome() == null) {
             erro = "Nome deve ser preenchido.";
         }
-        else if (acao.getNome().length() <= 10 || acao.getNome().length() >= 99999) {
+        else if (acao.getNome().length() < 10 || acao.getNome().length() > 100) {
             erro = "Nome deve ter entre 10 e 100 caracteres.";
         }
         else if (ChronoUnit.DAYS.between(LocalDateTime.now(), acao.getDataDeValidade()) < 30) {
@@ -125,6 +125,9 @@ public class MediatorAcao {
     }
 
     public Acao buscar(int identificador) throws FileNotFoundException {
+        if (99999 <= identificador || identificador <= 0){
+            return null;
+        }
         return repositorioAcao.buscar(identificador);
     }
 }
