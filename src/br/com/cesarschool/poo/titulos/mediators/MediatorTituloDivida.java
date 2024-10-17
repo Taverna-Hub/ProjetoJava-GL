@@ -78,11 +78,11 @@ public class MediatorTituloDivida {
 
         String erro = null;
 
-        if (tituloDivida.getIdentificador() < 0 || tituloDivida.getIdentificador() > 100000) {
+        if (tituloDivida.getIdentificador() <= 0 || tituloDivida.getIdentificador() >= 100000) {
             erro = "Identificador deve estar entre 1 e 99999.";
         }
 
-        if (tituloDivida.getNome() == null || tituloDivida.getNome().isEmpty()) {
+        if (tituloDivida.getNome() == null || tituloDivida.getNome().isBlank()) {
             erro = "Nome deve ser preenchido.";
         }
 

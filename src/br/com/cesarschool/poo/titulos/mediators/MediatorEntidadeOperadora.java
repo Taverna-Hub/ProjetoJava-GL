@@ -1,8 +1,6 @@
 package br.com.cesarschool.poo.titulos.mediators;
 
-import br.com.cesarschool.poo.titulos.entidades.Acao;
 import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
-import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
 
 import java.io.FileNotFoundException;
@@ -79,7 +77,7 @@ public class MediatorEntidadeOperadora {
         if (entidadeOperadora.getIdentificador() >= 1000000 || entidadeOperadora.getIdentificador() <= 100){
             error = "Identificador deve estar entre 100 e 1000000.";
         }
-        else if (entidadeOperadora.getNome().isBlank() || entidadeOperadora.getNome() == null) {
+        else if (entidadeOperadora.getNome() == null || entidadeOperadora.getNome().isBlank()) {
             error = "Nome deve ser preenchido.";
         }
         else if (entidadeOperadora.getNome().length() < 10 || entidadeOperadora.getNome().length() > 100) {

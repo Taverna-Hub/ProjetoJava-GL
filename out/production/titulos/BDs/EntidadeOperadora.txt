@@ -1,2 +1,1 @@
-4;Visa;1.0;20.0;0.0;
-5;Ourocard;1.0;20.0;0.0;
+101;BANCO CENTRAL;true;20.0;0.0;
