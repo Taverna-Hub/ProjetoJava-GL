@@ -1,21 +1,27 @@
 package br.com.cesarschool.poo.titulos.mediators;
 
+import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
+
+import java.io.IOException;
+import java.time.LocalDate;
+
 /*
  * Deve ser um singleton.
  * 
  * Deve ter um atributo repositorioTituloDivida, do tipo RepositorioTituloDivida, que deve 
- * ser inicializado na sua declaração. Este atributo será usado exclusivamente
- * pela classe, não tendo, portanto, métodos set e get.
+ * ser inicializado na sua declaraï¿½ï¿½o. Este atributo serï¿½ usado exclusivamente
+ * pela classe, nï¿½o tendo, portanto, mï¿½todos set e get.
  * 
- * Métodos: 
+ * Mï¿½todos: 
  * 
  * pivate String validar(TituloDivida titulo): deve validar os dados do objeto recebido nos seguintes termos: 
  * identificador: deve ser maior que zero e menor que 100000 (1)
  * nome: deve ser preenchido, diferente de branco e de null (2). deve ter entre 10 e 100 caracteres (3).
- * data de validade: deve ser maior do que a data atual mais 180 dias (4). 
- * valorUnitario: deve ser maior que zero (5). 
- * O método validar deve retornar null se o objeto estiver válido, e uma mensagem pertinente (ver abaixo)
- * se algum valor de atributo estiver inválido.
+ * data de validade: deve ser maior do que a data atual mais 180 dias (4).
+ * valorUnitario: deve ser maior que zero (5).
+ * O mï¿½todo validar deve retornar null se o objeto estiver vï¿½lido, e uma mensagem pertinente (ver abaixo)
+ * se algum valor de atributo estiver invï¿½lido.
  * 
  * (1) - Identificador deve estar entre 1 e 99999.
  * (2) - Nome deve ser preenchido.
@@ -23,34 +29,125 @@ package br.com.cesarschool.poo.titulos.mediators;
  * (4) - Data de validade deve ter pelo menos 180 dias na frente da data atual.
  * (5) - Taxa de juros deve ser maior ou igual a zero.
  *
- * public String incluir(TituloDivida titulo): deve chamar o método validar. Se ele 
- * retornar null, deve incluir titulo no repositório. Retornos possíveis:
+ * public String incluir(TituloDivida titulo): deve chamar o mï¿½todo validar. Se ele 
+ * retornar null, deve incluir titulo no repositï¿½rio. Retornos possï¿½veis:
  * (1) null, se o retorno do validar for null e o retorno do incluir do 
- * repositório for true.
+ * repositï¿½rio for true.
  * (2) a mensagem retornada pelo validar, se o retorno deste for diferente
  * de null.
- * (3) A mensagem "Título já existente", se o retorno do validar for null
- * e o retorno do repositório for false.
+ * (3) A mensagem "Tï¿½tulo jï¿½ existente", se o retorno do validar for null
+ * e o retorno do repositï¿½rio for false.
  *
- * public String alterar(TituloDivida titulo): deve chamar o método validar. Se ele 
- * retornar null, deve alterar titulo no repositório. Retornos possíveis:
+ * public String alterar(TituloDivida titulo): deve chamar o mï¿½todo validar. Se ele 
+ * retornar null, deve alterar titulo no repositï¿½rio. Retornos possï¿½veis:
  * (1) null, se o retorno do validar for null e o retorno do alterar do 
- * repositório for true.
+ * repositï¿½rio for true.
  * (2) a mensagem retornada pelo validar, se o retorno deste for diferente
  * de null.
- * (3) A mensagem "Título inexistente", se o retorno do validar for null
- * e o retorno do repositório for false.
+ * (3) A mensagem "Tï¿½tulo inexistente", se o retorno do validar for null
+ * e o retorno do repositï¿½rio for false.
  * 
  * public String excluir(int identificador): deve validar o identificador. 
- * Se este for válido, deve chamar o excluir do repositório. Retornos possíveis:
- * (1) null, se o retorno do excluir do repositório for true.
- * (2) A mensagem "Título inexistente", se o retorno do repositório for false
- * ou se o identificador for inválido.
+ * Se este for vï¿½lido, deve chamar o excluir do repositï¿½rio. Retornos possï¿½veis:
+ * (1) null, se o retorno do excluir do repositï¿½rio for true.
+ * (2) A mensagem "Tï¿½tulo inexistente", se o retorno do repositï¿½rio for false
+ * ou se o identificador for invï¿½lido.
  * 
  * public TituloDivida buscar(int identificador): deve validar o identificador.
- * Se este for válido, deve chamar o buscar do repositório, retornando o 
- * que ele retornar. Se o identificador for inválido, retornar null. 
+ * Se este for vï¿½lido, deve chamar o buscar do repositï¿½rio, retornando o 
+ * que ele retornar. Se o identificador for invï¿½lido, retornar null. 
  */
 public class MediatorTituloDivida {
+
+    private RepositorioTituloDivida repositorioTituloDivida;
+
+    private static MediatorTituloDivida instancia;
+
+    public MediatorTituloDivida() {
+        this.repositorioTituloDivida = new RepositorioTituloDivida();
+    }
+
+    public static MediatorTituloDivida getInstancia() {
+        if (instancia == null) {
+            instancia = new MediatorTituloDivida();
+        }
+        return instancia;
+    }
+
+    private String validar(TituloDivida tituloDivida) {
+
+        String erro = null;
+
+        if (tituloDivida.getIdentificador() < 0 || tituloDivida.getIdentificador() > 100000) {
+            erro = "Identificador deve estar entre 1 e 99999.";
+        }
+
+        if (tituloDivida.getNome() == null || tituloDivida.getNome().isEmpty()) {
+            erro = "Nome deve ser preenchido.";
+        }
+
+        else if (tituloDivida.getNome().length() < 10 || tituloDivida.getNome().length() > 100) {
+            erro = "Nome deve ter entre 10 e 100 caracteres.";
+        }
+
+        LocalDate dataAtual = LocalDate.now();
+        if (!tituloDivida.getDataDeValidade().isAfter(dataAtual.plusDays(180))) {
+            erro = "Data de validade deve ter pelo menos 180 dias na frente da data atual.";
+
+        }
+        if (tituloDivida.getTaxaJuros() < 0) {
+            erro = "Taxa de juros deve ser maior ou igual a zero.";
+        }
+
+        return erro;
+    }
+
+    public String incluir(TituloDivida tituloDivida) throws IOException {
+
+        String mensagemValidacao = validar(tituloDivida);
+
+        if (mensagemValidacao != null) {
+            return mensagemValidacao;
+        }
+
+        boolean incluido = repositorioTituloDivida.incluirTituloDivida(tituloDivida);
+
+        if (incluido) {
+            return null;
+        }
+        else {
+            return "Titulo jÃ¡ existente.";
+        }
+    }
+
+    public String alterar(TituloDivida tituloDivida) throws IOException {
+
+        String mensagemValidacao = validar(tituloDivida);
+
+        if (mensagemValidacao != null) {
+            return mensagemValidacao;
+        }
+        else if (repositorioTituloDivida.alterarTituloDivida(tituloDivida)) {
+            return null;
+        }
+        else {
+            return "Titulo jÃ¡ existente";
+        }
+
+    }
+
+    public String excluir(int identificador) throws IOException {
+
+        return repositorioTituloDivida.excluirTituloDivida(identificador) ? null : "Titulo Inexistente";
+    }
+
+    public TituloDivida buscar(int identificador) throws IOException {
+
+        if (identificador <= 0 || identificador > 100000) {
+            return null;
+        }
+        return repositorioTituloDivida.buscarTituloDivida(identificador);
+
+    }
 
 }
