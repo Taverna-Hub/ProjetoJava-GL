@@ -1,4 +1,14 @@
 package br.com.cesarschool.poo.titulos.mediators;
+
+import br.com.cesarschool.poo.titulos.entidades.Acao;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 /*
  * Deve ser um singleton.
  *
@@ -52,4 +62,69 @@ package br.com.cesarschool.poo.titulos.mediators;
  */
 public class MediatorAcao {
 
+    private final RepositorioAcao repositorioAcao;
+
+    private static MediatorAcao instancia;
+
+    private MediatorAcao(){
+        this.repositorioAcao = new RepositorioAcao();
+    }
+
+    public static MediatorAcao getInstancia() {
+        if (instancia == null) {
+            instancia = new MediatorAcao();
+        }
+        return instancia;
+    }
+    private String validar(Acao acao){
+        String erro = null;
+        if (99999 <= acao.getIdentificador() || acao.getIdentificador() <= 0){
+            erro = "Identificador deve estar entre 1 e 99999.";
+        }
+        else if (acao.getNome().isBlank() || acao.getNome() == null) {
+            erro = "Nome deve ser preenchido.";
+        }
+        else if (acao.getNome().length() <= 10 || acao.getNome().length() >= 99999) {
+            erro = "Nome deve ter entre 10 e 100 caracteres.";
+        }
+        else if (ChronoUnit.DAYS.between(LocalDateTime.now(), acao.getDataDeValidade()) < 30) {
+            erro = "Data de validade deve ter pelo menos 30 dias na frente da data atual.";
+        } else if (acao.getValorUnitario() <= 0) {
+            erro = "Valor unitário deve ser maior que zero.";
+        }
+
+        return erro;
+    }
+
+    public String incluir(Acao acao) throws IOException {
+
+        String mensagemValidacao = validar(acao);
+        if (mensagemValidacao == null){
+
+            if (!(repositorioAcao.incluir(acao))){
+            mensagemValidacao = "Ação já existente";
+        }
+        }
+        return mensagemValidacao;
+    }
+
+    public String alterar(Acao acao) throws IOException {
+        String mensagemValidacao = validar(acao);
+
+        if (mensagemValidacao == null){
+            if (!(repositorioAcao.alterar(acao))){
+                mensagemValidacao = "Ação inexistente";
+            }
+        }
+
+        return mensagemValidacao;
+    }
+
+    public String excluir(int identificador) throws IOException {
+        return repositorioAcao.excluir(identificador) ? null : "Ação inexistente";
+    }
+
+    public Acao buscar(int identificador) throws FileNotFoundException {
+        return repositorioAcao.buscar(identificador);
+    }
 }
