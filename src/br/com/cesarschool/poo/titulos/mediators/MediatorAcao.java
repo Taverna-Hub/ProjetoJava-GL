@@ -78,16 +78,17 @@ public class MediatorAcao {
     }
     private String validar(Acao acao){
         String erro = null;
-        if (99999 < acao.getIdentificador() || acao.getIdentificador() < 0){
+        if (99999 < acao.getIdentificador() || acao.getIdentificador() <= 0){
             erro = "Identificador deve estar entre 1 e 99999.";
         }
-        else if (acao.getNome().isBlank() || acao.getNome() == null) {
+        else if (acao.getNome() == null || acao.getNome().isBlank()) {
             erro = "Nome deve ser preenchido.";
         }
+
         else if (acao.getNome().length() < 10 || acao.getNome().length() > 100) {
             erro = "Nome deve ter entre 10 e 100 caracteres.";
         }
-        else if (ChronoUnit.DAYS.between(LocalDateTime.now(), acao.getDataDeValidade()) < 30) {
+        else if (ChronoUnit.DAYS.between(LocalDate.now(), acao.getDataDeValidade()) < 30) {
             erro = "Data de validade deve ter pelo menos 30 dias na frente da data atual.";
         } else if (acao.getValorUnitario() <= 0) {
             erro = "Valor unitário deve ser maior que zero.";
