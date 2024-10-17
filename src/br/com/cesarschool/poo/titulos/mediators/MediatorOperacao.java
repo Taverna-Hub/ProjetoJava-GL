@@ -124,6 +124,19 @@ public class MediatorOperacao {
         this.repositorioTransacao = repositorioTransacao;
     }
 
+    private static MediatorOperacao getInstancia(MediatorAcao mediatorAcao,
+                                                 MediatorTituloDivida mediatorTituloDivida,
+                                                 MediatorEntidadeOperadora mediatorEntidadeOperadora,
+                                                 RepositorioTransacao repositorioTransacao) {
+        if (instancia == null) {
+            instancia = new MediatorOperacao(mediatorAcao,
+                                            mediatorTituloDivida,
+                                            mediatorEntidadeOperadora,
+                                            repositorioTransacao);
+        }
+        return instancia;
+    }
+
     public String realizarOperacao(boolean ehAcao, int entidadeCredito, int idEntidadeDebito, int idAcaoOuTitulo, double valor) throws IOException {
 
         if (valor <= 0) {
