@@ -56,12 +56,11 @@ import java.io.IOException;
  * que ele retornar. Se o identificador for inv�lido, retornar null. 
  */
 public class MediatorEntidadeOperadora {
-    private final RepositorioEntidadeOperadora repositorioEntidadeOperadora;
+    private final RepositorioEntidadeOperadora repositorioEntidadeOperadora = new RepositorioEntidadeOperadora();
 
     private static MediatorEntidadeOperadora instancia;
 
     private MediatorEntidadeOperadora(){
-        this.repositorioEntidadeOperadora = new RepositorioEntidadeOperadora();
     }
 
     public static MediatorEntidadeOperadora getInstancia() {
@@ -122,6 +121,8 @@ public class MediatorEntidadeOperadora {
         }
         return repositorioEntidadeOperadora.buscarEntidadeOperadora(identificador);
     }
+
+
 
 
 }

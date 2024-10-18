@@ -126,4 +126,44 @@ public class RepositorioTransacao {
 		}
 		return arrayDeTransacoes;
 	}
+	public Transacao[] buscarPorEntidadeDevedora(int identificadorEntidadeDebito) throws IOException {
+		EntidadeOperadora entidadeDebito = new RepositorioEntidadeOperadora().buscarEntidadeOperadora(identificadorEntidadeDebito);
+
+		if (entidadeDebito == null){
+			return null;
+		}
+		int cont = 0;
+		Scanner SCAN = new Scanner(arquivoTransacao);
+		List<String[]> listaCredora = new ArrayList<>() ;
+
+		while (SCAN.hasNextLine()){
+			String[] arrayLinha = SCAN.nextLine().split(";");
+			if (Integer.parseInt(arrayLinha[5]) == entidadeDebito.getIdentificador()){
+				listaCredora.add(arrayLinha);
+				cont++;
+			}
+		}
+		SCAN.close();
+
+		Transacao[] arrayDeTransacoes = new Transacao[cont];
+		int i = 0;
+		for (String[] linha : listaCredora){
+
+			long identificadorEntidadeCredito = Integer.parseInt(linha[0]);
+			int identificadorAcao = Integer.parseInt(linha[10]);
+			int identificadorTituloDivida = Integer.parseInt(linha[14]);
+			double valorOperacao = Double.parseDouble(linha[18]);
+			LocalDateTime horaOperacao = LocalDateTime.parse(linha[19]);
+
+			EntidadeOperadora entidadeCredito =  new RepositorioEntidadeOperadora().buscarEntidadeOperadora(identificadorEntidadeCredito);
+			Acao acao = new RepositorioAcao().buscar(identificadorAcao);
+			TituloDivida tituloDivida = new RepositorioTituloDivida().buscarTituloDivida(identificadorTituloDivida);
+
+
+
+			arrayDeTransacoes[i] = new Transacao(entidadeCredito, entidadeDebito, acao, tituloDivida, valorOperacao, horaOperacao);
+			i++;
+		}
+		return arrayDeTransacoes;
+	}
 }

@@ -59,12 +59,11 @@ import java.time.LocalDate;
  */
 public class MediatorTituloDivida {
 
-    private RepositorioTituloDivida repositorioTituloDivida;
+    private RepositorioTituloDivida repositorioTituloDivida =  new RepositorioTituloDivida();
 
     private static MediatorTituloDivida instancia;
 
-    public MediatorTituloDivida() {
-        this.repositorioTituloDivida = new RepositorioTituloDivida();
+    private MediatorTituloDivida() {
     }
 
     public static MediatorTituloDivida getInstancia() {
@@ -149,5 +148,7 @@ public class MediatorTituloDivida {
         return repositorioTituloDivida.buscarTituloDivida(identificador);
 
     }
+
+
 
 }

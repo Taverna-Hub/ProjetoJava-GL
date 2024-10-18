@@ -9,6 +9,8 @@ import br.com.cesarschool.poo.titulos.repositorios.RepositorioTransacao;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /*
  * Deve ser um singleton.
@@ -110,30 +112,16 @@ import java.time.LocalDateTime;
 
 public class MediatorOperacao {
 
-    private static MediatorOperacao instancia;
+    private static MediatorOperacao instancia = new MediatorOperacao();
 
-    private MediatorAcao mediatorAcao;
-    private MediatorTituloDivida mediatorTituloDivida;
-    private MediatorEntidadeOperadora mediatorEntidadeOperadora;
-    private RepositorioTransacao repositorioTransacao;
+    private MediatorAcao mediatorAcao = MediatorAcao.getInstancia();
+    private MediatorTituloDivida mediatorTituloDivida = MediatorTituloDivida.getInstancia();
+    private MediatorEntidadeOperadora mediatorEntidadeOperadora = MediatorEntidadeOperadora.getInstancia();
+    private RepositorioTransacao repositorioTransacao = new RepositorioTransacao();
 
-    public MediatorOperacao(MediatorAcao mediatorAcao, MediatorTituloDivida mediatorTituloDivida, MediatorEntidadeOperadora mediatorEntdadeOperadora, RepositorioTransacao repositorioTransacao) {
-        this.mediatorAcao = mediatorAcao;
-        this.mediatorTituloDivida = mediatorTituloDivida;
-        this.mediatorEntidadeOperadora = mediatorEntdadeOperadora;
-        this.repositorioTransacao = repositorioTransacao;
-    }
+    private MediatorOperacao() {}
 
-    private static MediatorOperacao getInstancia(MediatorAcao mediatorAcao,
-                                                 MediatorTituloDivida mediatorTituloDivida,
-                                                 MediatorEntidadeOperadora mediatorEntidadeOperadora,
-                                                 RepositorioTransacao repositorioTransacao) {
-        if (instancia == null) {
-            instancia = new MediatorOperacao(mediatorAcao,
-                                            mediatorTituloDivida,
-                                            mediatorEntidadeOperadora,
-                                            repositorioTransacao);
-        }
+    public static MediatorOperacao getInstancia() {
         return instancia;
     }
 
@@ -226,4 +214,19 @@ public class MediatorOperacao {
         return null;
     }
 
+    public Transacao[] gerarExtrato(int entidade) throws IOException {
+
+        Transacao[] credora = repositorioTransacao.buscarPorEntidadeCredora(entidade);
+        Transacao[] devedora = repositorioTransacao.buscarPorEntidadeDevedora(entidade);
+
+        Transacao[] extrato =new Transacao[credora.length + devedora.length];
+
+        System.arraycopy(credora, 0, extrato, 0, credora.length);
+        System.arraycopy(devedora, 0, extrato, credora.length, devedora.length);
+
+        Arrays.sort(extrato, Comparator.comparing(Transacao::getDataHoraOperacao));
+
+        return extrato;
+
+    }
 }

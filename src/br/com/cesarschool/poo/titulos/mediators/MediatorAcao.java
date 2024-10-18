@@ -62,12 +62,11 @@ import java.time.temporal.ChronoUnit;
  */
 public class MediatorAcao {
 
-    private final RepositorioAcao repositorioAcao;
+    private final RepositorioAcao repositorioAcao = new RepositorioAcao();
 
     private static MediatorAcao instancia;
 
     private MediatorAcao(){
-        this.repositorioAcao = new RepositorioAcao();
     }
 
     public static MediatorAcao getInstancia() {
