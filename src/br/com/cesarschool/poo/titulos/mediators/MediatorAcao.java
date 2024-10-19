@@ -76,10 +76,13 @@ public class MediatorAcao {
         return instancia;
     }
     private String validar(Acao acao){
+
         String erro = null;
+
         if (99999 < acao.getIdentificador() || acao.getIdentificador() <= 0){
             erro = "Identificador deve estar entre 1 e 99999.";
         }
+
         else if (acao.getNome() == null || acao.getNome().isBlank()) {
             erro = "Nome deve ser preenchido.";
         }
@@ -87,9 +90,12 @@ public class MediatorAcao {
         else if (acao.getNome().length() < 10 || acao.getNome().length() > 100) {
             erro = "Nome deve ter entre 10 e 100 caracteres.";
         }
+
         else if (ChronoUnit.DAYS.between(LocalDate.now(), acao.getDataDeValidade()) < 30) {
             erro = "Data de validade deve ter pelo menos 30 dias na frente da data atual.";
-        } else if (acao.getValorUnitario() <= 0) {
+        }
+
+        else if (acao.getValorUnitario() <= 0) {
             erro = "Valor unitário deve ser maior que zero.";
         }
 
@@ -99,6 +105,7 @@ public class MediatorAcao {
     public String incluir(Acao acao) throws IOException {
 
         String mensagemValidacao = validar(acao);
+
         if (mensagemValidacao == null){
 
             if (!(repositorioAcao.incluir(acao))){
@@ -112,6 +119,7 @@ public class MediatorAcao {
         String mensagemValidacao = validar(acao);
 
         if (mensagemValidacao == null){
+
             if (!(repositorioAcao.alterar(acao))){
                 mensagemValidacao = "Ação inexistente";
             }
@@ -121,6 +129,7 @@ public class MediatorAcao {
     }
 
     public String excluir(int identificador) throws IOException {
+
         if (99999 <= identificador || identificador <= 0){
             return null;
         }
@@ -128,6 +137,7 @@ public class MediatorAcao {
     }
 
     public Acao buscar(int identificador) throws FileNotFoundException {
+
         if (99999 <= identificador || identificador <= 0){
             return null;
         }
