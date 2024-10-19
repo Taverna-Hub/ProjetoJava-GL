@@ -40,12 +40,26 @@ public class RepositorioTransacao {
 
 	public void incluir(Transacao transacao) throws IOException {
 
+			boolean ehAcao = true;
+		if (transacao.getAcao() == null){
+			ehAcao = false;
+		}
+
 		FileWriter escreverLinha = new FileWriter(arquivoTransacao, true);
 
 		EntidadeOperadora entidadeCredito = new RepositorioEntidadeOperadora().buscarEntidadeOperadora(transacao.getEntidadeCredito().getIdentificador());
 		EntidadeOperadora entidadeDebito = new RepositorioEntidadeOperadora().buscarEntidadeOperadora(transacao.getEntidadeDebito().getIdentificador());
-		Acao acao = new RepositorioAcao().buscar(transacao.getAcao().getIdentificador());
-		TituloDivida tituloDivida = new RepositorioTituloDivida().buscarTituloDivida(transacao.getTituloDivida().getIdentificador());
+		Acao acao;
+		TituloDivida tituloDivida;
+		if (ehAcao){
+			 acao = new RepositorioAcao().buscar(transacao.getAcao().getIdentificador());
+			 tituloDivida = null;
+		}
+		else {
+			 acao = null;
+			 tituloDivida = new RepositorioTituloDivida().buscarTituloDivida(transacao.getTituloDivida().getIdentificador());
+
+		}
 		double valorOperacao = transacao.getValorOperacao();
 		LocalDateTime dataHoraOperacao = transacao.getDataHoraOperacao();
 
@@ -61,17 +75,23 @@ public class RepositorioTransacao {
 				+ entidadeDebito.getAutorizadoAcao()  + ";"
 				+ entidadeDebito.getSaldoAcao()  + ";"
 				+ entidadeDebito.getSaldoTituloDivida();
-		String acaoString =
+		String acaoString = null;
+		String tituloDividaString = null;
+				if (ehAcao){
+		 acaoString =
 				acao.getIdentificador() + ";"
 				+ acao.getNome()  + ";"
 				+ acao.getDataDeValidade()  + ";"
 				+ acao.getValorUnitario();
-
-		String tituloDividaString =
+				}
+		if (!ehAcao){
+		 tituloDividaString =
 				tituloDivida.getIdentificador()  + ";"
 				+ tituloDivida.getNome()  + ";"
 				+ tituloDivida.getDataDeValidade()  + ";"
 				+ tituloDivida.getTaxaJuros();
+		}
+
 
 
 		String LinhaCompleta =

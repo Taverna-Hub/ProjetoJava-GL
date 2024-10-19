@@ -142,11 +142,11 @@ public class MediatorOperacao {
         }
 
         if (ehAcao && !entidadeCreditoObj.getAutorizadoAcao()) {
-            return "Entidade crédito não foi autorizada para ação";
+            return "Entidade de crédito não autorizada para ação";
         }
 
-        if (ehAcao && entidadeDebitoObj.getAutorizadoAcao()) {
-            return "Entidade débito não foi autorizada para ação";
+        if (ehAcao && !entidadeDebitoObj.getAutorizadoAcao()) {
+            return "Entidade de débito não foi autorizada para ação";
         }
 
         Acao acao = null;
@@ -171,8 +171,8 @@ public class MediatorOperacao {
             return "Saldo da entidade débito insuficiente";
         }
 
-        if (ehAcao && acao.getValorUnitario() < valor) {
-            return "Valor da operação e menor do que o valor unit�rio da ação";
+        if (ehAcao && acao.getValorUnitario() > valor) {
+            return "Valor da operação e menor do que o valor unitário da ação";
         }
 
         double valorOperacao;
@@ -185,9 +185,11 @@ public class MediatorOperacao {
 
         if (ehAcao) {
             entidadeDebitoObj.debitarSaldoAcao(valorOperacao);
+            entidadeCreditoObj.creditarSaldoAcao(valorOperacao);
         }
         else {
             entidadeDebitoObj.debitarSaldoTituloDivida(valorOperacao);
+            entidadeCreditoObj.creditarSaldoTituloDivida(valorOperacao);
         }
 
         String mensagemAlteracaoCredito = mediatorEntidadeOperadora.alterar(entidadeCreditoObj);
@@ -203,8 +205,8 @@ public class MediatorOperacao {
         Transacao transacao = new Transacao(
                 entidadeCreditoObj,
                 entidadeDebitoObj,
-                ehAcao ? acao : null,
-                ehAcao ? null : tituloDivida,
+                acao,
+                tituloDivida,
                 valorOperacao,
                 LocalDateTime.now()
         );
@@ -224,7 +226,7 @@ public class MediatorOperacao {
         System.arraycopy(credora, 0, extrato, 0, credora.length);
         System.arraycopy(devedora, 0, extrato, credora.length, devedora.length);
 
-        Arrays.sort(extrato, Comparator.comparing(Transacao::getDataHoraOperacao));
+        Arrays.sort(extrato, Comparator.comparing(Transacao::getDataHoraOperacao)   );
 
         return extrato;
 
