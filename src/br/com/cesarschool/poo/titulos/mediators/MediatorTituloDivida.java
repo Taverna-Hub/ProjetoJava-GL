@@ -109,7 +109,7 @@ public class MediatorTituloDivida {
             return mensagemValidacao;
         }
 
-        boolean incluido = repositorioTituloDivida.incluirTituloDivida(tituloDivida);
+        boolean incluido = repositorioTituloDivida.incluir(tituloDivida);
 
         if (incluido) {
             return null;
@@ -126,7 +126,7 @@ public class MediatorTituloDivida {
         if (mensagemValidacao != null) {
             return mensagemValidacao;
         }
-        else if (repositorioTituloDivida.alterarTituloDivida(tituloDivida)) {
+        else if (repositorioTituloDivida.alterar(tituloDivida)) {
             return null;
         }
         else {
@@ -137,7 +137,7 @@ public class MediatorTituloDivida {
 
     public String excluir(int identificador) throws IOException {
 
-        return repositorioTituloDivida.excluirTituloDivida(identificador) ? null : "Titulo Inexistente";
+        return repositorioTituloDivida.excluir(identificador) ? null : "Titulo Inexistente";
     }
 
     public TituloDivida buscar(int identificador) throws IOException {
@@ -145,7 +145,7 @@ public class MediatorTituloDivida {
         if (identificador <= 0 || identificador > 100000) {
             return null;
         }
-        return repositorioTituloDivida.buscarTituloDivida(identificador);
+        return repositorioTituloDivida.buscar(identificador);
 
     }
 

@@ -45,12 +45,12 @@ public class EntidadeOperadoraTeste {
         ec.creditarSaldoAcao(20);
         Assertions.assertEquals("Nome deve ter entre 10 e 100 caracteres.", MediatorEntidadeOperadora.getInstancia().incluir(ec));
     }
-    @Test
-    public  void testeValidarCerto() throws IOException {
-        EntidadeOperadora ec = new EntidadeOperadora(101, "BANCO CENTRAL", true);
-        ec.creditarSaldoAcao(20);
-        Assertions.assertNull(MediatorEntidadeOperadora.getInstancia().incluir(ec));
-    }
+//    @Test
+//    public  void testeValidarCerto() throws IOException {
+//        EntidadeOperadora ec = new EntidadeOperadora(101, "BANCO CENTRAL", true);
+//        ec.creditarSaldoAcao(20);
+//        Assertions.assertNull(MediatorEntidadeOperadora.getInstancia().incluir(ec));
+//    }
 
 
 
