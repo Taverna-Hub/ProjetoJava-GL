@@ -1,0 +1,58 @@
+package br.com.cesarschool.poo.telas;
+
+import br.com.cesarschool.poo.titulos.entidades.Acao;
+import br.com.cesarschool.poo.titulos.mediators.MediatorAcao;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.time.LocalDate;
+
+public class TelaAcao extends JFrame {
+
+    private MediatorAcao mediatorAcao;
+
+    public TelaAcao() {
+        mediatorAcao = MediatorAcao.getInstancia();
+    }
+
+    public JPanel getTelaAcaoPanel() {
+
+        JPanel painelAcao = new JPanel();
+        painelAcao.setLayout(new BoxLayout(painelAcao, BoxLayout.Y_AXIS));
+
+        JLabel label = new JLabel("Escolha sua Ação:", JLabel.CENTER);
+        JButton botaoIncluirAcao = new JButton("IncluirAção");
+        JButton botaoBuscarAcao = new JButton("Gerenciar Ação");
+
+        painelAcao.add(label);
+        painelAcao.add(botaoIncluirAcao);
+        painelAcao.add(botaoBuscarAcao);
+
+        botaoIncluirAcao.addActionListener(e -> {
+
+            try {
+                String nome = JOptionPane.showInputDialog("Digite o nome da Ação:");
+                double valor = Double.parseDouble(JOptionPane.showInputDialog("Informe o valor unitário:"));
+                int identificador = Integer.parseInt(JOptionPane.showInputDialog("Informe o identificador:"));
+                LocalDate validade = LocalDate.now().plusDays(31);
+
+                Acao novaAcao = new Acao(identificador, nome, validade, valor);
+
+                String resultadoInclusao = mediatorAcao.incluir(novaAcao);
+                if (resultadoInclusao == null) {
+                    JOptionPane.showMessageDialog(null, "Ação incluída com sucesso!");
+                } else {
+                    JOptionPane.showMessageDialog(null, resultadoInclusao, "ERRO", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao incluir a ação. Tente novamente.");
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Erro nos valores informados. Por favor, insira valores válidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        return painelAcao;
+    }
+}
