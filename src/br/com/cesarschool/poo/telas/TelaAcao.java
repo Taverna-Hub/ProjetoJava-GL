@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -53,6 +54,33 @@ public class TelaAcao extends JFrame {
                 JOptionPane.showMessageDialog(null, "Erro nos valores informados. Por favor, insira valores válidos.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
+
+        botaoBuscarAcao.addActionListener(e -> {
+
+            try {
+                int identificador = Integer.parseInt(JOptionPane.showInputDialog("Informe o identificador:"));
+
+                Acao acaoEncontrada = mediatorAcao.buscar(identificador);
+
+                if (acaoEncontrada != null) {
+
+                    JOptionPane.showMessageDialog(null,
+                            "Ação Encontrada\n" +
+                                    "Identificador: " + acaoEncontrada.getIdentificador() + "\n" +
+                                    "Nome: " + acaoEncontrada.getNome() + "\n" +
+                                    "Validade: " + acaoEncontrada.getDataDeValidade() + "\n" +
+                                    "Valor Unitário: " + acaoEncontrada.getValorUnitario() + "\n");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ação não encontrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Por favor, insira um número válido para o identificador", "Erro", JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar a ação. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         return painelAcao;
     }
 }

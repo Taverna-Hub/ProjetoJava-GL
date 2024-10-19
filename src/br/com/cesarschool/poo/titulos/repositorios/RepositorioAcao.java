@@ -36,7 +36,7 @@ import java.util.Scanner;
  */
 public class RepositorioAcao {
 
-	File arquivoAcao = new File("src/Bds/Acao.txt");
+	File arquivoAcao = new File("src/BDs/Acao.txt");
 
 	public boolean incluir(Acao acao) throws IOException {
 
