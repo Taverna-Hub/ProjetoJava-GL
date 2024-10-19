@@ -24,7 +24,7 @@ public class Main {
         new RepositorioEntidadeOperadora().incluirEntidadeOperadora(ec);
         new RepositorioEntidadeOperadora().incluirEntidadeOperadora(ed);
         new RepositorioAcao().incluir(acao);
-        new RepositorioTituloDivida().incluirTituloDivida(td);
+        new RepositorioTituloDivida().incluir(td);
         Transacao transacao = new Transacao(ec, ed, acao, td, 200.00, LocalDateTime.now());
         new RepositorioTransacao().incluir(transacao);
         System.out.println(ec.getSaldoAcao());

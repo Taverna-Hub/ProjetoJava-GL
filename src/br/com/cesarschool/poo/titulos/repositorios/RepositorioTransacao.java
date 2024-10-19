@@ -6,11 +6,8 @@ import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import br.com.cesarschool.poo.titulos.entidades.Transacao;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +54,7 @@ public class RepositorioTransacao {
 		}
 		else {
 			 acao = null;
-			 tituloDivida = new RepositorioTituloDivida().buscarTituloDivida(transacao.getTituloDivida().getIdentificador());
+			 tituloDivida = new RepositorioTituloDivida().buscar(transacao.getTituloDivida().getIdentificador());
 
 		}
 		double valorOperacao = transacao.getValorOperacao();
@@ -137,7 +134,7 @@ public class RepositorioTransacao {
 
 			EntidadeOperadora entidadeDebito =  new RepositorioEntidadeOperadora().buscarEntidadeOperadora(identificadorEntidadeDebito);
 			Acao acao = new RepositorioAcao().buscar(identificadorAcao);
-			TituloDivida tituloDivida = new RepositorioTituloDivida().buscarTituloDivida(identificadorTituloDivida);
+			TituloDivida tituloDivida = new RepositorioTituloDivida().buscar(identificadorTituloDivida);
 
 
 
@@ -177,7 +174,7 @@ public class RepositorioTransacao {
 
 			EntidadeOperadora entidadeCredito =  new RepositorioEntidadeOperadora().buscarEntidadeOperadora(identificadorEntidadeCredito);
 			Acao acao = new RepositorioAcao().buscar(identificadorAcao);
-			TituloDivida tituloDivida = new RepositorioTituloDivida().buscarTituloDivida(identificadorTituloDivida);
+			TituloDivida tituloDivida = new RepositorioTituloDivida().buscar(identificadorTituloDivida);
 
 
 

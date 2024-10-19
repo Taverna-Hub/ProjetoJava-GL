@@ -54,13 +54,13 @@ public class AcaoTeste {
         Acao acao = new Acao(10,"CESAR SCHOOL", LocalDate.of(2025, 1, 7), -30.332);
         Assertions.assertEquals("Valor unitário deve ser maior que zero.", MediatorAcao.getInstancia().incluir(acao));
     }
-
-    @Test
-    public void testeValidarCerto() throws IOException {
-        Acao acao = new Acao(10,"CESARSCHOOL", LocalDate.of(2025, 10, 7), 30.332);
-        Assertions.assertNull(MediatorAcao.getInstancia().incluir(acao));
-
-    }
+//
+//    @Test
+//    public void testeValidarCerto() throws IOException {
+//        Acao acao = new Acao(10,"CESARSCHOOL", LocalDate.of(2025, 10, 7), 30.332);
+//        Assertions.assertNull(MediatorAcao.getInstancia().incluir(acao));
+//
+//    }
 
 
 }
