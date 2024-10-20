@@ -49,7 +49,7 @@ public class TituloDividaTeste {
     }
     @Test
     public void testeValidarDataInvalida() throws IOException {
-        TituloDivida td = new TituloDivida(1, "Brasiliano", LocalDate.now(), 20.0);
+        TituloDivida td = new TituloDivida(1, "Brasiliano", LocalDate.of(2025, 1, 7), 20.0);
         Assertions.assertEquals("Data de validade deve ter pelo menos 180 dias na frente da data atual.",MediatorTituloDivida.getInstancia().incluir(td));
     }
     @Test
@@ -59,7 +59,7 @@ public class TituloDividaTeste {
     }
     @Test
     public void testeValidarTaxaJuros() throws IOException {
-        TituloDivida td = new TituloDivida(1, "Brasiliano", LocalDate.of(2025, 1, 7), -0.1);
+        TituloDivida td = new TituloDivida(1, "Brasiliano", LocalDate.of(2026, 1, 7), -0.1);
         Assertions.assertEquals("Taxa de juros deve ser maior ou igual a zero.",MediatorTituloDivida.getInstancia().incluir(td));
     }
 

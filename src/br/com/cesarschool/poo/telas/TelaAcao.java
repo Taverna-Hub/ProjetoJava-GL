@@ -24,9 +24,9 @@ public class TelaAcao extends JFrame {
         JPanel painelAcao = new JPanel();
         painelAcao.setLayout(new BoxLayout(painelAcao, BoxLayout.Y_AXIS));
 
-        JLabel label = new JLabel("Escolha sua Ação:", JLabel.CENTER);
-        JButton botaoIncluirAcao = new JButton("IncluirAção");
-        JButton botaoBuscarAcao = new JButton("Gerenciar Ação");
+        JLabel label = new JLabel("Escolha sua Acao:", JLabel.CENTER);
+        JButton botaoIncluirAcao = new JButton("IncluirAcao");
+        JButton botaoBuscarAcao = new JButton("Gerenciar Acao");
 
         painelAcao.add(label);
         painelAcao.add(botaoIncluirAcao);
@@ -35,8 +35,8 @@ public class TelaAcao extends JFrame {
         botaoIncluirAcao.addActionListener(e -> {
 
             try {
-                String nome = JOptionPane.showInputDialog("Digite o nome da Ação:");
-                double valor = Double.parseDouble(JOptionPane.showInputDialog("Informe o valor unitário:"));
+                String nome = JOptionPane.showInputDialog("Digite o nome da Acao:");
+                double valor = Double.parseDouble(JOptionPane.showInputDialog("Informe o valor unitario:"));
                 int identificador = Integer.parseInt(JOptionPane.showInputDialog("Informe o identificador:"));
                 LocalDate validade = LocalDate.now().plusDays(31);
 
@@ -44,14 +44,14 @@ public class TelaAcao extends JFrame {
 
                 String resultadoInclusao = mediatorAcao.incluir(novaAcao);
                 if (resultadoInclusao == null) {
-                    JOptionPane.showMessageDialog(null, "Ação incluída com sucesso!");
+                    JOptionPane.showMessageDialog(null, "Acao incluída com sucesso!");
                 } else {
                     JOptionPane.showMessageDialog(null, resultadoInclusao, "ERRO", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao incluir a ação. Tente novamente.");
+                JOptionPane.showMessageDialog(null, "Erro ao incluir a acao. Tente novamente.");
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Erro nos valores informados. Por favor, insira valores válidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro nos valores informados. Por favor, insira valores validos.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -65,19 +65,19 @@ public class TelaAcao extends JFrame {
                 if (acaoEncontrada != null) {
 
                     JOptionPane.showMessageDialog(null,
-                            "Ação Encontrada\n" +
+                            "Acao Encontrada\n" +
                                     "Identificador: " + acaoEncontrada.getIdentificador() + "\n" +
                                     "Nome: " + acaoEncontrada.getNome() + "\n" +
                                     "Validade: " + acaoEncontrada.getDataDeValidade() + "\n" +
-                                    "Valor Unitário: " + acaoEncontrada.getValorUnitario() + "\n");
+                                    "Valor Unitario: " + acaoEncontrada.getValorUnitario() + "\n");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ação não encontrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Acao nao encontrada.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
 
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Por favor, insira um número válido para o identificador", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Por favor, insira um número valido para o identificador", "Erro", JOptionPane.ERROR_MESSAGE);
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao buscar a ação. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro ao buscar a acao. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 

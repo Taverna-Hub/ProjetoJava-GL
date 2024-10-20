@@ -2,3 +2,6 @@
 2;BANCO DO BRASIL;2026-01-01;21.21;
 3;CAPS;2024-09-30;20.0;
 10;CESARSCHOOL;2025-10-07;20;
+19;aaaaaaaaaaaaaaaa;2024-11-19;12.0;
+18;aaaaaaaaaaaaaaaaaa;2024-11-19;17.0;
+33;Luan Hiroshi Kato;2024-11-19;12.0;
