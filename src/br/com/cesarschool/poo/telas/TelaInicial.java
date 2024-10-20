@@ -1,5 +1,7 @@
 package br.com.cesarschool.poo.telas;
 
+import br.com.cesarschool.poo.telas.telaacao.TelaGerenciarAcao;
+import br.com.cesarschool.poo.telas.telaacao.TelaIncluirAcao;
 import br.com.cesarschool.poo.telas.telaacao.TelaPrincipalAcao;
 import br.com.cesarschool.poo.telas.telatitulodividas.TelaPrincipalTituloDividas;
 import br.com.cesarschool.poo.telas.telaoperacao.TelaPrincipalOperacoes;
@@ -24,16 +26,25 @@ public class TelaInicial extends JFrame {
         painelPrincipal = new JPanel(cardLayout);
 
         JPanel telaInicialPanel = criarTelaInicial();
-        JPanel telaAcaoPanel = new TelaPrincipalAcao().getTelaAcaoPanel();
+
+        // Telas Principais dos CRUDs
+        JPanel telaAcaoPanel = new TelaPrincipalAcao(cardLayout, painelPrincipal).getTelaAcaoPanel();
         JPanel telaTituloDividaPanel = new TelaPrincipalTituloDividas(cardLayout, painelPrincipal).criarTelaTituloDivida();
         JPanel telaOperacoesPanel = new TelaPrincipalOperacoes(cardLayout, painelPrincipal).criarTelaOperacoes();
         JPanel telaEntidadeOperadoraPanel = new TelaPrincipalEntidadeOperadora(cardLayout, painelPrincipal).criarTelaEntidadeOperadora();
+
+        // Telas dos CRUDs
+        JPanel telaIncluirAcaoPanel = new TelaIncluirAcao(cardLayout, painelPrincipal).getIncluirAcao();
+        JPanel telaGerenciarAcaoPanel = new TelaGerenciarAcao(cardLayout, painelPrincipal).getBuscarAcao();
 
         painelPrincipal.add(telaInicialPanel, "Tela Inicial");
         painelPrincipal.add(telaAcaoPanel, "Tela Ação");
         painelPrincipal.add(telaTituloDividaPanel, "Tela Titulo Divida");
         painelPrincipal.add(telaOperacoesPanel, "Tela Operações");
         painelPrincipal.add(telaEntidadeOperadoraPanel, "Tela Entidade Operadora");
+
+        painelPrincipal.add(telaIncluirAcaoPanel, "Incluir Acao");
+        painelPrincipal.add(telaGerenciarAcaoPanel, "Gerenciar Acao");
 
         add(painelPrincipal);
 

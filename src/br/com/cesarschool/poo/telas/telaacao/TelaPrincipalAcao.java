@@ -4,15 +4,16 @@ import br.com.cesarschool.poo.titulos.entidades.Acao;
 import br.com.cesarschool.poo.titulos.mediators.MediatorAcao;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.time.LocalDate;
+import java.awt.*;
 
 public class TelaPrincipalAcao extends JFrame {
 
-    private MediatorAcao mediatorAcao;
+    private CardLayout cardLayout;
+    private JPanel painelPrincipal;
 
-    public TelaPrincipalAcao() {
-        mediatorAcao = MediatorAcao.getInstancia();
+    public TelaPrincipalAcao(CardLayout cardLayout, JPanel painelPrincipal) {
+        this.cardLayout = cardLayout;
+        this.painelPrincipal = painelPrincipal;
     }
 
     public JPanel getTelaAcaoPanel() {
@@ -20,62 +21,16 @@ public class TelaPrincipalAcao extends JFrame {
         JPanel painelAcao = new JPanel();
         painelAcao.setLayout(new BoxLayout(painelAcao, BoxLayout.Y_AXIS));
 
-        JLabel label = new JLabel("Escolha sua Acao:", JLabel.CENTER);
-        JButton botaoIncluirAcao = new JButton("IncluirAcao");
-        JButton botaoBuscarAcao = new JButton("Gerenciar Acao");
+        JLabel label = new JLabel("Escolha uma acao:", JLabel.CENTER);
+        JButton botaoIncluirAcao = new JButton("Incluir Acao");
+        JButton botaoGerenciarAcao = new JButton("Gerenciar Acao");
 
         painelAcao.add(label);
         painelAcao.add(botaoIncluirAcao);
-        painelAcao.add(botaoBuscarAcao);
+        painelAcao.add(botaoGerenciarAcao);
 
-        botaoIncluirAcao.addActionListener(e -> {
-
-            try {
-                String nome = JOptionPane.showInputDialog("Digite o nome da Acao:");
-                double valor = Double.parseDouble(JOptionPane.showInputDialog("Informe o valor unitario:"));
-                int identificador = Integer.parseInt(JOptionPane.showInputDialog("Informe o identificador:"));
-                LocalDate validade = LocalDate.now().plusDays(31);
-
-                Acao novaAcao = new Acao(identificador, nome, validade, valor);
-
-                String resultadoInclusao = mediatorAcao.incluir(novaAcao);
-                if (resultadoInclusao == null) {
-                    JOptionPane.showMessageDialog(null, "Acao incluída com sucesso!");
-                } else {
-                    JOptionPane.showMessageDialog(null, resultadoInclusao, "ERRO", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao incluir a acao. Tente novamente.");
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Erro nos valores informados. Por favor, insira valores validos.", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-
-        botaoBuscarAcao.addActionListener(e -> {
-
-            try {
-                int identificador = Integer.parseInt(JOptionPane.showInputDialog("Informe o identificador:"));
-
-                Acao acaoEncontrada = mediatorAcao.buscar(identificador);
-
-                if (acaoEncontrada != null) {
-
-                    JOptionPane.showMessageDialog(null,
-                            "Acao Encontrada\n" +
-                                    "Identificador: " + acaoEncontrada.getIdentificador() + "\n" +
-                                    "Nome: " + acaoEncontrada.getNome() + "\n" +
-                                    "Validade: " + acaoEncontrada.getDataDeValidade() + "\n" +
-                                    "Valor Unitario: " + acaoEncontrada.getValorUnitario() + "\n");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Acao nao encontrada.", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Por favor, insira um número valido para o identificador", "Erro", JOptionPane.ERROR_MESSAGE);
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao buscar a acao. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        });
+        botaoIncluirAcao.addActionListener(e -> cardLayout.show(painelPrincipal, "Incluir Acao"));
+        botaoGerenciarAcao.addActionListener(e -> cardLayout.show(painelPrincipal, "Gerenciar Acao"));
 
         return painelAcao;
     }
