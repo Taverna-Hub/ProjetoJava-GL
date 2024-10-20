@@ -62,19 +62,19 @@ public class TelaInicial extends JFrame {
         botaoEncerrar.setBounds(481, 16, 99, 40);
 
         //estilos
-        botaoEncerrar.setBackground(Color.decode("#B76E2D"));
+        botaoEncerrar.setBackground(Color.decode(BotaoArredondado.LARANJA));
         botaoEncerrar.setForeground(Color.WHITE);
 
-        botaoAcao.setBackground(Color.decode("#623F2B"));
+        botaoAcao.setBackground(Color.decode(BotaoArredondado.MARROM));
         botaoAcao.setForeground(Color.WHITE);
 
-        botaoTituloDivida.setBackground(Color.decode("#623F2B"));
+        botaoTituloDivida.setBackground(Color.decode(BotaoArredondado.MARROM));
         botaoTituloDivida.setForeground(Color.WHITE);
 
-        botaoOperacao.setBackground(Color.decode("#623F2B"));
+        botaoOperacao.setBackground(Color.decode(BotaoArredondado.MARROM));
         botaoOperacao.setForeground(Color.WHITE);
 
-        botaoEntidadeOperadora.setBackground(Color.decode("#623F2B"));
+        botaoEntidadeOperadora.setBackground(Color.decode(BotaoArredondado.MARROM));
         botaoEntidadeOperadora.setForeground(Color.WHITE);
 
         telaInicialPanel.add(label);

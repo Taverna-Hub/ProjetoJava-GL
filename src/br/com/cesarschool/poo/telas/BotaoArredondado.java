@@ -7,7 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 
 public class BotaoArredondado extends JButton {
-
+    public static final String LARANJA = "#B76E2D";
+    public static final String MARROM = "#623F2B";
+    public static final String FUNDO = "#17181D";
     private int raio;
     private boolean mouseDentro;  // Flag para verificar se o mouse está sobre o botão
 
