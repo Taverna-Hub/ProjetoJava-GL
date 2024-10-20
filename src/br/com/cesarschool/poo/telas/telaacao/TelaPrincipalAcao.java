@@ -1,21 +1,17 @@
-package br.com.cesarschool.poo.telas;
+package br.com.cesarschool.poo.telas.telaacao;
 
 import br.com.cesarschool.poo.titulos.entidades.Acao;
 import br.com.cesarschool.poo.titulos.mediators.MediatorAcao;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class TelaAcao extends JFrame {
+public class TelaPrincipalAcao extends JFrame {
 
     private MediatorAcao mediatorAcao;
 
-    public TelaAcao() {
+    public TelaPrincipalAcao() {
         mediatorAcao = MediatorAcao.getInstancia();
     }
 

@@ -1,11 +1,9 @@
 package br.com.cesarschool.poo.telas;
 
-import br.com.cesarschool.poo.titulos.mediators.*;
+import br.com.cesarschool.poo.telas.telaacao.TelaPrincipalAcao;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 public class TelaInicial extends JFrame {
@@ -24,7 +22,7 @@ public class TelaInicial extends JFrame {
         painelPrincipal = new JPanel(cardLayout);
 
         JPanel telaInicialPanel = criarTelaInicial();
-        JPanel telaAcaoPanel = new TelaAcao().getTelaAcaoPanel();
+        JPanel telaAcaoPanel = new TelaPrincipalAcao().getTelaAcaoPanel();
 
         painelPrincipal.add(telaInicialPanel, "Tela Inicial");
         painelPrincipal.add(telaAcaoPanel, "Tela Ação");
