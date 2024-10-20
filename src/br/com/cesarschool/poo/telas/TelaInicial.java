@@ -17,6 +17,7 @@ public class TelaInicial extends JFrame {
 
         setTitle("Tela Inicial");
         setSize(600, 400);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -43,15 +44,38 @@ public class TelaInicial extends JFrame {
     private JPanel criarTelaInicial() {
 
         JPanel telaInicialPanel = new JPanel();
-        telaInicialPanel.setLayout(new BoxLayout(telaInicialPanel, BoxLayout.Y_AXIS));
-
+        telaInicialPanel.setLayout(null);
+        telaInicialPanel.setBackground(Color.decode("#17181D"));
         JLabel label = new JLabel("Bem vindo!", JLabel.CENTER);
 
-        JButton botaoAcao = new JButton("Acao");
-        JButton botaoTituloDivida = new JButton("Titulo Divida");
-        JButton botaoOperacao = new JButton("Operacao");
-        JButton botaoEntidadeOperadora = new JButton("Entidade Operadora");
-        JButton botaoEncerrar = new JButton("Encerrar");
+        BotaoArredondado botaoAcao = new BotaoArredondado("Acao", 20);
+        BotaoArredondado botaoTituloDivida = new BotaoArredondado("Titulo Divida", 20);
+        BotaoArredondado botaoOperacao = new BotaoArredondado("Operacao", 20);
+        BotaoArredondado botaoEntidadeOperadora = new BotaoArredondado("Entidade Operadora", 20);
+        BotaoArredondado botaoEncerrar = new BotaoArredondado("Encerrar", 20);
+
+        // posições
+        botaoAcao.setBounds(118, 113, 170, 40);
+        botaoTituloDivida.setBounds(320, 113, 170, 40);
+        botaoOperacao.setBounds(118, 217, 170, 40);
+        botaoEntidadeOperadora.setBounds(320, 217, 170, 40);
+        botaoEncerrar.setBounds(481, 16, 99, 40);
+
+        //estilos
+        botaoEncerrar.setBackground(Color.decode("#B76E2D"));
+        botaoEncerrar.setForeground(Color.WHITE);
+
+        botaoAcao.setBackground(Color.decode("#623F2B"));
+        botaoAcao.setForeground(Color.WHITE);
+
+        botaoTituloDivida.setBackground(Color.decode("#623F2B"));
+        botaoTituloDivida.setForeground(Color.WHITE);
+
+        botaoOperacao.setBackground(Color.decode("#623F2B"));
+        botaoOperacao.setForeground(Color.WHITE);
+
+        botaoEntidadeOperadora.setBackground(Color.decode("#623F2B"));
+        botaoEntidadeOperadora.setForeground(Color.WHITE);
 
         telaInicialPanel.add(label);
         telaInicialPanel.add(botaoAcao);
