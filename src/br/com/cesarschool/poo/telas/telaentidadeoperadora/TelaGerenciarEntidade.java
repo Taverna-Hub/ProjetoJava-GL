@@ -1,6 +1,6 @@
 package br.com.cesarschool.poo.telas.telaentidadeoperadora;
 
-import br.com.cesarschool.poo.telas.BotaoArredondado;
+import br.com.cesarschool.poo.telas.TelaUtils.BotaoArredondado;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package br.com.cesarschool.poo.telas;
+package br.com.cesarschool.poo.telas.TelaUtils;
 
 import javax.swing.*;
 import java.awt.*;
