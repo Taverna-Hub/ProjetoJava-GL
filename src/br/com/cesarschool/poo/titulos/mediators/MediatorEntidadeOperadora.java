@@ -73,7 +73,7 @@ public class MediatorEntidadeOperadora {
     private String validar(EntidadeOperadora entidadeOperadora){
 
         String error = null;
-        if (entidadeOperadora.getIdentificador() >= 1000000 || entidadeOperadora.getIdentificador() <= 100){
+        if (entidadeOperadora.getIdentificador() > 1000000 || entidadeOperadora.getIdentificador() <     100){
             error = "Identificador deve estar entre 100 e 1000000.";
         }
         else if (entidadeOperadora.getNome() == null || entidadeOperadora.getNome().isBlank()) {
@@ -101,7 +101,7 @@ public class MediatorEntidadeOperadora {
 
         if (mensagemValidacao == null){
             if (!(repositorioEntidadeOperadora.alterarEntidadeOperadora(entidade))){
-                mensagemValidacao = "Ação inexistente";
+                mensagemValidacao = "Entidade inexistente";
             }
         }
 
@@ -109,14 +109,14 @@ public class MediatorEntidadeOperadora {
     }
 
     public String excluir(int identificador) throws IOException {
-        if (99999 <= identificador || identificador <= 0){
-            return null;
+        if (1000000 < identificador || identificador < 100){
+            return "Identificador deve estar entre 100 e 1000000.";
         }
-        return repositorioEntidadeOperadora.excluirEntidadeOperadora(identificador) ? null : "Ação inexistente";
+        return repositorioEntidadeOperadora.excluirEntidadeOperadora(identificador) ? null : "Entidade inexistente";
     }
 
     public EntidadeOperadora buscar(long identificador) throws FileNotFoundException {
-        if (99999 <= identificador || identificador <= 0){
+        if (1000000 < identificador || identificador < 100){
             return null;
         }
         return repositorioEntidadeOperadora.buscarEntidadeOperadora(identificador);

@@ -10,13 +10,14 @@ import br.com.cesarschool.poo.telas.telaentidadeoperadora.TelaPrincipalEntidadeO
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 public class TelaInicial extends JFrame {
 
     private CardLayout cardLayout;
     private JPanel painelPrincipal;
 
-    public TelaInicial() {
+    public TelaInicial() throws FileNotFoundException {
 
         setTitle("Tela Inicial");
         setSize(600, 400);
@@ -100,7 +101,18 @@ public class TelaInicial extends JFrame {
         botaoAcao.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Ação"));
         botaoTituloDivida.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Titulo Divida"));
         botaoOperacao.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Operações"));
-        botaoEntidadeOperadora.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Entidade Operadora"));
+        botaoEntidadeOperadora.addActionListener(e -> {
+            try {
+                // Cria uma nova tela de entidade operadora com as atualizações
+                JPanel telaEntidadeOperadoraPanelAtualizada = new TelaPrincipalEntidadeOperadora(cardLayout, painelPrincipal).criarTelaEntidadeOperadora();
+                painelPrincipal.add(telaEntidadeOperadoraPanelAtualizada, "Tela Entidade Operadora");
+
+                // Navega para a tela de entidade operadora
+                cardLayout.show(painelPrincipal, "Tela Entidade Operadora");
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao carregar as entidades!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
         // Encerrar a aplicação
         botaoEncerrar.addActionListener(e -> System.exit(0));
@@ -108,7 +120,7 @@ public class TelaInicial extends JFrame {
         return telaInicialPanel;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         TelaInicial tela = new TelaInicial();
         tela.setVisible(true);
     }

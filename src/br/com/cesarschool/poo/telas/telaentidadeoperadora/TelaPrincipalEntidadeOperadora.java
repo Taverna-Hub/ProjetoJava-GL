@@ -4,6 +4,7 @@ import br.com.cesarschool.poo.telas.TelaUtils.BotaoArredondado;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 public class TelaPrincipalEntidadeOperadora {
 
@@ -11,7 +12,7 @@ public class TelaPrincipalEntidadeOperadora {
     private JPanel painelPrincipal;
 
     // Construtor para receber o CardLayout e o painelPrincipal da TelaInicial
-    public TelaPrincipalEntidadeOperadora(CardLayout cardLayout, JPanel painelPrincipal) {
+    public TelaPrincipalEntidadeOperadora(CardLayout cardLayout, JPanel painelPrincipal) throws FileNotFoundException {
         this.cardLayout = cardLayout;
         this.painelPrincipal = painelPrincipal;
 

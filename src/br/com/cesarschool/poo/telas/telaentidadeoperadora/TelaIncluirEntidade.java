@@ -27,7 +27,6 @@ public class TelaIncluirEntidade {
         TextFieldComPlaceholder idField = new TextFieldComPlaceholder("Identificador");
         TextFieldComPlaceholder nomeField = new TextFieldComPlaceholder("Nome");
         StyledCheckBox autorizadoAcao = new StyledCheckBox("Autorizar transacoes com acao", Color.decode(BotaoArredondado.MARROM), Color.WHITE);
-        JOptionPane popMensagem = new JOptionPane();
         BotaoArredondado botaoIncluir = new BotaoArredondado("Incluir", 20);
 
         idField.setBounds(100, 120, 187, 34);
@@ -55,9 +54,9 @@ public class TelaIncluirEntidade {
                 if (mensagem == null){
                     mensagem = "Sucesso!";
                 }
-                JOptionPane.showMessageDialog(null, mensagem, "Confirmação", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, mensagem, "Confirmacao", JOptionPane.INFORMATION_MESSAGE);
                 if (mensagem.equals("Sucesso!")){
-                cardLayout.show(painelPrincipal, "Tela Inicial");
+                    cardLayout.show(painelPrincipal, "Tela Inicial");
 
                 }
             } catch (IOException ex) {
