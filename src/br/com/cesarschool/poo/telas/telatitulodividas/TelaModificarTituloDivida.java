@@ -1,7 +1,6 @@
 package br.com.cesarschool.poo.telas.telatitulodividas;
 
 import br.com.cesarschool.poo.telas.TelaUtils.BotaoArredondado;
-import br.com.cesarschool.poo.telas.TelaUtils.StyledCheckBox;
 import br.com.cesarschool.poo.telas.TelaUtils.TextFieldComPlaceholder;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import br.com.cesarschool.poo.titulos.mediators.MediatorTituloDivida;
@@ -15,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class TelaModificarTituloDivida {
         private CardLayout cardLayout;
         private JPanel painelPrincipal;
+
         public TelaModificarTituloDivida(CardLayout cardLayout, JPanel painelPrincipal) {
             this.cardLayout = cardLayout;
             this.painelPrincipal = painelPrincipal;
@@ -32,8 +32,6 @@ public class TelaModificarTituloDivida {
         TextFieldComPlaceholder dataField = new TextFieldComPlaceholder(tituloDivida.getDataDeValidade().format(formatter));
         TextFieldComPlaceholder jurosField = new TextFieldComPlaceholder(String.valueOf(tituloDivida.getTaxaJuros()));
         BotaoArredondado botaoModificar = new BotaoArredondado("Modificar", 20);
-
-
 
         idField.setBounds(41, 83, 162, 24);
         idField.setForeground(Color.WHITE);

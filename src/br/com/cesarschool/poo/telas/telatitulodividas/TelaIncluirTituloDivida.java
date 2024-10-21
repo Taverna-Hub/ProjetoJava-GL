@@ -13,12 +13,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class TelaIncluirTituloDivida {
+
     private CardLayout cardLayout;
     private JPanel painelPrincipal;
+
     public TelaIncluirTituloDivida(CardLayout cardLayout, JPanel painelPrincipal) {
         this.cardLayout = cardLayout;
         this.painelPrincipal = painelPrincipal;
-
     }
 
     public JPanel criarTelaIncluirTituloDivida() {
@@ -37,11 +38,6 @@ public class TelaIncluirTituloDivida {
         nomeField.setBounds(100, 189, 187, 34);
         dataField.setBounds(313, 120, 187, 34);
         jurosField.setBounds(313, 189, 187, 34);
-
-
-
-
-
 
         botaoIncluir.setBounds(215,286 , 170, 40);
         botaoIncluir.setBackground(Color.decode(BotaoArredondado.MARROM));
@@ -95,4 +91,4 @@ public class TelaIncluirTituloDivida {
 
         return incluirTituloPanel;
     }
-    }
+}

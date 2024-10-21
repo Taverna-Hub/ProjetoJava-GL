@@ -4,7 +4,6 @@ import br.com.cesarschool.poo.telas.TelaUtils.BotaoArredondado;
 import br.com.cesarschool.poo.telas.telaacao.TelaGerenciarAcao;
 import br.com.cesarschool.poo.telas.telaacao.TelaIncluirAcao;
 import br.com.cesarschool.poo.telas.telaacao.TelaPrincipalAcao;
-import br.com.cesarschool.poo.telas.telatitulodividas.TelaGerenciarTituloDivida;
 import br.com.cesarschool.poo.telas.telatitulodividas.TelaPrincipalTituloDividas;
 import br.com.cesarschool.poo.telas.telaoperacao.TelaPrincipalOperacoes;
 import br.com.cesarschool.poo.telas.telaentidadeoperadora.TelaPrincipalEntidadeOperadora;
@@ -33,14 +32,14 @@ public class TelaInicial extends JFrame {
         JPanel telaInicialPanel = criarTelaInicial();
 
         // Telas Principais dos CRUDs
-        JPanel telaAcaoPanel = new TelaPrincipalAcao(cardLayout, painelPrincipal).getTelaAcaoPanel();
+        JPanel telaAcaoPanel = new TelaPrincipalAcao(cardLayout, painelPrincipal).criarTelaPrincipalAcao();
         JPanel telaTituloDividaPanel = new TelaPrincipalTituloDividas(cardLayout, painelPrincipal).criarTelaTituloDivida();
         JPanel telaOperacoesPanel = new TelaPrincipalOperacoes(cardLayout, painelPrincipal).criarTelaOperacoes();
         JPanel telaEntidadeOperadoraPanel = new TelaPrincipalEntidadeOperadora(cardLayout, painelPrincipal).criarTelaEntidadeOperadora();
 
         // Telas dos CRUDs
-        JPanel telaIncluirAcaoPanel = new TelaIncluirAcao(cardLayout, painelPrincipal).getIncluirAcao();
-        JPanel telaGerenciarAcaoPanel = new TelaGerenciarAcao(cardLayout, painelPrincipal).getBuscarAcao();
+        JPanel telaIncluirAcaoPanel = new TelaIncluirAcao(cardLayout, painelPrincipal).criarTelaIncluirAcao();
+        JPanel telaGerenciarAcaoPanel = new TelaGerenciarAcao(cardLayout, painelPrincipal).criarTelaGerenciarAcao();
 
         painelPrincipal.add(telaInicialPanel, "Tela Inicial");
         painelPrincipal.add(telaAcaoPanel, "Tela Ação");
@@ -100,34 +99,40 @@ public class TelaInicial extends JFrame {
         telaInicialPanel.add(botaoEncerrar);
 
         // Navegar para as respectivas telas
-        botaoAcao.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Ação"));
-        botaoTituloDivida.addActionListener(e -> {
+        botaoAcao.addActionListener(e -> {
             try {
                 // Cria uma nova tela de entidade operadora com as atualizações
+                JPanel telaAcaoPanelAtualizada = new TelaPrincipalAcao(cardLayout, painelPrincipal).criarTelaPrincipalAcao();
+                painelPrincipal.add(telaAcaoPanelAtualizada, "Tela Acao");
+                // Navega para a tela do respectivo mediator
+                cardLayout.show(painelPrincipal, "Tela Acao");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao carregar as Acoes!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        botaoTituloDivida.addActionListener(e -> {
+            try {
                 JPanel telaTituloDividaPanelAtualizada = new TelaPrincipalTituloDividas(cardLayout, painelPrincipal).criarTelaTituloDivida();
                 painelPrincipal.add(telaTituloDividaPanelAtualizada, "Tela Titulo Divida");
-
-                // Navega para a tela de entidade operadora
                 cardLayout.show(painelPrincipal, "Tela Titulo Divida");
+
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao carregar os Titulos!", "Erro", JOptionPane.ERROR_MESSAGE);
-
             }
 
         });
         botaoOperacao.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Operações"));
         botaoEntidadeOperadora.addActionListener(e -> {
             try {
-                // Cria uma nova tela de entidade operadora com as atualizações
                 JPanel telaEntidadeOperadoraPanelAtualizada = new TelaPrincipalEntidadeOperadora(cardLayout, painelPrincipal).criarTelaEntidadeOperadora();
                 painelPrincipal.add(telaEntidadeOperadoraPanelAtualizada, "Tela Entidade Operadora");
-
-                // Navega para a tela de entidade operadora
                 cardLayout.show(painelPrincipal, "Tela Entidade Operadora");
+
             } catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao carregar as entidades!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
+
 
         // Encerrar a aplicação
         botaoEncerrar.addActionListener(e -> System.exit(0));

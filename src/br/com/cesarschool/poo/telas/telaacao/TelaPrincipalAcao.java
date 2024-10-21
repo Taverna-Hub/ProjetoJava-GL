@@ -1,37 +1,65 @@
 package br.com.cesarschool.poo.telas.telaacao;
 
-import br.com.cesarschool.poo.titulos.entidades.Acao;
-import br.com.cesarschool.poo.titulos.mediators.MediatorAcao;
+import br.com.cesarschool.poo.telas.TelaUtils.BotaoArredondado;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class TelaPrincipalAcao extends JFrame {
 
     private CardLayout cardLayout;
     private JPanel painelPrincipal;
 
-    public TelaPrincipalAcao(CardLayout cardLayout, JPanel painelPrincipal) {
+    public TelaPrincipalAcao(CardLayout cardLayout, JPanel painelPrincipal) throws IOException {
         this.cardLayout = cardLayout;
         this.painelPrincipal = painelPrincipal;
+
+        JPanel telaIncluirAcao = new TelaIncluirAcao(cardLayout, painelPrincipal).criarTelaIncluirAcao();
+        JPanel telaGerenciarAcao = new TelaGerenciarAcao(cardLayout, painelPrincipal).criarTelaGerenciarAcao();
+
+        painelPrincipal.add(telaIncluirAcao, "Tela Incluir Acao");
+        painelPrincipal.add(telaGerenciarAcao, "Tela Gerenciar Acao");
     }
 
-    public JPanel getTelaAcaoPanel() {
+    public JPanel criarTelaPrincipalAcao() {
 
-        JPanel painelAcao = new JPanel();
-        painelAcao.setLayout(new BoxLayout(painelAcao, BoxLayout.Y_AXIS));
+        JPanel telaAcaoPanel = new JPanel();
+        telaAcaoPanel.setLayout(null);
+        telaAcaoPanel.setBackground(Color.decode(BotaoArredondado.FUNDO));
 
-        JLabel label = new JLabel("Escolha uma acao:", JLabel.CENTER);
-        JButton botaoIncluirAcao = new JButton("Incluir Acao");
-        JButton botaoGerenciarAcao = new JButton("Gerenciar Acao");
+        JLabel labelAcao = new JLabel("Acao");
+        BotaoArredondado botaoVoltar = new BotaoArredondado("Voltar", 20);
+        BotaoArredondado botaoIncluirAcao = new BotaoArredondado("Incluir", 20);
+        BotaoArredondado botaoGerenciarAcao = new BotaoArredondado("Gerenciar", 20);
 
-        painelAcao.add(label);
-        painelAcao.add(botaoIncluirAcao);
-        painelAcao.add(botaoGerenciarAcao);
+        botaoVoltar.setBounds(20, 15, 87, 40);
+        botaoIncluirAcao.setBounds(215, 149, 170, 40);
+        botaoGerenciarAcao.setBounds(215, 232, 170, 40);
+        labelAcao.setBounds(245, 82, 128, 24);
+        labelAcao.setForeground(Color.WHITE);
+        labelAcao.setFont(new Font("INTER", Font.PLAIN, 20));
 
-        botaoIncluirAcao.addActionListener(e -> cardLayout.show(painelPrincipal, "Incluir Acao"));
-        botaoGerenciarAcao.addActionListener(e -> cardLayout.show(painelPrincipal, "Gerenciar Acao"));
+        botaoVoltar.setBackground(Color.decode(BotaoArredondado.LARANJA));
+        botaoVoltar.setForeground(Color.WHITE);
 
-        return painelAcao;
+        botaoIncluirAcao.setBackground(Color.decode(BotaoArredondado.MARROM));
+        botaoIncluirAcao.setForeground(Color.WHITE);
+
+        botaoGerenciarAcao.setBackground(Color.decode(BotaoArredondado.MARROM));
+        botaoGerenciarAcao.setForeground(Color.WHITE);
+
+        telaAcaoPanel.add(botaoIncluirAcao);
+        telaAcaoPanel.add(botaoGerenciarAcao);
+        telaAcaoPanel.add(labelAcao);
+        telaAcaoPanel.add(botaoVoltar);
+
+        // Ação do botão Incluir
+        botaoIncluirAcao.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Incluir Acao"));
+        botaoGerenciarAcao.addActionListener(e-> cardLayout.show(painelPrincipal, "Tela Gerenciar Acao"));
+        // Retorna à tela inicial
+        botaoVoltar.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Inicial"));
+
+        return telaAcaoPanel;
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class TelaGerenciarTituloDivida {
+
     private CardLayout cardLayout;
     private JPanel painelPrincipal;
     private final List<TituloDivida> titulosDivida = new ArrayList<>(); // Lista de entidades para o JComboBox
@@ -36,7 +37,9 @@ public class TelaGerenciarTituloDivida {
     }
 
     public JPanel criarTelaGerenciarTitulo() throws IOException {
+
         JPanel gerenciarTitulosPanel = new JPanel(null);
+
         gerenciarTitulosPanel.setBackground(Color.decode(BotaoArredondado.FUNDO));
         BotaoArredondado botaoVoltar = new BotaoArredondado("Voltar", 20);
         BotaoArredondado botaoModificar = new BotaoArredondado("Modificar", 20);
@@ -86,13 +89,15 @@ public class TelaGerenciarTituloDivida {
         });
 
         botaoModificar.addActionListener(e -> {
+
             String idString = (Objects.requireNonNull(comboBoxTitulos.getSelectedItem()).toString());
             int id = Integer.parseInt(idString.split(" - ")[0]);
+
             try {
                 TituloDivida tituloDivida = MediatorTituloDivida.getInstancia().buscar(id);
                 JPanel TelaModificarTituloDivida = new TelaModificarTituloDivida(cardLayout, painelPrincipal).criarTelaModificarTituloDivida(tituloDivida);
-                painelPrincipal.add(TelaModificarTituloDivida, "Tela Modificar Entidade");
-                cardLayout.show(painelPrincipal, "Tela Modificar Entidade");
+                painelPrincipal.add(TelaModificarTituloDivida, "Tela Modificar Titulo");
+                cardLayout.show(painelPrincipal, "Tela Modificar Titulo");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
