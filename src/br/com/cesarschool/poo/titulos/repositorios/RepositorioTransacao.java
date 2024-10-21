@@ -6,8 +6,10 @@ import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import br.com.cesarschool.poo.titulos.entidades.Transacao;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,7 @@ public class RepositorioTransacao {
 
 	public void incluir(Transacao transacao) throws IOException {
 
-			boolean ehAcao = true;
+		boolean ehAcao = true;
 		if (transacao.getAcao() == null){
 			ehAcao = false;
 		}
@@ -48,6 +50,7 @@ public class RepositorioTransacao {
 		EntidadeOperadora entidadeDebito = new RepositorioEntidadeOperadora().buscar(transacao.getEntidadeDebito().getIdentificador());
 		Acao acao;
 		TituloDivida tituloDivida;
+
 		if (ehAcao){
 			 acao = new RepositorioAcao().buscar(transacao.getAcao().getIdentificador());
 			 tituloDivida = null;
@@ -81,6 +84,7 @@ public class RepositorioTransacao {
 				+ acao.getDataDeValidade()  + ";"
 				+ acao.getValorUnitario();
 				}
+
 		if (!ehAcao){
 		 tituloDividaString =
 				tituloDivida.getIdentificador()  + ";"
@@ -88,8 +92,6 @@ public class RepositorioTransacao {
 				+ tituloDivida.getDataDeValidade()  + ";"
 				+ tituloDivida.getTaxaJuros();
 		}
-
-
 
 		String LinhaCompleta =
 				entidadeCreditoString + ";"
@@ -143,6 +145,7 @@ public class RepositorioTransacao {
 		}
 		return arrayDeTransacoes;
 	}
+
 	public Transacao[] buscarPorEntidadeDevedora(int identificadorEntidadeDebito) throws IOException {
 		EntidadeOperadora entidadeDebito = new RepositorioEntidadeOperadora().buscar(identificadorEntidadeDebito);
 
@@ -182,5 +185,42 @@ public class RepositorioTransacao {
 			i++;
 		}
 		return arrayDeTransacoes;
+	}
+
+	public List<Transacao> buscarTodos () throws FileNotFoundException {
+
+		Scanner scan = new Scanner(arquivoTransacao);
+		List<Transacao> listaTransacoes = new ArrayList<>();
+
+		while (scan.hasNextLine()){
+
+			String[] arrayLinha = scan.nextLine().split(";");
+
+			long identificadorEntidadeCredito = Integer.parseInt(arrayLinha[0]);
+			EntidadeOperadora entidadeCredito = new RepositorioEntidadeOperadora().buscar(identificadorEntidadeCredito);
+
+			long identificadorEntidadeDebito = Integer.parseInt(arrayLinha[5]);
+			EntidadeOperadora entidadeDebito = new RepositorioEntidadeOperadora().buscar(identificadorEntidadeDebito);
+
+			Acao acao = null;
+			TituloDivida tituloDivida = null;
+
+			if (!arrayLinha[10].equals("null")) {
+				int identificadorAcao = Integer.parseInt(arrayLinha[10]);
+				acao = new RepositorioAcao().buscar(identificadorAcao);
+			}
+
+			if (!arrayLinha[14].equals("null")) {
+				int identificadorTituloDivida = Integer.parseInt(arrayLinha[14]);
+				tituloDivida =  new RepositorioTituloDivida().buscar(identificadorTituloDivida);
+			}
+
+			double valorOperacao = Double.parseDouble(arrayLinha[18]);
+			LocalDateTime horaOperacao = LocalDateTime.parse(arrayLinha[19]);
+
+			Transacao transacao = new Transacao(entidadeCredito,entidadeDebito, acao, tituloDivida, valorOperacao, horaOperacao);
+		}
+		scan.close();
+		return listaTransacoes;
 	}
 }

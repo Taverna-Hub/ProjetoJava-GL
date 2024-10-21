@@ -53,7 +53,11 @@ public class TelaPrincipalOperacoes {
         telaOperacoesPanel.add(labelOperacoes);
 
 
-        botaoExtrato.addActionListener(e-> cardLayout.show(painelPrincipal, "Tela Extrato"));
+        botaoExtrato.addActionListener(e-> {
+            JPanel telaExtratoPanel = new TelaExtrato(cardLayout, painelPrincipal);
+            painelPrincipal.add(telaExtratoPanel, "Tela Extrato");
+            cardLayout.show(painelPrincipal, "Tela Extrato");
+        });
         botaoTransacao.addActionListener(e-> cardLayout.show(painelPrincipal, "Tela Transacao"));
 
         // Retorna à tela inicial

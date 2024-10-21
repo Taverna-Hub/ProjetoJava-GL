@@ -32,8 +32,6 @@ public class TelaTransacao extends JPanel{
 
     }
 
-
-
     public void carregar() throws IOException {
         listaEntidade.clear();
         listaAcao.clear();
@@ -43,7 +41,6 @@ public class TelaTransacao extends JPanel{
         listaEntidade.addAll(MediatorEntidadeOperadora.getInstancia().buscarTodos());
 
     }
-
 
     public void atualizarCombosBoxEntidades(JComboBox<String> comboBox1, JComboBox<String> comboBox2, JComboBox<String> comboBox3, JComboBox<String> comboBox4) throws FileNotFoundException {
         comboBox1.removeAllItems();
@@ -63,7 +60,6 @@ public class TelaTransacao extends JPanel{
         }
 
     }
-
 
     public JPanel criarTelaTransacao() throws IOException {
         JPanel transacaoPanel = new JPanel(null);
@@ -85,7 +81,6 @@ public class TelaTransacao extends JPanel{
         carregar();
         atualizarCombosBoxEntidades(comboDebito, comboCredito, comboAcao, comboTitulo);
         BotaoArredondado botaoInserir = new BotaoArredondado("transferir", 20);
-
 
         comboDebito.setBounds(76, 103, 187, 34);
         comboCredito.setBounds(313, 103, 187, 34);
@@ -127,8 +122,6 @@ public class TelaTransacao extends JPanel{
             }
         });
 
-
-
         botaoVoltar.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Inicial"));
 
         botaoInserir.addActionListener(e -> {
@@ -138,8 +131,6 @@ public class TelaTransacao extends JPanel{
             int idDebito = Integer.parseInt(idCreditoString.split(" - ")[0]);
             String idAtivoString = action.get() ? Objects.requireNonNull(comboAcao.getSelectedItem()).toString() : Objects.requireNonNull(comboTitulo.getSelectedItem()).toString();
             int idAtivo = Integer.parseInt(idAtivoString.split(" - ")[0]);
-
-
 
             cardLayout.show(painelPrincipal, "Tela Inicial");
         });
@@ -153,8 +144,6 @@ public class TelaTransacao extends JPanel{
         transacaoPanel.add(comboTitulo);
         transacaoPanel.add(tituloCheck);
         transacaoPanel.add(botaoInserir);
-
-
 
         return transacaoPanel;
     }
