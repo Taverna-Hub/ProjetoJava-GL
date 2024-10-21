@@ -34,9 +34,9 @@ public class RepositorioEntidadeOperadora {
 
     File arquivoEntidadeOperadora = new File("src/BDs/EntidadeOperadora.txt");
 
-    public boolean incluirEntidadeOperadora(EntidadeOperadora entidadeOperadora) throws IOException {
+    public boolean incluir(EntidadeOperadora entidadeOperadora) throws IOException {
 
-        if (buscarEntidadeOperadora(entidadeOperadora.getIdentificador()) != null) {
+        if (buscar(entidadeOperadora.getIdentificador()) != null) {
             return false;
         }
 
@@ -61,9 +61,9 @@ public class RepositorioEntidadeOperadora {
         return true;
     }
 
-    public boolean alterarEntidadeOperadora(EntidadeOperadora entidadeOperadora) throws IOException {
+    public boolean alterar(EntidadeOperadora entidadeOperadora) throws IOException {
 
-        if (buscarEntidadeOperadora(entidadeOperadora.getIdentificador()) == null){
+        if (buscar(entidadeOperadora.getIdentificador()) == null){
             return false;
         }
 
@@ -89,11 +89,11 @@ public class RepositorioEntidadeOperadora {
                 EntidadeOperadora e1 = new EntidadeOperadora(identificadorArray, arrayLinha[1], autorizadoAcaoArray);
                 e1.creditarSaldoAcao(saldoAcaoArray);
                 e1.creditarSaldoTituloDivida(saldoTituloDividaArray);
-                incluirEntidadeOperadora(e1);
+                incluir(e1);
 
             }
             else {
-                incluirEntidadeOperadora(entidadeOperadora);
+                incluir(entidadeOperadora);
 
             }
 
@@ -102,9 +102,9 @@ public class RepositorioEntidadeOperadora {
         return true;
     }
 
-    public boolean excluirEntidadeOperadora(long identificador) throws IOException {
+    public boolean excluir(long identificador) throws IOException {
 
-        if (buscarEntidadeOperadora(identificador) == null){
+        if (buscar(identificador) == null){
             return false;
         }
 
@@ -130,7 +130,7 @@ public class RepositorioEntidadeOperadora {
                 EntidadeOperadora e1 = new EntidadeOperadora(identificadorArray, arrayLinha[1], autorizadoAcaoArray);
                 e1.creditarSaldoAcao(saldoAcaoArray);
                 e1.creditarSaldoTituloDivida(saldoTituloDividaArray);
-                incluirEntidadeOperadora(e1);
+                incluir(e1);
             }
 
         }
@@ -138,7 +138,7 @@ public class RepositorioEntidadeOperadora {
         return true;
     }
 
-    public EntidadeOperadora buscarEntidadeOperadora(long identificador) throws FileNotFoundException {
+    public EntidadeOperadora buscar(long identificador) throws FileNotFoundException {
 
         Scanner scan = new Scanner(arquivoEntidadeOperadora);
         while (scan.hasNextLine()) {
@@ -161,5 +161,30 @@ public class RepositorioEntidadeOperadora {
         }
         scan.close();
         return null;
+    }
+
+    public List<EntidadeOperadora> buscarTodos () throws FileNotFoundException {
+        Scanner scan = new Scanner(arquivoEntidadeOperadora);
+        List<EntidadeOperadora> listaEntidades = new ArrayList<>();
+        EntidadeOperadora e1;
+        while (scan.hasNextLine()) {
+
+            String[] arrayLinha = scan.nextLine().split(";");
+
+            long identificadorArray = Long.parseLong(arrayLinha[0]);
+            boolean autorizadoAcaoArray = Boolean.parseBoolean(arrayLinha[2]);
+            double saldoAcaoArray = Double.parseDouble(arrayLinha[3]);
+            double saldoTituloDividaArray = Double.parseDouble(arrayLinha[4]);
+
+
+
+            e1 = new EntidadeOperadora(identificadorArray, arrayLinha[1], autorizadoAcaoArray);
+            e1.creditarSaldoAcao(saldoAcaoArray);
+            e1.creditarSaldoTituloDivida(saldoTituloDividaArray);
+            listaEntidades.add(e1);
+
+        }
+        scan.close();
+                return listaEntidades;
     }
 }

@@ -1,12 +1,14 @@
 package br.com.cesarschool.poo.titulos.mediators;
 
 import br.com.cesarschool.poo.titulos.entidades.Acao;
+import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 /*
  * Deve ser um singleton.
@@ -141,5 +143,9 @@ public class MediatorAcao {
             return null;
         }
         return repositorioAcao.buscar(identificador);
+    }
+
+    public List<Acao> buscarTodos() throws FileNotFoundException {
+        return repositorioAcao.buscarTodos();
     }
 }

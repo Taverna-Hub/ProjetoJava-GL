@@ -1,10 +1,13 @@
 package br.com.cesarschool.poo.titulos.mediators;
 
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 /*
  * Deve ser um singleton.
@@ -147,6 +150,10 @@ public class MediatorTituloDivida {
         }
         return repositorioTituloDivida.buscar(identificador);
 
+    }
+
+    public List<TituloDivida> buscarTodos() throws FileNotFoundException {
+        return repositorioTituloDivida.buscarTodos();
     }
 
 

@@ -5,6 +5,7 @@ import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 /*
  * Deve ser um singleton.
@@ -89,7 +90,7 @@ public class MediatorEntidadeOperadora {
     public String incluir(EntidadeOperadora entidade) throws IOException {
         String mensagemValidacao = validar(entidade);
         if (mensagemValidacao == null){
-            if (!(repositorioEntidadeOperadora.incluirEntidadeOperadora(entidade))){
+            if (!(repositorioEntidadeOperadora.incluir(entidade))){
                 mensagemValidacao = "Entidade já existente";
             }
         }
@@ -100,7 +101,7 @@ public class MediatorEntidadeOperadora {
         String mensagemValidacao = validar(entidade);
 
         if (mensagemValidacao == null){
-            if (!(repositorioEntidadeOperadora.alterarEntidadeOperadora(entidade))){
+            if (!(repositorioEntidadeOperadora.alterar(entidade))){
                 mensagemValidacao = "Entidade inexistente";
             }
         }
@@ -112,14 +113,18 @@ public class MediatorEntidadeOperadora {
         if (1000000 < identificador || identificador < 100){
             return "Identificador deve estar entre 100 e 1000000.";
         }
-        return repositorioEntidadeOperadora.excluirEntidadeOperadora(identificador) ? null : "Entidade inexistente";
+        return repositorioEntidadeOperadora.excluir(identificador) ? null : "Entidade inexistente";
     }
 
     public EntidadeOperadora buscar(long identificador) throws FileNotFoundException {
         if (1000000 < identificador || identificador < 100){
             return null;
         }
-        return repositorioEntidadeOperadora.buscarEntidadeOperadora(identificador);
+        return repositorioEntidadeOperadora.buscar(identificador);
+    }
+
+    public List<EntidadeOperadora> buscarTodos() throws FileNotFoundException {
+        return repositorioEntidadeOperadora.buscarTodos();
     }
 
 

@@ -23,20 +23,8 @@ public class TelaGerenciarTituloDivida {
     }
 
     public void carregarTitulosDivida() throws IOException {
-        int cont = 0;
         titulosDivida.clear(); // Limpa a lista antes de carregar novamente
-        for (int i = 1; i <= 99999; i++) {
-            TituloDivida titulos = MediatorTituloDivida.getInstancia().buscar(i);
-            if (titulos != null) {
-                cont = 0;
-                this.titulosDivida.add(titulos);
-            } else {
-                cont++;
-                if (cont == 1000) {
-                    break;
-                }
-            }
-        }
+        titulosDivida.addAll(MediatorTituloDivida.getInstancia().buscarTodos());
     }
 
     public void atualizarComboBoxTitulos(JComboBox<String> comboBox) throws FileNotFoundException {

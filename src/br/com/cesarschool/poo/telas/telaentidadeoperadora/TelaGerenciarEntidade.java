@@ -23,20 +23,8 @@ public class TelaGerenciarEntidade {
     }
 
     public void carregarEntidadesOperadoras() throws FileNotFoundException {
-        int cont = 0;
         entidadesOperadoras.clear(); // Limpa a lista antes de carregar novamente
-        for (int i = 100; i <= 1000000; i++) {
-            EntidadeOperadora entidade = MediatorEntidadeOperadora.getInstancia().buscar(i);
-            if (entidade != null) {
-                cont = 0;
-                this.entidadesOperadoras.add(entidade);
-            } else {
-                cont++;
-                if (cont == 1000) {
-                    break;
-                }
-            }
-        }
+        entidadesOperadoras.addAll(MediatorEntidadeOperadora.getInstancia().buscarTodos());
     }
 
     public void atualizarComboBoxEntidades(JComboBox<String> comboBox) throws FileNotFoundException {

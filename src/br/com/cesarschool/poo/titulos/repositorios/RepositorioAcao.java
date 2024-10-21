@@ -1,6 +1,7 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
 import br.com.cesarschool.poo.titulos.entidades.Acao;
+import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -147,5 +148,23 @@ public class RepositorioAcao {
 		return null;
 	}
 	// OK
+
+	public List<Acao> buscarTodos () throws FileNotFoundException {
+		Scanner scan = new Scanner(arquivoAcao);
+		List<Acao> listaAcao = new ArrayList<>();
+		while (scan.hasNextLine()) {
+
+			String[] arrayLinha = scan.nextLine().split(";");
+
+			int identificadorArray = Integer.parseInt(arrayLinha[0]);
+			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
+			double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
+
+			listaAcao.add(new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray));
+
+		}
+		scan.close();
+		return listaAcao;
+	}
 
 }

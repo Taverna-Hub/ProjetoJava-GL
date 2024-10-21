@@ -1,5 +1,6 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 
 import java.io.File;
@@ -141,5 +142,24 @@ public class RepositorioTituloDivida {
 		}
 		scan.close();
 		return null;
+	}
+
+	public List<TituloDivida> buscarTodos () throws FileNotFoundException {
+		Scanner scan = new Scanner(arquivoTitulo);
+		List<TituloDivida> listaTitulos = new ArrayList<>();
+		while (scan.hasNextLine()) {
+
+			String[] arrayLinha = scan.nextLine().split(";");
+
+			int identificadorArray = Integer.parseInt(arrayLinha[0]);
+			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
+			double TaxaDeJurosArray = Double.parseDouble(arrayLinha[3]);
+
+			listaTitulos.add(new TituloDivida(identificadorArray, arrayLinha[1], dataArray, TaxaDeJurosArray));
+
+
+		}
+		scan.close();
+		return listaTitulos;
 	}
 }

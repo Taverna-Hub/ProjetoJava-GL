@@ -44,8 +44,8 @@ public class RepositorioTransacao {
 
 		FileWriter escreverLinha = new FileWriter(arquivoTransacao, true);
 
-		EntidadeOperadora entidadeCredito = new RepositorioEntidadeOperadora().buscarEntidadeOperadora(transacao.getEntidadeCredito().getIdentificador());
-		EntidadeOperadora entidadeDebito = new RepositorioEntidadeOperadora().buscarEntidadeOperadora(transacao.getEntidadeDebito().getIdentificador());
+		EntidadeOperadora entidadeCredito = new RepositorioEntidadeOperadora().buscar(transacao.getEntidadeCredito().getIdentificador());
+		EntidadeOperadora entidadeDebito = new RepositorioEntidadeOperadora().buscar(transacao.getEntidadeDebito().getIdentificador());
 		Acao acao;
 		TituloDivida tituloDivida;
 		if (ehAcao){
@@ -104,7 +104,7 @@ public class RepositorioTransacao {
 	}
 
 	public Transacao[] buscarPorEntidadeCredora(int identificadorEntidadeCredito) throws IOException {
-		EntidadeOperadora entidadeCredito = new RepositorioEntidadeOperadora().buscarEntidadeOperadora(identificadorEntidadeCredito);
+		EntidadeOperadora entidadeCredito = new RepositorioEntidadeOperadora().buscar(identificadorEntidadeCredito);
 
 		if (entidadeCredito == null){
 			return null;
@@ -132,7 +132,7 @@ public class RepositorioTransacao {
 			double valorOperacao = Double.parseDouble(linha[18]);
 			LocalDateTime horaOperacao = LocalDateTime.parse(linha[19]);
 
-			EntidadeOperadora entidadeDebito =  new RepositorioEntidadeOperadora().buscarEntidadeOperadora(identificadorEntidadeDebito);
+			EntidadeOperadora entidadeDebito =  new RepositorioEntidadeOperadora().buscar(identificadorEntidadeDebito);
 			Acao acao = new RepositorioAcao().buscar(identificadorAcao);
 			TituloDivida tituloDivida = new RepositorioTituloDivida().buscar(identificadorTituloDivida);
 
@@ -144,7 +144,7 @@ public class RepositorioTransacao {
 		return arrayDeTransacoes;
 	}
 	public Transacao[] buscarPorEntidadeDevedora(int identificadorEntidadeDebito) throws IOException {
-		EntidadeOperadora entidadeDebito = new RepositorioEntidadeOperadora().buscarEntidadeOperadora(identificadorEntidadeDebito);
+		EntidadeOperadora entidadeDebito = new RepositorioEntidadeOperadora().buscar(identificadorEntidadeDebito);
 
 		if (entidadeDebito == null){
 			return null;
@@ -172,7 +172,7 @@ public class RepositorioTransacao {
 			double valorOperacao = Double.parseDouble(linha[18]);
 			LocalDateTime horaOperacao = LocalDateTime.parse(linha[19]);
 
-			EntidadeOperadora entidadeCredito =  new RepositorioEntidadeOperadora().buscarEntidadeOperadora(identificadorEntidadeCredito);
+			EntidadeOperadora entidadeCredito =  new RepositorioEntidadeOperadora().buscar(identificadorEntidadeCredito);
 			Acao acao = new RepositorioAcao().buscar(identificadorAcao);
 			TituloDivida tituloDivida = new RepositorioTituloDivida().buscar(identificadorTituloDivida);
 
