@@ -220,7 +220,7 @@ public class MediatorOperacao {
         Transacao[] credora = repositorioTransacao.buscarPorEntidadeCredora(entidade);
         Transacao[] devedora = repositorioTransacao.buscarPorEntidadeDevedora(entidade);
 
-        Transacao[] extrato =new Transacao[credora.length + devedora.length];
+        Transacao[] extrato = new Transacao[credora.length + devedora.length];
 
         System.arraycopy(credora, 0, extrato, 0, credora.length);
         System.arraycopy(devedora, 0, extrato, credora.length, devedora.length);

@@ -43,14 +43,13 @@ public class BotaoArredondado extends JButton {
         Shape arredondado = new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), raio, raio);  // Cria bordas arredondadas
         g2.setColor(getBackground());
         g2.fill(arredondado);  // Preenche o botão com a cor de fundo
-
         // Se o mouse estiver sobre o botão, desenha uma borda de destaque
         if (mouseDentro) {
             g2.setColor(Color.BLACK);  // Define a cor da borda ao passar o mouse (pode ser alterada)
             g2.setStroke(new BasicStroke(2));  // Define a espessura da borda
             g2.draw(arredondado);  // Desenha a borda arredondada
         }
-
+        setForeground(Color.WHITE);
         g2.setColor(getForeground());  // Define a cor do texto
 
         g2.dispose();
