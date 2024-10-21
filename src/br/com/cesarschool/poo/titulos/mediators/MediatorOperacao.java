@@ -53,9 +53,9 @@ import java.util.Comparator;
  * entidade de d�bito. O saldo deve ser maior ou igual a valor. Se n�o for,
  * retornar a mensagem "Saldo da entidade d�bito insuficiente".
  * 
- * 8- Se ehAcao for true, verificar se valorUnitario da ação é maior do que
+ * 8- Se ehAcao for true, verificar se valorUnitario da acao é maior do que
  * valor. Se for, retornar a mensagem 
- * "Valor da operação e menor do que o valor unit�rio da ação"
+ * "Valor da operacao e menor do que o valor unit�rio da acao"
  * 
  * 9- Calcular o valor da opera��o. Se ehAcao for true, o valor da opera��o
  * � igual a valor. Se ehAcao for false, o valor da opera��o � igual ao 
@@ -64,7 +64,7 @@ import java.util.Comparator;
  * m�todo.
  * 
  *  10- Invocar o m�todo creditarSaldoAcao ou creditarSaldoTituloDivida da 
- *  entidade de cr�dito, passando o valor da operação.
+ *  entidade de cr�dito, passando o valor da operacao.
  *  
  *  11- Invocar o m�todo debitarSaldoAcao ou debitarSaldoTituloDivida da 
  *  entidade de d�bito, passando o valor da opera��o.
@@ -127,7 +127,7 @@ public class MediatorOperacao {
     public String realizarOperacao(boolean ehAcao, int entidadeCredito, int idEntidadeDebito, int idAcaoOuTitulo, double valor) throws IOException {
 
         if (valor <= 0) {
-            return "Valor Inválido";
+            return "Valor Invalido";
         }
 
         EntidadeOperadora entidadeCreditoObj = mediatorEntidadeOperadora.buscar(entidadeCredito);
@@ -141,11 +141,11 @@ public class MediatorOperacao {
         }
 
         if (ehAcao && !entidadeCreditoObj.getAutorizadoAcao()) {
-            return "Entidade de crédito não autorizada para ação";
+            return "Entidade de crédito nao autorizada para acao";
         }
 
         if (ehAcao && !entidadeDebitoObj.getAutorizadoAcao()) {
-            return "Entidade de débito não foi autorizada para ação";
+            return "Entidade de débito nao foi autorizada para acao";
         }
 
         Acao acao = null;
@@ -153,7 +153,7 @@ public class MediatorOperacao {
         if (ehAcao) {
             acao = mediatorAcao.buscar(idAcaoOuTitulo);
             if (acao == null) {
-                return "Ação inexistente";
+                return "Acao inexistente";
             }
         }
         else {
@@ -171,7 +171,7 @@ public class MediatorOperacao {
         }
 
         if (ehAcao && acao.getValorUnitario() > valor) {
-            return "Valor da operação e menor do que o valor unitário da ação";
+            return "Valor da operacao e menor do que o valor unitario da acao";
         }
 
         double valorOperacao;

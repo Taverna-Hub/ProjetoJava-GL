@@ -115,7 +115,7 @@ public class MediatorTituloDivida {
             return null;
         }
         else {
-            return "Titulo já existente.";
+            return "Titulo ja existente.";
         }
     }
 
@@ -130,7 +130,7 @@ public class MediatorTituloDivida {
             return null;
         }
         else {
-            return "Titulo já existente";
+            return "Titulo ja existente";
         }
 
     }

@@ -4,6 +4,7 @@ import br.com.cesarschool.poo.telas.TelaUtils.BotaoArredondado;
 import br.com.cesarschool.poo.telas.telaacao.TelaGerenciarAcao;
 import br.com.cesarschool.poo.telas.telaacao.TelaIncluirAcao;
 import br.com.cesarschool.poo.telas.telaacao.TelaPrincipalAcao;
+import br.com.cesarschool.poo.telas.telatitulodividas.TelaGerenciarTituloDivida;
 import br.com.cesarschool.poo.telas.telatitulodividas.TelaPrincipalTituloDividas;
 import br.com.cesarschool.poo.telas.telaoperacao.TelaPrincipalOperacoes;
 import br.com.cesarschool.poo.telas.telaentidadeoperadora.TelaPrincipalEntidadeOperadora;
@@ -11,13 +12,14 @@ import br.com.cesarschool.poo.telas.telaentidadeoperadora.TelaPrincipalEntidadeO
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class TelaInicial extends JFrame {
 
     private CardLayout cardLayout;
     private JPanel painelPrincipal;
 
-    public TelaInicial() throws FileNotFoundException {
+    public TelaInicial() throws IOException {
 
         setTitle("Tela Inicial");
         setSize(600, 400);
@@ -99,7 +101,20 @@ public class TelaInicial extends JFrame {
 
         // Navegar para as respectivas telas
         botaoAcao.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Ação"));
-        botaoTituloDivida.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Titulo Divida"));
+        botaoTituloDivida.addActionListener(e -> {
+            try {
+                // Cria uma nova tela de entidade operadora com as atualizações
+                JPanel telaTituloDividaPanelAtualizada = new TelaPrincipalTituloDividas(cardLayout, painelPrincipal).criarTelaTituloDivida();
+                painelPrincipal.add(telaTituloDividaPanelAtualizada, "Tela Titulo Divida");
+
+                // Navega para a tela de entidade operadora
+                cardLayout.show(painelPrincipal, "Tela Titulo Divida");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao carregar os Titulos!", "Erro", JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        });
         botaoOperacao.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Operações"));
         botaoEntidadeOperadora.addActionListener(e -> {
             try {
@@ -120,7 +135,7 @@ public class TelaInicial extends JFrame {
         return telaInicialPanel;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         TelaInicial tela = new TelaInicial();
         tela.setVisible(true);
     }
