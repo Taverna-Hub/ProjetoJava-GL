@@ -8,6 +8,7 @@ import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import br.com.cesarschool.poo.titulos.mediators.MediatorAcao;
 import br.com.cesarschool.poo.titulos.mediators.MediatorEntidadeOperadora;
+import br.com.cesarschool.poo.titulos.mediators.MediatorOperacao;
 import br.com.cesarschool.poo.titulos.mediators.MediatorTituloDivida;
 
 import javax.swing.*;
@@ -41,6 +42,16 @@ public class TelaTransacao extends JPanel{
         listaEntidade.addAll(MediatorEntidadeOperadora.getInstancia().buscarTodos());
 
     }
+    String toString(EntidadeOperadora e1){
+        return (e1.getIdentificador() + " - " + e1.getNome() + " : " + e1.getSaldoAcao());
+    }
+    String toString(TituloDivida td1){
+        return (td1.getIdentificador() + " - " + td1.getNome() + " : " + td1.getTaxaJuros());
+    }
+    String toString(Acao a1){
+        return (a1.getIdentificador() + " - " + a1.getNome() + " : " + a1.getValorUnitario());
+    }
+
 
     public void atualizarCombosBoxEntidades(JComboBox<String> comboBox1, JComboBox<String> comboBox2, JComboBox<String> comboBox3, JComboBox<String> comboBox4) throws FileNotFoundException {
         comboBox1.removeAllItems();
@@ -49,14 +60,14 @@ public class TelaTransacao extends JPanel{
         comboBox4.removeAllItems();
 
         for (EntidadeOperadora entidade : listaEntidade) {
-            comboBox1.addItem(entidade.getIdentificador() + " - " + entidade.getNome());
-            comboBox2.addItem(entidade.getIdentificador() + " - " + entidade.getNome());
+            comboBox1.addItem(toString(entidade));
+            comboBox2.addItem(toString(entidade));
         }
         for (Acao acao : listaAcao) {
-            comboBox3.addItem(acao.getIdentificador() + " - " + acao.getNome());
+            comboBox3.addItem(toString(acao));
         }
         for (TituloDivida titulo : listaTitulo) {
-            comboBox4.addItem(titulo.getIdentificador() + " - " + titulo.getNome());
+            comboBox4.addItem(toString(titulo));
         }
 
     }
@@ -131,8 +142,20 @@ public class TelaTransacao extends JPanel{
             int idDebito = Integer.parseInt(idCreditoString.split(" - ")[0]);
             String idAtivoString = action.get() ? Objects.requireNonNull(comboAcao.getSelectedItem()).toString() : Objects.requireNonNull(comboTitulo.getSelectedItem()).toString();
             int idAtivo = Integer.parseInt(idAtivoString.split(" - ")[0]);
+            double valor = Double.parseDouble(valorField.getText());
+            try {
+                String message = MediatorOperacao.getInstancia().realizarOperacao(action.get(), idCredito, idDebito, idAtivo, valor);
+                if (message == null){
+                   message = "Sucesso!";
+                }
+                    JOptionPane.showMessageDialog(null, message,  "Confirmacao", JOptionPane.INFORMATION_MESSAGE);
+                if (message.equals("Sucesso!")){
+                    cardLayout.show(painelPrincipal, "Tela Inicial");
+                }
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
 
-            cardLayout.show(painelPrincipal, "Tela Inicial");
         });
 
         transacaoPanel.add(botaoVoltar);
