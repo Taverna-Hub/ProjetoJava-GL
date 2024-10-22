@@ -59,7 +59,7 @@ public class TelaIncluirAcao extends JFrame {
 
             double valor = valorString.isBlank() ? -1 : Double.parseDouble(valorString);
 
-            LocalDate data = dataValidade.isBlank() ? LocalDate.now().plusDays(31) : LocalDate.parse(dataValidade, formatter);
+            LocalDate data = dataValidade.isBlank() ? LocalDate.now() : LocalDate.parse(dataValidade, formatter);
 
             Acao novaAcao = new Acao(id, nome, data, valor);
 
