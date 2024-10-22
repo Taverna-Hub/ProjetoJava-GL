@@ -1,7 +1,11 @@
 package br.com.cesarschool.poo.telas.telaoperacao;
 
 import br.com.cesarschool.poo.telas.TelaUtils.BotaoArredondado;
+import br.com.cesarschool.poo.telas.TelaUtils.StyledCheckBox;
+import br.com.cesarschool.poo.telas.TelaUtils.TextFieldComPlaceholder;
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.com.cesarschool.poo.titulos.entidades.Transacao;
+import br.com.cesarschool.poo.titulos.mediators.MediatorEntidadeOperadora;
 import br.com.cesarschool.poo.titulos.mediators.MediatorOperacao;
 
 import javax.swing.*;
@@ -13,100 +17,81 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TelaExtrato extends JPanel {
 
-    private final MediatorOperacao mediatorOperacao = MediatorOperacao.getInstancia();
-
-    private JComboBox<String> idExtratoComboBox;
+    private  List<EntidadeOperadora> entidades = new ArrayList<>();
+    private JComboBox<String> idExtratoComboBox = new JComboBox<>();
     private CardLayout cardLayout;
     private JPanel painelPrincipal;
 
     public TelaExtrato(CardLayout cardLayout, JPanel painelPrincipal) {
         this.cardLayout = cardLayout;
         this.painelPrincipal = painelPrincipal;
-        setLayout(new BorderLayout());
-        add(extratoIdentificador(), BorderLayout.CENTER);
-    }
-
-    public JPanel extratoIdentificador() {
-
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.decode(BotaoArredondado.FUNDO));
-        panel.setLayout(null);
-
-        JLabel heading = new JLabel("Insira o Identificador da Entidade");
-        heading.setBounds(266, 37, 68, 24);
-        panel.add(heading);
-
-        idExtratoComboBox = new JComboBox<>();
-        idExtratoComboBox.setBounds(190, 134, 220, 38);
-        idExtratoComboBox.setBorder(BorderFactory.createLineBorder(Color.decode(BotaoArredondado.LARANJA)));
-        idExtratoComboBox.setBackground(Color.decode(BotaoArredondado.FUNDO));
-        panel.add(idExtratoComboBox);
-
-        BotaoArredondado btnBuscar = new BotaoArredondado("Buscar", 20);
-        btnBuscar.setBounds(251, 200, 90, 29);
-        btnBuscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e ){
-                String identificadorStr = idExtratoComboBox.getSelectedItem() != null ?
-                        idExtratoComboBox.getSelectedItem().toString().split(" - ")[0] : "";
-
-                if (identificadorStr.isEmpty()) {
-                    JOptionPane.showMessageDialog(panel, "Identificador inválido selecionado. Por favor, selecione um identificador válido.", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                List<Transacao> extrato = null;
-                try {
-                    extrato = mediatorOperacao.buscarTodos();
-                } catch (FileNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
-                if (extrato.isEmpty()) {
-                    JOptionPane.showMessageDialog(panel, "Nenhum extrato encontrado para o identificador selecionado.", "Informação", JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
-
-                gerarExtrato(extrato);
-            }
-        });
-
-        panel.add(btnBuscar);
-        return panel;
 
     }
 
-    public void gerarExtrato(List<Transacao> extrato) {
-        removeAll();
-        revalidate();
-        repaint();
+    private void carregarLista() throws FileNotFoundException {
+        entidades = (MediatorEntidadeOperadora.getInstancia().buscarTodos());
+    }
 
-        String[] columnNames = {"Credor", "Debitor", "Modo", "Valor", "Data"};
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-
-        for (Transacao transacao : extrato) {
-            Object[] row = {transacao.getEntidadeCredito(), transacao.getEntidadeDebito(),
-                            transacao.getAcao() != null ? transacao.getAcao() : transacao.getTituloDivida(),
-                            transacao.getValorOperacao(), transacao.getDataHoraOperacao()};
-            model.addRow(row);
+    private void carregarCombo(){
+        idExtratoComboBox.removeAllItems();
+        for (EntidadeOperadora entidade : entidades){
+            idExtratoComboBox.addItem(entidade.getIdentificador() + " - " + entidade.getNome());
         }
 
-        JTable table = new JTable(model);
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(600, 400));
-        add(scrollPane, BorderLayout.CENTER);
-
-        JButton btnVoltar = new JButton("Voltar");
-        btnVoltar.addActionListener(e-> {
-           cardLayout.show(painelPrincipal, "Tela Operacoes");
-        });
-
-        JPanel btnPanel = new JPanel();
-        btnPanel.add(btnVoltar);
-        add(btnPanel, BorderLayout.SOUTH);
-
-        revalidate();
-        repaint();
     }
+
+    public JPanel criarTelaExtrato() throws IOException {
+        JPanel extratoPanel = new JPanel(null);
+        extratoPanel.setBackground(Color.decode(BotaoArredondado.FUNDO));
+        BotaoArredondado botaoVoltar = new BotaoArredondado("Voltar", 20);
+
+
+        carregarLista();
+        carregarCombo();
+        BotaoArredondado botaoBuscar = new BotaoArredondado("Buscar", 20);
+        idExtratoComboBox.setBounds(207, 166, 187, 34);
+        botaoBuscar.setBounds(215, 230, 170, 40);
+
+        botaoBuscar.setBackground(Color.decode(BotaoArredondado.MARROM));
+
+        botaoVoltar.setBounds(20, 15, 87, 40);
+        botaoVoltar.setBackground(Color.decode(BotaoArredondado.LARANJA));
+
+
+        botaoBuscar.addActionListener(e-> {
+           String idString = String.valueOf(idExtratoComboBox.getSelectedItem()).split(" - ")[0];
+           int id = Integer.parseInt(idString);
+            try {
+                if (MediatorOperacao.getInstancia().gerarExtrato(id) == null){
+                    JOptionPane.showMessageDialog(null, "Erro: A entidade não tem transações", "Confirmacao", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+                else {
+                    // Criar nova tela de extrato de transações
+                    TelaExtratoTabela telaTabela = new TelaExtratoTabela(cardLayout, painelPrincipal, id);
+                    JPanel painelTabela = telaTabela.criarTelaTabela();
+
+                    // Adicionar a tela da tabela ao painel principal e exibir
+                    painelPrincipal.add(painelTabela, "TelaTabelaExtrato");
+                    cardLayout.show(painelPrincipal, "TelaTabelaExtrato");
+                }
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        botaoVoltar.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Inicial"));
+
+        extratoPanel.add(botaoVoltar);
+        extratoPanel.add(botaoBuscar);
+        extratoPanel.add(idExtratoComboBox);
+
+        return extratoPanel;
+    }
+
+
 }

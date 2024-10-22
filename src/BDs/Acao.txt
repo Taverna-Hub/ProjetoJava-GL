@@ -4,3 +4,4 @@
 100;aaaaaaaaaaaaa;2024-11-21;2.0;
 101;Luan hiroshi;2025-10-07;1.0;
 1233;aaaaaaaaaaaaaaa;9999-10-01;123.0;
+70;SERASA CONTRIBUICAO;2026-12-08;20.0;

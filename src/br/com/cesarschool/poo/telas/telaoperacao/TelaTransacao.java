@@ -77,7 +77,8 @@ public class TelaTransacao extends JPanel{
         transacaoPanel.setBackground(Color.decode(BotaoArredondado.FUNDO));
         AtomicBoolean action = new AtomicBoolean(true);
         BotaoArredondado botaoVoltar = new BotaoArredondado("Voltar", 20);
-
+        JLabel creditoLabel = new JLabel("entidade Credido");
+        JLabel debitoLabel = new JLabel("entidade Credido");
         TextFieldComPlaceholder valorField = new TextFieldComPlaceholder("Valor");
         StyledCheckBox acaoCheck = new StyledCheckBox("acao", Color.decode(BotaoArredondado.MARROM),  Color.WHITE);
         StyledCheckBox tituloCheck = new StyledCheckBox("Titulo Divida", Color.decode(BotaoArredondado.MARROM), Color.WHITE);
@@ -92,6 +93,11 @@ public class TelaTransacao extends JPanel{
         carregar();
         atualizarCombosBoxEntidades(comboDebito, comboCredito, comboAcao, comboTitulo);
         BotaoArredondado botaoInserir = new BotaoArredondado("transferir", 20);
+
+        creditoLabel.setBounds(76, 72, 166, 24);
+        debitoLabel.setBounds(317, 72, 166, 24);
+        creditoLabel.setForeground(Color.WHITE);
+        debitoLabel.setForeground(Color.WHITE);
 
         comboDebito.setBounds(76, 103, 187, 34);
         comboCredito.setBounds(313, 103, 187, 34);
@@ -139,7 +145,7 @@ public class TelaTransacao extends JPanel{
             String idCreditoString = Objects.requireNonNull(comboCredito.getSelectedItem()).toString();
             int idCredito = Integer.parseInt(idCreditoString.split(" - ")[0]);
             String idDebitoString = Objects.requireNonNull(comboDebito.getSelectedItem()).toString();
-            int idDebito = Integer.parseInt(idCreditoString.split(" - ")[0]);
+            int idDebito = Integer.parseInt(idDebitoString.split(" - ")[0]);
             String idAtivoString = action.get() ? Objects.requireNonNull(comboAcao.getSelectedItem()).toString() : Objects.requireNonNull(comboTitulo.getSelectedItem()).toString();
             int idAtivo = Integer.parseInt(idAtivoString.split(" - ")[0]);
             double valor = Double.parseDouble(valorField.getText());
@@ -167,6 +173,8 @@ public class TelaTransacao extends JPanel{
         transacaoPanel.add(comboTitulo);
         transacaoPanel.add(tituloCheck);
         transacaoPanel.add(botaoInserir);
+        transacaoPanel.add(debitoLabel);
+        transacaoPanel.add(creditoLabel);
 
         return transacaoPanel;
     }

@@ -23,6 +23,8 @@ public class TelaPrincipalOperacoes {
 
         JPanel telaTransacao = new TelaTransacao(cardLayout, painelPrincipal).criarTelaTransacao();
         painelPrincipal.add(telaTransacao, "Tela Transacao");
+        JPanel telaExtratoPanel = new TelaExtrato(cardLayout, painelPrincipal).criarTelaExtrato();
+        painelPrincipal.add(telaExtratoPanel, "Tela Extrato");
     }
 
     public JPanel criarTelaOperacoes() {
@@ -54,8 +56,6 @@ public class TelaPrincipalOperacoes {
 
 
         botaoExtrato.addActionListener(e-> {
-            JPanel telaExtratoPanel = new TelaExtrato(cardLayout, painelPrincipal);
-            painelPrincipal.add(telaExtratoPanel, "Tela Extrato");
             cardLayout.show(painelPrincipal, "Tela Extrato");
         });
         botaoTransacao.addActionListener(e-> cardLayout.show(painelPrincipal, "Tela Transacao"));
