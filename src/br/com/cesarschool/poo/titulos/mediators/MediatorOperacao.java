@@ -55,7 +55,7 @@ import java.util.List;
  * entidade de d�bito. O saldo deve ser maior ou igual a valor. Se n�o for,
  * retornar a mensagem "Saldo da entidade d�bito insuficiente".
  * 
- * 8- Se ehAcao for true, verificar se valorUnitario da acao é maior do que
+ * 8- Se ehAcao for true, verificar se valorUnitario da acao e maior do que
  * valor. Se for, retornar a mensagem 
  * "Valor da operacao e menor do que o valor unit�rio da acao"
  * 
@@ -134,7 +134,7 @@ public class MediatorOperacao {
 
         EntidadeOperadora entidadeCreditoObj = mediatorEntidadeOperadora.buscar(entidadeCredito);
         if (entidadeCreditoObj == null) {
-            return "Entidade crédito inexistente";
+            return "Entidade credito inexistente";
         }
 
         EntidadeOperadora entidadeDebitoObj = mediatorEntidadeOperadora.buscar(idEntidadeDebito);
@@ -143,11 +143,11 @@ public class MediatorOperacao {
         }
 
         if (ehAcao && !entidadeCreditoObj.getAutorizadoAcao()) {
-            return "Entidade de crédito nao autorizada para acao";
+            return "Entidade de credito nao autorizada para acao";
         }
 
         if (ehAcao && !entidadeDebitoObj.getAutorizadoAcao()) {
-            return "Entidade de débito nao foi autorizada para acao";
+            return "Entidade de debito nao foi autorizada para acao";
         }
 
         Acao acao = null;
@@ -166,10 +166,10 @@ public class MediatorOperacao {
         }
 
         if (ehAcao && entidadeDebitoObj.getSaldoAcao() < valor) {
-            return "Saldo da entidade débito insuficiente";
+            return "Saldo da entidade debito insuficiente";
         }
         else if (!ehAcao && entidadeDebitoObj.getSaldoTituloDivida() < valor) {
-            return "Saldo da entidade débito insuficiente";
+            return "Saldo da entidade debito insuficiente";
         }
 
         if (ehAcao && acao.getValorUnitario() > valor) {

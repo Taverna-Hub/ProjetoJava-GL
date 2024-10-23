@@ -9,16 +9,11 @@ import br.com.cesarschool.poo.titulos.mediators.MediatorEntidadeOperadora;
 import br.com.cesarschool.poo.titulos.mediators.MediatorOperacao;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TelaExtrato extends JPanel {
 
@@ -72,11 +67,9 @@ public class TelaExtrato extends JPanel {
 
                 }
                 else {
-                    // Criar nova tela de extrato de transações
                     TelaExtratoTabela telaTabela = new TelaExtratoTabela(cardLayout, painelPrincipal, id);
                     JPanel painelTabela = telaTabela.criarTelaTabela();
 
-                    // Adicionar a tela da tabela ao painel principal e exibir
                     painelPrincipal.add(painelTabela, "TelaTabelaExtrato");
                     cardLayout.show(painelPrincipal, "TelaTabelaExtrato");
                 }

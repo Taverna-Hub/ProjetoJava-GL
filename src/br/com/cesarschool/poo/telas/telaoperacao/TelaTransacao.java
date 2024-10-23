@@ -77,8 +77,8 @@ public class TelaTransacao extends JPanel{
         transacaoPanel.setBackground(Color.decode(BotaoArredondado.FUNDO));
         AtomicBoolean action = new AtomicBoolean(true);
         BotaoArredondado botaoVoltar = new BotaoArredondado("Voltar", 20);
+        JLabel debitoLabel = new JLabel("entidade Debito");
         JLabel creditoLabel = new JLabel("entidade Credido");
-        JLabel debitoLabel = new JLabel("entidade Credido");
         TextFieldComPlaceholder valorField = new TextFieldComPlaceholder("Valor");
         StyledCheckBox acaoCheck = new StyledCheckBox("acao", Color.decode(BotaoArredondado.MARROM),  Color.WHITE);
         StyledCheckBox tituloCheck = new StyledCheckBox("Titulo Divida", Color.decode(BotaoArredondado.MARROM), Color.WHITE);
@@ -94,10 +94,10 @@ public class TelaTransacao extends JPanel{
         atualizarCombosBoxEntidades(comboDebito, comboCredito, comboAcao, comboTitulo);
         BotaoArredondado botaoInserir = new BotaoArredondado("transferir", 20);
 
-        creditoLabel.setBounds(76, 72, 166, 24);
-        debitoLabel.setBounds(317, 72, 166, 24);
-        creditoLabel.setForeground(Color.WHITE);
+        debitoLabel.setBounds(76, 72, 166, 24);
+        creditoLabel.setBounds(317, 72, 166, 24);
         debitoLabel.setForeground(Color.WHITE);
+        creditoLabel.setForeground(Color.WHITE);
 
         comboDebito.setBounds(76, 103, 187, 34);
         comboCredito.setBounds(313, 103, 187, 34);
@@ -119,23 +119,23 @@ public class TelaTransacao extends JPanel{
 
         acaoCheck.addItemListener(e -> {
             if (acaoCheck.isSelected()) {
-                tituloCheck.setSelected(false); // Desmarca o outro checkbox
-                comboAcao.setVisible(true);     // Mostra o campo de ação
+                tituloCheck.setSelected(false);
+                comboAcao.setVisible(true);
                 comboTitulo.setVisible(false);
-                action.set(true);   // Esconde o campo de ação// Esconde o campo de título de dívida
+                action.set(true);
             } else {
-                comboAcao.setVisible(false); // Esconde o campo se desmarcado
+                comboAcao.setVisible(false);
             }
         });
 
         tituloCheck.addItemListener(e -> {
             if (tituloCheck.isSelected()) {
-                acaoCheck.setSelected(false); // Desmarca o outro checkbox
-                comboTitulo.setVisible(true);  // Mostra o campo de título de dívida
+                acaoCheck.setSelected(false);
+                comboTitulo.setVisible(true);
                 comboAcao.setVisible(false);
-                action.set(false);  // Esconde o campo de ação
+                action.set(false);
             } else {
-                comboTitulo.setVisible(false); // Esconde o campo se desmarcado
+                comboTitulo.setVisible(false);
             }
         });
 
@@ -173,8 +173,8 @@ public class TelaTransacao extends JPanel{
         transacaoPanel.add(comboTitulo);
         transacaoPanel.add(tituloCheck);
         transacaoPanel.add(botaoInserir);
-        transacaoPanel.add(debitoLabel);
         transacaoPanel.add(creditoLabel);
+        transacaoPanel.add(debitoLabel);
 
         return transacaoPanel;
     }

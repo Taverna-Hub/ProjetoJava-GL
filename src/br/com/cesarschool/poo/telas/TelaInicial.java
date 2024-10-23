@@ -4,6 +4,8 @@ import br.com.cesarschool.poo.telas.TelaUtils.BotaoArredondado;
 import br.com.cesarschool.poo.telas.telaacao.TelaGerenciarAcao;
 import br.com.cesarschool.poo.telas.telaacao.TelaIncluirAcao;
 import br.com.cesarschool.poo.telas.telaacao.TelaPrincipalAcao;
+import br.com.cesarschool.poo.telas.telaoperacao.TelaExtrato;
+import br.com.cesarschool.poo.telas.telaoperacao.TelaTransacao;
 import br.com.cesarschool.poo.telas.telatitulodividas.TelaPrincipalTituloDividas;
 import br.com.cesarschool.poo.telas.telaoperacao.TelaPrincipalOperacoes;
 import br.com.cesarschool.poo.telas.telaentidadeoperadora.TelaPrincipalEntidadeOperadora;
@@ -99,12 +101,11 @@ public class TelaInicial extends JFrame {
         telaInicialPanel.add(botaoEncerrar);
 
         // Navegar para as respectivas telas
+
         botaoAcao.addActionListener(e -> {
             try {
-                // Cria uma nova tela de entidade operadora com as atualizações
                 JPanel telaAcaoPanelAtualizada = new TelaPrincipalAcao(cardLayout, painelPrincipal).criarTelaPrincipalAcao();
                 painelPrincipal.add(telaAcaoPanelAtualizada, "Tela Acao");
-                // Navega para a tela do respectivo mediator
                 cardLayout.show(painelPrincipal, "Tela Acao");
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao carregar as Acoes!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -121,7 +122,20 @@ public class TelaInicial extends JFrame {
             }
 
         });
-        botaoOperacao.addActionListener(e -> cardLayout.show(painelPrincipal, "Tela Operações"));
+        botaoOperacao.addActionListener(e -> {
+            try {
+                JPanel telaTransacaoPanelAtualizada = new TelaTransacao(cardLayout, painelPrincipal).criarTelaTransacao();
+                JPanel telaExtratoAtualizada = new TelaExtrato(cardLayout, painelPrincipal).criarTelaExtrato();
+                JPanel telaOperacaoAtualizada = new TelaPrincipalOperacoes(cardLayout, painelPrincipal).criarTelaOperacoes();
+                painelPrincipal.add(telaOperacaoAtualizada, "Tela Operacoes");
+                painelPrincipal.add(telaTransacaoPanelAtualizada, "Tela Transacao");
+                painelPrincipal.add(telaExtratoAtualizada, "Tela Extrato");
+                cardLayout.show(painelPrincipal, "Tela Operacoes");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao carregar as Transacoes!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         botaoEntidadeOperadora.addActionListener(e -> {
             try {
                 JPanel telaEntidadeOperadoraPanelAtualizada = new TelaPrincipalEntidadeOperadora(cardLayout, painelPrincipal).criarTelaEntidadeOperadora();
