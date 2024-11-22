@@ -152,7 +152,7 @@ public class MediatorTituloDivida {
 
     }
 
-    public List<TituloDivida> buscarTodos() throws FileNotFoundException {
+    public TituloDivida[] buscarTodos() throws FileNotFoundException {
         return repositorioTituloDivida.buscarTodos();
     }
 

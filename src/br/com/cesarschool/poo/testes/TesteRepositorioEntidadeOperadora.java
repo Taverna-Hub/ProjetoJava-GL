@@ -3,6 +3,7 @@ package br.com.cesarschool.poo.testes;
 import br.com.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioGeral;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

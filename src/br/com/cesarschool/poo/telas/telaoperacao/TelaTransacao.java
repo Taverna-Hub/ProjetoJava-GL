@@ -16,6 +16,7 @@ import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -37,9 +38,9 @@ public class TelaTransacao extends JPanel{
         listaEntidade.clear();
         listaAcao.clear();
         listaTitulo.clear();
-        listaTitulo.addAll(MediatorTituloDivida.getInstancia().buscarTodos());
-        listaAcao.addAll(MediatorAcao.getInstancia().buscarTodos());
-        listaEntidade.addAll(MediatorEntidadeOperadora.getInstancia().buscarTodos());
+        listaTitulo.addAll(Arrays.stream(MediatorTituloDivida.getInstancia().buscarTodos()).toList());
+        listaAcao.addAll(Arrays.stream(MediatorAcao.getInstancia().buscarTodos()).toList());
+        listaEntidade.addAll(Arrays.stream(MediatorEntidadeOperadora.getInstancia().buscarTodos()).toList());
 
     }
     String toString(EntidadeOperadora e1){

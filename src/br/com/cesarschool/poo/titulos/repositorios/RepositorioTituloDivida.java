@@ -36,130 +36,31 @@ import java.util.Scanner;
  * objeto. Caso o identificador n�o seja encontrado no arquivo, retornar null.   
  */
 
-public class RepositorioTituloDivida {
-	File arquivoTitulo = new File("src/BDs/TituloDivida.txt");
+public class RepositorioTituloDivida extends RepositorioGeral{
 
-	public boolean incluir(TituloDivida tituloDivida) throws IOException {
-		if (buscar(tituloDivida.getIdentificador()) != null) {
-			return false;
-		}
-		FileWriter escreverLinha = new FileWriter(arquivoTitulo, true);
-
-
-		String identificadorString = String.valueOf(tituloDivida.getIdentificador());
-		String dataString = String.valueOf(tituloDivida.getDataDeValidade());
-		String valorString = String.valueOf(tituloDivida.getTaxaJuros());
-
-		String linhaCompleta = identificadorString + ";" + tituloDivida.getNome() + ";" + dataString + ";" + valorString + ";\n";
-
-		escreverLinha.write(linhaCompleta);
-		escreverLinha.close();
-
-		return true;
+	public RepositorioTituloDivida() {
+		super(TituloDivida.class);
 	}
 
-	public boolean alterar(TituloDivida tituloDivida) throws IOException {
+	public boolean incluir(TituloDivida tituloDivida) {
 
-		if (buscar(tituloDivida.getIdentificador()) == null){
-			return false;
-		}
-
-		Scanner SCAN = new Scanner(arquivoTitulo);
-		List<String> linhasDoArquivo = new ArrayList<>();
-
-		while (SCAN.hasNextLine()){
-			linhasDoArquivo.add(SCAN.nextLine());
-
-		}
-		FileWriter escreverLinha = new FileWriter(arquivoTitulo);
-
-		for (String linha : linhasDoArquivo){
-
-			String[] arrayLinha = linha.split(";");
-
-			int identificadorArray = Integer.parseInt(arrayLinha[0]);
-			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
-			double TaxaDeJurosArray = Double.parseDouble(arrayLinha[3]);
-			if (tituloDivida.getIdentificador() != identificadorArray){
-				incluir(new TituloDivida(identificadorArray, arrayLinha[1], dataArray, TaxaDeJurosArray));
-
-			}
-			else {
-				incluir(tituloDivida);
-
-			}
-
-		}
-
-		return true;
+		return false;
 	}
 
-	public boolean excluir(int identificador) throws IOException {
-		if (buscar(identificador) == null){
-			return false;
-		}
+	public boolean alterar(TituloDivida tituloDivida)  {
 
-		Scanner SCAN = new Scanner(arquivoTitulo);
-		List<String> linhasDoArquivo = new ArrayList<>();
-
-		while (SCAN.hasNextLine()){
-			linhasDoArquivo.add(SCAN.nextLine());
-
-		}
-		FileWriter escreverLinha = new FileWriter(arquivoTitulo);
-
-		for (String linha : linhasDoArquivo){
-
-			String[] arrayLinha = linha.split(";");
-
-			int identificadorArray = Integer.parseInt(arrayLinha[0]);
-			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
-			double taxaDeJurosArray = Double.parseDouble(arrayLinha[3]);
-			if (identificador != identificadorArray){
-				incluir(new TituloDivida(identificadorArray, arrayLinha[1], dataArray, taxaDeJurosArray));
-
-			}
-
-		}
-
-		return true;
+		return false;
 	}
 
-	public TituloDivida buscar(int identificador) throws FileNotFoundException {
-		Scanner scan = new Scanner(arquivoTitulo);
-		while (scan.hasNextLine()) {
+	public boolean excluir(int identificador)  {
+		return false;
+	}
 
-			String[] arrayLinha = scan.nextLine().split(";");
-
-			int identificadorArray = Integer.parseInt(arrayLinha[0]);
-			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
-			double TaxaDeJurosArray = Double.parseDouble(arrayLinha[3]);
-
-			if (identificador == identificadorArray) {
-				scan.close();
-				return new TituloDivida(identificadorArray, arrayLinha[1], dataArray, TaxaDeJurosArray);
-			}
-		}
-		scan.close();
+	public TituloDivida buscar(int identificador)  {
 		return null;
 	}
 
-	public List<TituloDivida> buscarTodos () throws FileNotFoundException {
-		Scanner scan = new Scanner(arquivoTitulo);
-		List<TituloDivida> listaTitulos = new ArrayList<>();
-		while (scan.hasNextLine()) {
-
-			String[] arrayLinha = scan.nextLine().split(";");
-
-			int identificadorArray = Integer.parseInt(arrayLinha[0]);
-			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
-			double TaxaDeJurosArray = Double.parseDouble(arrayLinha[3]);
-
-			listaTitulos.add(new TituloDivida(identificadorArray, arrayLinha[1], dataArray, TaxaDeJurosArray));
-
-
-		}
-		scan.close();
-		return listaTitulos;
+	public TituloDivida[] buscarTodos ()  {
+		return null;
 	}
 }

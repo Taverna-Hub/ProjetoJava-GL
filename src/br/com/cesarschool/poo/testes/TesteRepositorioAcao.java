@@ -3,6 +3,7 @@ package br.com.cesarschool.poo.testes;
 import br.com.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.com.cesarschool.poo.titulos.entidades.Acao;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioGeral;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +20,7 @@ public class TesteRepositorioAcao extends TesteGeral{
         DAOSerializadorObjetos dao = DAO.getDao();
         Assertions.assertNotNull(dao);
     }
+
     @Test
     public void testDAO01() {
         excluirArquivosDiretorio(NOME_DIR_ACAO);
@@ -31,6 +33,7 @@ public class TesteRepositorioAcao extends TesteGeral{
         Assertions.assertNotNull(acao1.getDataHoraInclusao());
         Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(acao, acao1));
     }
+
     @Test
     public void testDAO02() {
         excluirArquivosDiretorio(NOME_DIR_ACAO);
@@ -39,6 +42,7 @@ public class TesteRepositorioAcao extends TesteGeral{
         Assertions.assertFalse(DAO.incluir(acao));
         Assertions.assertEquals(obterQtdArquivosDir(NOME_DIR_ACAO), 1);
     }
+
     @Test
     public void testDAO03() {
         excluirArquivosDiretorio(NOME_DIR_ACAO);
@@ -52,6 +56,7 @@ public class TesteRepositorioAcao extends TesteGeral{
         Assertions.assertNotNull(acao1.getDataHoraUltimaAlteracao());
         Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(acaoAlt, acao1));
     }
+
     @Test
     public void testDAO04() {
         excluirArquivosDiretorio(NOME_DIR_ACAO);
@@ -61,6 +66,7 @@ public class TesteRepositorioAcao extends TesteGeral{
         Assertions.assertFalse(DAO.alterar(acaoAlt));
         Assertions.assertEquals(obterQtdArquivosDir(NOME_DIR_ACAO), 1);
     }
+
     @Test
     public void testDAO05() {
         excluirArquivosDiretorio(NOME_DIR_ACAO);
@@ -72,6 +78,7 @@ public class TesteRepositorioAcao extends TesteGeral{
         Acao acaoBusc = DAO.buscar(id);
         Assertions.assertNull(acaoBusc);
     }
+
     @Test
     public void testDAO06() {
         excluirArquivosDiretorio(NOME_DIR_ACAO);

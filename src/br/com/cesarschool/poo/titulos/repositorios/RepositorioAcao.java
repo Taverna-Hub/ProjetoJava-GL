@@ -35,136 +35,30 @@ import java.util.Scanner;
  * A busca deve localizar uma linha por identificador, materializar e retornar um 
  * objeto. Caso o identificador não seja encontrado no arquivo, retornar null.
  */
-public class RepositorioAcao {
+public class RepositorioAcao extends RepositorioGeral{
 
-	File arquivoAcao = new File("src/BDs/Acao.txt");
-
-	public boolean incluir(Acao acao) throws IOException {
-
-		if (buscar(acao.getIdentificador()) != null) {
-			return false;
-		}
-		FileWriter escreverLinha = new FileWriter(arquivoAcao, true);
-
-
-		String identificadorString = String.valueOf(acao.getIdentificador());
-		String dataString = String.valueOf(acao.getDataDeValidade());
-		String valorString = String.valueOf(acao.getValorUnitario());
-
-		String linhaCompleta = identificadorString + ";" + acao.getNome() + ";" + dataString + ";" + valorString + ";\n";
-
-		escreverLinha.write(linhaCompleta);
-		escreverLinha.close();
-
-		return true;
-	}
-	// OK
-	public boolean alterar(Acao acao) throws IOException {
-
-		if (buscar(acao.getIdentificador()) == null){
-			return false;
-		}
-
-		Scanner SCAN = new Scanner(arquivoAcao);
-		List<String> linhasDoArquivo = new ArrayList<>();
-
-		while (SCAN.hasNextLine()){
-			linhasDoArquivo.add(SCAN.nextLine());
-
-		}
-		FileWriter escreverLinha = new FileWriter(arquivoAcao);
-
-		for (String linha : linhasDoArquivo){
-
-			String[] arrayLinha = linha.split(";");
-
-			int identificadorArray = Integer.parseInt(arrayLinha[0]);
-			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
-			double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
-			if (acao.getIdentificador() != identificadorArray){
-				incluir(new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray));
-
-			}
-			else {
-				incluir(acao);
-
-			}
-
-		}
-
-		return true;
+	public RepositorioAcao() {
+		super(Acao.class);
 	}
 
-
-	public boolean excluir(int identificador) throws IOException {
-
-		if (buscar(identificador) == null){
-			return false;
-		}
-
-		Scanner SCAN = new Scanner(arquivoAcao);
-		List<String> linhasDoArquivo = new ArrayList<>();
-
-		while (SCAN.hasNextLine()){
-				linhasDoArquivo.add(SCAN.nextLine());
-
-		}
-		FileWriter escreverLinha = new FileWriter(arquivoAcao);
-
-		for (String linha : linhasDoArquivo){
-
-			String[] arrayLinha = linha.split(";");
-
-			int identificadorArray = Integer.parseInt(arrayLinha[0]);
-			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
-			double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
-			if (identificador != identificadorArray){
-				incluir(new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray));
-
-			}
-
-		}
-
-		return true;
+	public boolean incluir(Acao acao) {
+		return false;
 	}
 
-	public Acao buscar(int identificador) throws FileNotFoundException {
+	public boolean alterar(Acao acao){
+		return false;
+	}
 
-		Scanner scan = new Scanner(arquivoAcao);
-		while (scan.hasNextLine()) {
+	public boolean excluir(int identificador) {
+		return false;
+	}
 
-			String[] arrayLinha = scan.nextLine().split(";");
-
-			int identificadorArray = Integer.parseInt(arrayLinha[0]);
-			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
-			double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
-
-			if (identificador == identificadorArray) {
-				scan.close();
-				return new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray);
-			}
-		}
-		scan.close();
+	public Acao buscar(int identificador) {
 		return null;
 	}
-	// OK
 
-	public List<Acao> buscarTodos () throws FileNotFoundException {
-		Scanner scan = new Scanner(arquivoAcao);
-		List<Acao> listaAcao = new ArrayList<>();
-		while (scan.hasNextLine()) {
-
-			String[] arrayLinha = scan.nextLine().split(";");
-
-			int identificadorArray = Integer.parseInt(arrayLinha[0]);
-			LocalDate dataArray = LocalDate.parse(arrayLinha[2]);
-			double valorUnitarioArray = Double.parseDouble(arrayLinha[3]);
-
-			listaAcao.add(new Acao(identificadorArray, arrayLinha[1], dataArray, valorUnitarioArray));
-
-		}
-		scan.close();
-		return listaAcao;
+	public Acao[] buscarTodos () {
+		return null;
 	}
 
 }

@@ -13,11 +13,12 @@ import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TelaExtrato extends JPanel {
 
-    private  List<EntidadeOperadora> entidades = new ArrayList<>();
+    private List<EntidadeOperadora> entidades = new ArrayList<>();
     private JComboBox<String> idExtratoComboBox = new JComboBox<>();
     private CardLayout cardLayout;
     private JPanel painelPrincipal;
@@ -29,7 +30,7 @@ public class TelaExtrato extends JPanel {
     }
 
     private void carregarLista() throws FileNotFoundException {
-        entidades = (MediatorEntidadeOperadora.getInstancia().buscarTodos());
+        entidades = Arrays.stream((MediatorEntidadeOperadora.getInstancia().buscarTodos())).toList();
     }
 
     private void carregarCombo(){
@@ -44,7 +45,6 @@ public class TelaExtrato extends JPanel {
         JPanel extratoPanel = new JPanel(null);
         extratoPanel.setBackground(Color.decode(BotaoArredondado.FUNDO));
         BotaoArredondado botaoVoltar = new BotaoArredondado("Voltar", 20);
-
 
         carregarLista();
         carregarCombo();

@@ -123,7 +123,7 @@ public class MediatorEntidadeOperadora {
         return repositorioEntidadeOperadora.buscar(identificador);
     }
 
-    public List<EntidadeOperadora> buscarTodos() throws FileNotFoundException {
+    public EntidadeOperadora[] buscarTodos() throws FileNotFoundException {
         return repositorioEntidadeOperadora.buscarTodos();
     }
 

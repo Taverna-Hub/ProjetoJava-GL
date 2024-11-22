@@ -1,5 +1,7 @@
 package br.com.cesarschool.poo.titulos.entidades;
 
+import br.com.cesarschool.poo.daogenerico.Entidade;
+
 import java.time.LocalDateTime;
 
 /*
@@ -17,7 +19,7 @@ import java.time.LocalDateTime;
  * 
  *  
  */ 
-public class Transacao {
+public class Transacao extends Entidade {
 
     private EntidadeOperadora entidadeCredito;
     private EntidadeOperadora entidadeDebito;

@@ -9,6 +9,7 @@ import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ public class TelaGerenciarTituloDivida {
 
     public void carregarTitulosDivida() throws IOException {
         titulosDivida.clear(); // Limpa a lista antes de carregar novamente
-        titulosDivida.addAll(MediatorTituloDivida.getInstancia().buscarTodos());
+        titulosDivida.addAll(Arrays.stream(MediatorTituloDivida.getInstancia().buscarTodos()).toList());
     }
 
     public void atualizarComboBoxTitulos(JComboBox<String> comboBox) throws FileNotFoundException {

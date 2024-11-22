@@ -145,7 +145,7 @@ public class MediatorAcao {
         return repositorioAcao.buscar(identificador);
     }
 
-    public List<Acao> buscarTodos() throws FileNotFoundException {
+    public Acao[] buscarTodos() throws FileNotFoundException {
         return repositorioAcao.buscarTodos();
     }
 }

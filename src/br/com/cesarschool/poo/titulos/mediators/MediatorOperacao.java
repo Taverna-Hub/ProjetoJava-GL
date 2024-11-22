@@ -233,7 +233,7 @@ public class MediatorOperacao {
 
     }
 
-    public List<Transacao> buscarTodos() throws FileNotFoundException {
+    public Transacao[] buscarTodos() throws FileNotFoundException {
         return repositorioTransacao.buscarTodos();
     }
 }

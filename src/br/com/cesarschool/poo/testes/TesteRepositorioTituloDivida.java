@@ -2,6 +2,7 @@ package br.com.cesarschool.poo.testes;
 
 import br.com.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioGeral;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
