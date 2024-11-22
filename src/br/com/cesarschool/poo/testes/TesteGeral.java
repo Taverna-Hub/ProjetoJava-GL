@@ -1,13 +1,13 @@
 package br.com.cesarschool.poo.testes;
 
 import br.com.cesarschool.poo.daogenerico.Entidade;
-
+import br.com.cesarschool.poo.testes.TestesDAOSerializador.EntidadeTeste;
 import java.io.File;
 
 public class TesteGeral {
     protected static final String SEP_ARQUIVO = System.getProperty("file.separator");
     protected static final String PONTO = ".";
-    protected static final String NOME_DIR = PONTO + SEP_ARQUIVO + TestesDAOSerializador.EntidadeTeste.class.getSimpleName();
+    protected static final String NOME_DIR = PONTO + SEP_ARQUIVO + EntidadeTeste.class.getSimpleName();
     protected void excluirArquivosDiretorio() {
         excluirArquivosDiretorio(NOME_DIR);
     }
@@ -34,4 +34,5 @@ public class TesteGeral {
     protected String obterNomeArquivo(String dir, Entidade ent) {
         return dir + SEP_ARQUIVO + ent.getIdUnico();
     }
+
 }

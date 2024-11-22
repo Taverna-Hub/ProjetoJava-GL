@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-public class TesteRepositorioEntidadeOperadora extends TesteGeral{
+public class TesteRepositorioEntidadeOperadora extends TesteGeral {
     private static final RepositorioEntidadeOperadora DAO = new RepositorioEntidadeOperadora();
     private static final String NOME_DIR_EO = PONTO + SEP_ARQUIVO + EntidadeOperadora.class.getSimpleName();
 

@@ -14,7 +14,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class TesteRepositorioTransacao extends TesteGeral{
+public class TesteRepositorioTransacao extends TesteGeral {
     private static final RepositorioTransacao DAO = new RepositorioTransacao();
     private static final String NOME_DIR_TRANSACAO = PONTO + SEP_ARQUIVO + Transacao.class.getSimpleName();
 
@@ -24,7 +24,6 @@ public class TesteRepositorioTransacao extends TesteGeral{
         DAOSerializadorObjetos dao = DAO.getDao();
         Assertions.assertNotNull(dao);
     }
-
     @Test
     public void testDAO01() {
         excluirArquivosDiretorio(NOME_DIR_TRANSACAO);
@@ -36,7 +35,6 @@ public class TesteRepositorioTransacao extends TesteGeral{
         Assertions.assertEquals(obterQtdArquivosDir(NOME_DIR_TRANSACAO), 1);
         Assertions.assertTrue(new File(obterNomeArquivo(NOME_DIR_TRANSACAO, tr)).exists());
     }
-
     @Test
     public void testDAO02() {
         excluirArquivosDiretorio(NOME_DIR_TRANSACAO);
@@ -48,7 +46,6 @@ public class TesteRepositorioTransacao extends TesteGeral{
         Assertions.assertEquals(obterQtdArquivosDir(NOME_DIR_TRANSACAO), 1);
         Assertions.assertTrue(new File(obterNomeArquivo(NOME_DIR_TRANSACAO, tr)).exists());
     }
-
     @Test
     public void testDAO03() {
         excluirArquivosDiretorio(NOME_DIR_TRANSACAO);
@@ -70,7 +67,6 @@ public class TesteRepositorioTransacao extends TesteGeral{
         Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(tr1, trs[0]));
         Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(tr2, trs[1]));
     }
-
     @Test
     public void testDAO04() {
         excluirArquivosDiretorio(NOME_DIR_TRANSACAO);

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.time.LocalDate;
 
-public class TesteRepositorioTituloDivida extends TesteGeral{
+public class TesteRepositorioTituloDivida extends TesteGeral {
     private static final RepositorioTituloDivida DAO = new RepositorioTituloDivida();
     private static final String NOME_DIR_TITULO = PONTO + SEP_ARQUIVO + TituloDivida.class.getSimpleName();
 
