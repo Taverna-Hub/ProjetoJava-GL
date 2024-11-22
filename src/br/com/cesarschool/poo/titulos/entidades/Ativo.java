@@ -1,5 +1,7 @@
 package br.com.cesarschool.poo.titulos.entidades;
 
+import br.com.cesarschool.poo.daogenerico.Entidade;
+
 import java.time.LocalDate;
 
 /*
@@ -12,7 +14,7 @@ import java.time.LocalDate;
  * e m�todos set/get p�blicos para os atributos. O atributo identificador
  * � read-only fora da classe.
  */
-public class Ativo {
+public class Ativo extends Entidade {
     private int identificador;
     private String nome;
     private LocalDate dataDeValidade;
