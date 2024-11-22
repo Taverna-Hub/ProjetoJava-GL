@@ -44,6 +44,10 @@ public class Ativo extends Entidade {
         this.dataDeValidade = dataDeValidade;
     }
 
+    @Override
+    public String getIdUnico() {
+        return identificador + "";
+    }
 }
 
 //OK

@@ -4,24 +4,34 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOSerializadorObjetos<T extends Entidade & Serializable> {
-    private final String nomeDiretorio;
+public class DAOSerializadorObjetos <T extends Entidade & Serializable> {
+    private String nomeDiretorio;
 
     public DAOSerializadorObjetos(Class<?> tipoEntidade) {
-        this.nomeDiretorio = "BDs/" + tipoEntidade.getSimpleName();
-        File diretorio = new File(nomeDiretorio);
-        if (!diretorio.exists()) {
-            diretorio.mkdirs();
+        this.nomeDiretorio = "." + File.separator + tipoEntidade.getSimpleName();
+        File dir = new File(nomeDiretorio);
+        if (!dir.exists()) {
+            dir.mkdir();
         }
     }
 
     public boolean incluir(Entidade entidade) {
-        File arquivo = new File(getCaminhoArquivo(entidade.getIdUnico()));
-        if (arquivo.exists()) {
-            return false; // Identificador já existe
+        if (entidade == null) {
+            return false;
         }
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(arquivo))) {
-            oos.writeObject(entidade);
+
+        File file = new File(nomeDiretorio + File.separator + entidade.getIdUnico());
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            } else if (file.exists()) {
+                return false;
+            }
+
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+                oos.writeObject(entidade);
+            }
+
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -30,54 +40,69 @@ public class DAOSerializadorObjetos<T extends Entidade & Serializable> {
     }
 
     public boolean alterar(Entidade entidade) {
-        File arquivo = new File(getCaminhoArquivo(entidade.getIdUnico()));
-        if (arquivo.exists()) {
-            if (arquivo.delete()) {
-                return incluir(entidade);
-            }
+        File file = new File(nomeDiretorio + File.separator + entidade.getIdUnico());
+        if (!file.exists()) {
+            return false;
         }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            Entidade entidadeExistente = (Entidade) ois.readObject();
+            if (entidadeExistente.getIdUnico().equals(entidade.getIdUnico())) {
+                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+                    oos.writeObject(entidade);
+                }
+                return true;
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
     public boolean excluir(String idUnico) {
-        File arquivo = new File(getCaminhoArquivo(idUnico));
-        if (arquivo.exists()) {
-            return arquivo.delete();
+        File file = new File(nomeDiretorio + File.separator + idUnico);
+        try {
+            return file.delete();
+        } catch (SecurityException e) {
+            return false;
         }
-        return false;
     }
 
     public Entidade buscar(String idUnico) {
-        File arquivo = new File(getCaminhoArquivo(idUnico));
-        if (arquivo.exists()) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
-                return (T) ois.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        File file = new File(nomeDiretorio + File.separator + idUnico);
+        if (!file.exists()) {
+            return null;
         }
-        return null;
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            return (Entidade) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Entidade[] buscarTodos() {
-        File diretorio = new File(nomeDiretorio);
-        List<T> listaEntidades = new ArrayList<>();
-        if (diretorio.exists() && diretorio.isDirectory()) {
-            File[] arquivos = diretorio.listFiles();
-            if (arquivos != null) {
-                for (File arquivo : arquivos) {
-                    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
-                        listaEntidades.add((T) ois.readObject());
-                    } catch (IOException | ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+        File directory = new File(nomeDiretorio);
+        File[] files = directory.listFiles();
+
+        if (files == null || files.length == 0) {
+            return new Entidade[0];
+        }
+
+        List<Entidade> entidades = new ArrayList<>();
+        for (File file : files) {
+            if (file.isFile()) {
+                try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                    Entidade entidade = (Entidade) ois.readObject();
+                    entidades.add(entidade);
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
                 }
             }
         }
-        return listaEntidades.toArray((T[]) new Entidade[0]);
-    }
 
-    private String getCaminhoArquivo(String idUnico) {
-        return nomeDiretorio + "/" + idUnico + ".dat";
+        return entidades.toArray(new Entidade[0]);
     }
 }

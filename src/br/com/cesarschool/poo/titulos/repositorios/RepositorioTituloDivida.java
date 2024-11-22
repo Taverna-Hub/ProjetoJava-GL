@@ -72,4 +72,5 @@ public class RepositorioTituloDivida extends RepositorioGeral{
 	public Class getClasseEntidade() {
 		return TituloDivida.class;
 	}
+
 }

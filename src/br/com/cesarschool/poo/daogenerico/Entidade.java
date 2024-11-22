@@ -8,17 +8,18 @@ public abstract class Entidade implements Serializable {
     private LocalDateTime dataHoraInclusao;
     private LocalDateTime dataHoraUltimaAlteracao;
 
-    public Entidade(String idUnico, LocalDateTime dataHoraInclusao) {
+    public Entidade(String idUnico) {
+        this();
         this.idUnico = idUnico;
-        this.dataHoraInclusao = dataHoraInclusao;
     }
 
     protected Entidade() {
+        this.dataHoraInclusao = LocalDateTime.now();
+        this.dataHoraUltimaAlteracao = LocalDateTime.now();
     }
 
-    public String getIdUnico() {
-        return idUnico;
-    }
+    public abstract String getIdUnico();
+
 
     public LocalDateTime getDataHoraInclusao() {
         return dataHoraInclusao;

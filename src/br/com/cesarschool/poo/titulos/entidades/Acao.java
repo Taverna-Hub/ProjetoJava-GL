@@ -32,4 +32,8 @@ public class Acao extends Ativo{
         super(identificador, nome, dataDeValidade);
         this.valorUnitario = valorUnitario;
     }
+
+    public String getIdUnico(){
+        return String.valueOf(this.getIdentificador());
+    }
 }

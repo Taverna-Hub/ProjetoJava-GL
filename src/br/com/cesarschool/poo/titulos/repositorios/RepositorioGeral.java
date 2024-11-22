@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// T era coringa, hoje coringa sou eu
 public abstract class RepositorioGeral <T extends Entidade>{
     private final Class<T> classeEntidade;
     private DAOSerializadorObjetos dao;
@@ -44,7 +43,7 @@ public abstract class RepositorioGeral <T extends Entidade>{
     }
 
     public Entidade buscar(String id) {
-        return dao.buscar(id); // todo
+        return dao.buscar(id);
     }
 
 

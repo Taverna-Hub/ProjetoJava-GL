@@ -88,6 +88,12 @@ public class EntidadeOperadora extends Entidade {
     public void debitarSaldoTituloDivida(double valor){
         saldoTituloDivida -= valor;
     }
+
+
+    @Override
+    public String getIdUnico() {
+        return identificador + "";
+    }
 }
 
 //OK
