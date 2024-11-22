@@ -1,5 +1,6 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
+import br.com.cesarschool.poo.daogenerico.Entidade;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 
 import java.util.List;
@@ -60,6 +61,16 @@ public class RepositorioTituloDivida extends RepositorioGeral{
 
 	public TituloDivida[] buscarTodos ()  {
 		return null;
+	}
+
+	@Override
+	protected Entidade parseLinha(String linha) {
+		return null;
+	}
+
+	@Override
+	protected String formatarTitulo(Entidade entidade) {
+		return "";
 	}
 
 	// aux

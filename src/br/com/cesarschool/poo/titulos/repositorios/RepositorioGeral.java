@@ -53,7 +53,7 @@ public abstract class RepositorioGeral <T extends Entidade>{
         return null;
     }
 
-    private List<T> buscarTodosAsList() throws IOException {
+    protected List<T> buscarTodosAsList() throws IOException {
         Path path = Paths.get(FILE_NAME);
         if (!Files.exists(path)) {
             return new ArrayList<>();
@@ -68,7 +68,7 @@ public abstract class RepositorioGeral <T extends Entidade>{
 
     protected abstract String formatarTitulo(T t);
 
-    private void salvarTodos(List<T> t) throws IOException {
+    protected void salvarTodos(List<T> t) throws IOException {
         List<String> linhas = t.stream()
                 .map(this::formatarTitulo)
                 .collect(Collectors.toList());
