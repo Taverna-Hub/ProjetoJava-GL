@@ -1,16 +1,8 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
-import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /*
  * Deve gravar em e ler de um arquivo texto chamado TituloDivida.txt os dados dos objetos do tipo
@@ -42,8 +34,9 @@ public class RepositorioTituloDivida extends RepositorioGeral{
 		super(TituloDivida.class);
 	}
 
+	@Override
 	public boolean incluir(TituloDivida tituloDivida) {
-
+		List<tituloDivida> titulos = buscarTodosAsList();
 		return false;
 	}
 
@@ -68,4 +61,8 @@ public class RepositorioTituloDivida extends RepositorioGeral{
 	public TituloDivida[] buscarTodos ()  {
 		return null;
 	}
+
+	// aux
+
+
 }
