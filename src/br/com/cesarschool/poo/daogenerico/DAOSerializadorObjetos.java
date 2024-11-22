@@ -4,19 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * Esta classe representa um DAO genérico, que inclui, exclui, altera, busca por identificador
- * único e busca todos, qualquer objeto(s) cujo tipo é subtipo de Entidade.
- *
- * Sugerimos o uso da API de serialização do JAVA, que grava e lê objetos em arquvos.
- * Lembrar sempre de fechar (em qualquer circunstância) streams JAVA abertas.
- *
- * As nuances mais detalhadas do funcionamento desta classe está especificada na classe de testes
- * automatizados br.gov.cesarschool.poo.testes.TestesDAOSerializador.
- *
- * A classe deve ter a estrutura (métodos e construtores) dada abaixo.
- */
-public class DAOSerializadorObjetos <T extends Entidade & Serializable> {
+public class DAOSerializadorObjetos<T extends Entidade & Serializable> {
     private final String nomeDiretorio;
 
     public DAOSerializadorObjetos(Class<?> tipoEntidade) {
@@ -28,8 +16,11 @@ public class DAOSerializadorObjetos <T extends Entidade & Serializable> {
     }
 
     public boolean incluir(Entidade entidade) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(
-                new FileOutputStream(getCaminhoArquivo(entidade.getIdUnico())))) {
+        File arquivo = new File(getCaminhoArquivo(entidade.getIdUnico()));
+        if (arquivo.exists()) {
+            return false; // Identificador já existe
+        }
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(arquivo))) {
             oos.writeObject(entidade);
             return true;
         } catch (IOException e) {
@@ -41,7 +32,9 @@ public class DAOSerializadorObjetos <T extends Entidade & Serializable> {
     public boolean alterar(Entidade entidade) {
         File arquivo = new File(getCaminhoArquivo(entidade.getIdUnico()));
         if (arquivo.exists()) {
-            return incluir(entidade);
+            if (arquivo.delete()) {
+                return incluir(entidade);
+            }
         }
         return false;
     }
@@ -58,9 +51,7 @@ public class DAOSerializadorObjetos <T extends Entidade & Serializable> {
         File arquivo = new File(getCaminhoArquivo(idUnico));
         if (arquivo.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
-                // @SuppressWarnings("unchecked")
-                T entidade = (T) ois.readObject();
-                return entidade;
+                return (T) ois.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -76,18 +67,14 @@ public class DAOSerializadorObjetos <T extends Entidade & Serializable> {
             if (arquivos != null) {
                 for (File arquivo : arquivos) {
                     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
-                        // @SuppressWarnings("unchecked")
-                        T entidade = (T) ois.readObject();
-                        listaEntidades.add(entidade);
+                        listaEntidades.add((T) ois.readObject());
                     } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }
-        // @SuppressWarnings("unchecked")
-        T[] arrayEntidades = (T[]) listaEntidades.toArray(new Entidade[0]);
-        return arrayEntidades;
+        return listaEntidades.toArray((T[]) new Entidade[0]);
     }
 
     private String getCaminhoArquivo(String idUnico) {

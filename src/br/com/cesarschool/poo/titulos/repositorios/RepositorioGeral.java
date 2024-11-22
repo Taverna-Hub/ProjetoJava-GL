@@ -2,6 +2,7 @@ package br.com.cesarschool.poo.titulos.repositorios;
 
 import br.com.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.com.cesarschool.poo.daogenerico.Entidade;
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 
 import java.io.IOException;
@@ -18,7 +19,6 @@ import java.util.stream.Collectors;
 public abstract class RepositorioGeral <T extends Entidade>{
     private final Class<T> classeEntidade;
     private DAOSerializadorObjetos dao;
-    private static final String FILE_NAME = "";
     public RepositorioGeral(Class<T> classeEntidade) {
         this.classeEntidade = classeEntidade;
         this.dao = new DAOSerializadorObjetos<>(classeEntidade);
@@ -28,51 +28,28 @@ public abstract class RepositorioGeral <T extends Entidade>{
         return dao;
     }
 
-    public abstract boolean incluir(TituloDivida tituloDivida);
-
     public abstract Class<T> getClasseEntidade();
 
 
     public boolean incluir(T entidade) {
-        return false;
+        return dao.incluir(entidade);
     }
 
     public boolean alterar(T entidade) {
-        return false;
+        return dao.alterar(entidade);
     }
 
-    public boolean excluir(T entidade) {
-        return false;
+    public boolean excluir(String id) {
+        return dao.excluir(id);
     }
 
-    public T buscar(String id) {
-        return null;
+    public Entidade buscar(String id) {
+        return dao.buscar(id); // todo
     }
 
-    public T[] buscarTodos() {
-        return null;
-    }
 
-    protected List<T> buscarTodosAsList() throws IOException {
-        Path path = Paths.get(FILE_NAME);
-        if (!Files.exists(path)) {
-            return new ArrayList<>();
-        }
-
-        return Files.lines(path)
-                .map(this::parseLinha)
-                .collect(Collectors.toList());
-    }
-
-    protected abstract T parseLinha(String linha);
-
-    protected abstract String formatarTitulo(T t);
-
-    protected void salvarTodos(List<T> t) throws IOException {
-        List<String> linhas = t.stream()
-                .map(this::formatarTitulo)
-                .collect(Collectors.toList());
-        Files.write(Paths.get(FILE_NAME), linhas, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
+    public Entidade[] buscarTodos() {
+        return dao.buscarTodos();
     }
 
 }
