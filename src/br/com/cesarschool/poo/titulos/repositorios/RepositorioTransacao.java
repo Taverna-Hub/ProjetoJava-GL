@@ -49,6 +49,12 @@ public class RepositorioTransacao extends RepositorioGeral{
 	public Transacao[] buscarPorEntidadeDevedora(long identificadorEntidadeDebito) {
 		return null;
 	}
+
+	@Override
+	public Class getClasseEntidade() {
+		return Transacao.class;
+	}
+
 	public Transacao[] buscarTodos () {
 		return null;
 	}

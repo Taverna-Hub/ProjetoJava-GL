@@ -57,6 +57,11 @@ public class RepositorioAcao extends RepositorioGeral{
 		return null;
 	}
 
+	@Override
+	public Class getClasseEntidade() {
+		return Acao.class;
+	}
+
 	public Acao[] buscarTodos () {
 		return null;
 	}

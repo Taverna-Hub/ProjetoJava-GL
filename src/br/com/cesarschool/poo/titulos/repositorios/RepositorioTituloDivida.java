@@ -60,6 +60,11 @@ public class RepositorioTituloDivida extends RepositorioGeral{
 		return null;
 	}
 
+	@Override
+	public Class getClasseEntidade() {
+		return TituloDivida.class;
+	}
+
 	public TituloDivida[] buscarTodos ()  {
 		return null;
 	}

@@ -51,6 +51,12 @@ public class RepositorioEntidadeOperadora extends RepositorioGeral{
     public EntidadeOperadora buscar(long identificador) {
         return null;
     }
+
+    @Override
+    public Class getClasseEntidade() {
+        return EntidadeOperadora.class;
+    }
+
     public EntidadeOperadora[] buscarTodos () {
         return null;
     }

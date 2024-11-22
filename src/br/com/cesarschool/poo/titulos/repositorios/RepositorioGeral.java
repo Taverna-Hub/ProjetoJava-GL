@@ -4,20 +4,21 @@ import br.com.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.com.cesarschool.poo.daogenerico.Entidade;
 
 // T era coringa, hoje coringa sou eu
-public class RepositorioGeral <T extends Entidade>{
-    private DAOSerializadorObjetos dao;
+public abstract class RepositorioGeral <T extends Entidade>{
     private final Class<T> classeEntidade;
+    private DAOSerializadorObjetos dao;
 
     public RepositorioGeral(Class<T> classeEntidade) {
         this.classeEntidade = classeEntidade;
+        this.dao = new DAOSerializadorObjetos<>(classeEntidade);
     }
+
     public DAOSerializadorObjetos getDao() {
         return dao;
     }
 
-    public Class<T> getClasseEntidade() {
-        return classeEntidade;
-    }
+    public abstract Class<T> getClasseEntidade();
+
 
     public boolean incluir(T entidade) {
         return false;
