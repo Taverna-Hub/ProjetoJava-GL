@@ -20,20 +20,12 @@ import java.time.LocalDateTime;
  *
  * Deve implementar a interface Serializable do JAVA - OK
  */
-public abstract class Entidade implements Serializable {
-    private static final long serialVersionUID = 1L;
+public abstract class Entidade<T> implements Serializable {
 
     private LocalDateTime dataHoraInclusao;
     private LocalDateTime dataHoraUltimaAlteracao;
     private String usuarioInclusao;
     private String usuarioUltimaAlteracao;
-
-    public Entidade() {
-        this.dataHoraInclusao = LocalDateTime.now();
-        this.dataHoraUltimaAlteracao = LocalDateTime.now();
-        this.usuarioInclusao = "";
-        this.usuarioUltimaAlteracao = "";
-    }
 
     public LocalDateTime getDataHoraInclusao() {
         return dataHoraInclusao;
@@ -65,5 +57,11 @@ public abstract class Entidade implements Serializable {
 
     public void setUsuarioUltimaAlteracao(String usuarioUltimaAlteracao) {
         this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
+    }
+
+    public abstract T getIdUnico();
+    public Entidade() {
+        dataHoraInclusao = LocalDateTime.now();
+        dataHoraUltimaAlteracao = LocalDateTime.now();
     }
 }

@@ -6,6 +6,7 @@ import br.com.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.time.LocalDate;
 
 public class TesteRepositorioTituloDivida extends TesteGeral{

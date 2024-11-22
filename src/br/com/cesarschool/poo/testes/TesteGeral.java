@@ -7,7 +7,7 @@ import java.io.File;
 public class TesteGeral {
     protected static final String SEP_ARQUIVO = System.getProperty("file.separator");
     protected static final String PONTO = ".";
-    protected static final String NOME_DIR = PONTO + SEP_ARQUIVO + EntidadeTeste.class.getSimpleName();
+    protected static final String NOME_DIR = PONTO + SEP_ARQUIVO + TestesDAOSerializador.EntidadeTeste.class.getSimpleName();
     protected void excluirArquivosDiretorio() {
         excluirArquivosDiretorio(NOME_DIR);
     }

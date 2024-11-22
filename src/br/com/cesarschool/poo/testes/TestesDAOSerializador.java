@@ -1,5 +1,6 @@
 package br.com.cesarschool.poo.testes;
 
+import br.com.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.com.cesarschool.poo.daogenerico.Entidade;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ public class TestesDAOSerializador {
     private static final String ID_2 = "2";
     private static final String NOME_1 = "ENT 1";
     private static final String ID_1 = "1";
+
     static class EntidadeTeste extends Entidade {
         private static final long serialVersionUID = 1L;
         private String id;
@@ -30,6 +32,7 @@ public class TestesDAOSerializador {
             return nome;
         }
     }
+
     private static final String SEP_ARQUIVO = System.getProperty("file.separator");
     private static final String PONTO = ".";
     private static final String NOME_DIR = PONTO + SEP_ARQUIVO + EntidadeTeste.class.getSimpleName();
