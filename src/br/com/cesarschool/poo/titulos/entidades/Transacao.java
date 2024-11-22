@@ -1,6 +1,7 @@
 package br.com.cesarschool.poo.titulos.entidades;
 
 import br.com.cesarschool.poo.daogenerico.Entidade;
+import br.com.cesarschool.poo.titulos.utils.Comparavel;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,7 +21,7 @@ import java.time.format.DateTimeFormatter;
  * 
  *  
  */ 
-public class Transacao extends Entidade {
+public class Transacao extends Entidade implements Comparavel {
 
     private EntidadeOperadora entidadeCredito;
     private EntidadeOperadora entidadeDebito;
@@ -70,6 +71,16 @@ public class Transacao extends Entidade {
                 + entidadeDebito.getIdUnico() + "_"
                 + ((acao!= null) ? acao.getIdUnico() : tituloDivida.getIdUnico())
                 + "_" + formattedDateTime;
+    }
+
+    @Override
+    public int comparar(Comparavel c) {
+        if (!(c instanceof Transacao)) {
+            throw new IllegalArgumentException("O objeto deve ser do tipo Transacao.");
+        }
+        Transacao outraTransacao = (Transacao) c;
+
+        return outraTransacao.getDataHoraOperacao().compareTo(this.dataHoraOperacao);
     }
 }
 
