@@ -36,7 +36,7 @@ public class RepositorioTituloDivida extends RepositorioGeral{
 	}
 
 	public boolean incluir(TituloDivida tituloDivida) {
-		if (buscar(String.valueOf(tituloDivida.getIdentificador())) != null){
+		if (buscar(String.valueOf(tituloDivida.getIdentificador())) != null) {
 			return false;
 		}
 
