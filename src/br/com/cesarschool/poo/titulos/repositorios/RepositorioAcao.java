@@ -1,37 +1,36 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
+import br.com.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.com.cesarschool.poo.titulos.entidades.Acao;
-import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class RepositorioAcao extends RepositorioGeral{
-
+	private final DAOSerializadorObjetos<Acao> dao;
 	public RepositorioAcao() {
 		super(Acao.class);
+		this.dao = new DAOSerializadorObjetos<>(Acao.class);
 	}
 
 	public boolean incluir(Acao acao) {
-		return false;
+		if (buscar(String.valueOf(acao.getIdentificador())) != null){
+			return false;
+		}
+		return super.incluir(acao);
 	}
 
 	public boolean alterar(Acao acao){
-		return false;
+		if (buscar(String.valueOf(acao.getIdentificador())) == null) {
+			return false;
+		}
+		return super.alterar(acao);
 	}
 
 	public boolean excluir(int identificador) {
-		return false;
+		return super.excluir(String.valueOf(identificador));
 	}
 
 	public Acao buscar(int identificador) {
-		return null;
+		return (Acao) super.buscar(String.valueOf(identificador));
 	}
 
 	@Override
@@ -40,7 +39,11 @@ public class RepositorioAcao extends RepositorioGeral{
 	}
 
 	public Acao[] buscarTodos () {
-		return null;
+		return (Acao[]) super.buscarTodos();
+	}
+
+	public DAOSerializadorObjetos<Acao> getDao() {
+		return dao;
 	}
 
 }
