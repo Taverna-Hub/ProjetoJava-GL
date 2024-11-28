@@ -1,6 +1,6 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
-import br.com.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
+import br.gov.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 
 public class RepositorioEntidadeOperadora extends RepositorioGeral{
